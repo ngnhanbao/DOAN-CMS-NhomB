@@ -230,3 +230,62 @@ function my_custom_widgets_init()
 }
 // Móc hàm my_custom_widgets_init vào hook widgets_init của WordPress
 add_action('widgets_init', 'my_custom_widgets_init');
+
+// Tạo shortcode [tdc_news] để hiển thị danh sách bài viết như thiết kế
+function tdc_custom_news_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'posts' => 5, // Số lượng bài viết
+    ), $atts, 'tdc_news');
+
+    $query = new WP_Query(array(
+        'post_type'      => 'post',
+        'posts_per_page' => $atts['posts'],
+        'post_status'    => 'publish',
+    ));
+
+    if (!$query->have_posts()) {
+        return '<p>Không có bài viết nào.</p>';
+    }
+
+    // CSS được nhúng trực tiếp để đảm bảo hiển thị ngay lập tức
+    $output = '<style>
+        .tdc-news-list { display: flex; flex-direction: column; gap: 15px; font-family: sans-serif; }
+        .tdc-news-item { display: flex; border: 1px solid #eaeaea; background: #fff; padding: 15px; align-items: stretch; }
+        .tdc-news-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #eaeaea; padding-right: 20px; margin-right: 20px; min-width: 75px; }
+        .tdc-day { font-size: 42px; font-weight: 700; font-family: "Times New Roman", Times, serif; line-height: 1; color: #333; }
+        .tdc-month { font-size: 11px; text-transform: uppercase; color: #888; margin-top: 5px; letter-spacing: 0.5px; }
+        .tdc-news-content { flex: 1; }
+        .tdc-title { margin: 0 0 10px 0; font-size: 16px; line-height: 1.4; }
+        .tdc-title a { color: #0056b3; text-decoration: none; text-transform: uppercase; font-weight: 700; }
+        .tdc-title a:hover { color: #003d82; text-decoration: underline; }
+        .tdc-excerpt { font-size: 14px; color: #555; line-height: 1.5; margin: 0; }
+    </style>';
+
+    $output .= '<div class="tdc-news-list">';
+    
+    while ($query->have_posts()) {
+        $query->the_post();
+        $day = get_the_time('d');
+        $month = get_the_time('m');
+        $title = get_the_title();
+        $link = get_permalink();
+        $excerpt = wp_trim_words(get_the_excerpt(), 20, ' [...]');
+        
+        $output .= '<div class="tdc-news-item">';
+        $output .= '  <div class="tdc-news-date">';
+        $output .= '    <span class="tdc-day">' . $day . '</span>';
+        $output .= '    <span class="tdc-month">THÁNG ' . $month . '</span>';
+        $output .= '  </div>';
+        $output .= '  <div class="tdc-news-content">';
+        $output .= '    <h3 class="tdc-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h3>';
+        $output .= '    <p class="tdc-excerpt">' . esc_html($excerpt) . '</p>';
+        $output .= '  </div>';
+        $output .= '</div>';
+    }
+    
+    wp_reset_postdata();
+    $output .= '</div>';
+    
+    return $output;
+}
+add_shortcode('tdc_news', 'tdc_custom_news_shortcode');
