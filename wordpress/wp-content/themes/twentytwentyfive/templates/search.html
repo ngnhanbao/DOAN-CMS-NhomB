@@ -3,18 +3,41 @@
 <!-- wp:group {"tagName":"main","className":"group-c-search-page","layout":{"type":"constrained"}} -->
 <main class="wp-block-group group-c-search-page">
 
-	<!-- Tiêu đề: Search: "messi" -->
+	<!-- =========================================
+	     SEARCH TITLE
+	     ========================================= -->
+
 	<!-- wp:query-title {"type":"search","className":"group-c-search-title"} /-->
 
-	<!-- Query tìm kiếm -->
-	<!-- wp:query {"query":{"inherit":true},"displayLayout":{"type":"list"},"className":"group-c-search-query"} -->
-	<!-- wp:group {"align":"full","className":"group-c-no-results","layout":{"type":"constrained"}} -->
+
+	<!-- =========================================
+	     SEARCH FORM
+	     LUÔN NẰM TRÊN KẾT QUẢ
+	     ========================================= -->
+
+	<!-- wp:group {"className":"group-c-search-top","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group group-c-search-top">
+
+		<!-- wp:search {"label":"Search","showLabel":false,"placeholder":"Search topics or keywords","buttonText":"Search","className":"group-c-search-form"} /-->
+
+	</div>
+	<!-- /wp:group -->
+
+
+	<!-- =========================================
+	     SEARCH QUERY
+	     ========================================= -->
+
+	<!-- wp:query {"query":{"inherit":true},"className":"group-c-search-query"} -->
 	<div class="wp-block-query group-c-search-query">
 
-		<!-- Có kết quả -->
-		<!-- wp:post-template -->
+		<!-- =====================================
+		     CÓ KẾT QUẢ → HIỆN BÀI
+		     ===================================== -->
 
-			<!-- wp:group {"className":"group-c-search-result"} -->
+		<!-- wp:post-template {"layout":{"type":"default"}} -->
+
+			<!-- wp:group {"className":"group-c-search-result","layout":{"type":"constrained"}} -->
 			<div class="wp-block-group group-c-search-result">
 
 				<!-- wp:post-featured-image {"isLink":true} /-->
@@ -29,15 +52,24 @@
 		<!-- /wp:post-template -->
 
 
-		<!-- Không có kết quả -->
+		<!-- =====================================
+		     KHÔNG CÓ KẾT QUẢ
+		     CHỈ HIỆN THÔNG BÁO
+		     ===================================== -->
+
 		<!-- wp:query-no-results -->
 
-			<!-- wp:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
+			<!-- wp:paragraph {"className":"group-c-no-results-text"} -->
+			<p class="group-c-no-results-text">
+				We could not find any results for your search.
+				You can give it another try through the search form below.
+			</p>
+			<!-- /wp:paragraph -->
 
 		<!-- /wp:query-no-results -->
 
 	</div>
-	<!-- /wp:group -->
+	<!-- /wp:query -->
 
 </main>
 <!-- /wp:group -->
