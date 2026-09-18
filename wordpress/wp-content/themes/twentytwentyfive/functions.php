@@ -203,6 +203,15 @@ function group_c_enqueue_assets()
 		array(),
 		'1.0.0'
 	);
+
+	
+	// Custom Search Form CSS
+	wp_enqueue_style(
+	'group-c-search',
+	get_template_directory_uri() . '/assets/css/group-c-search.css',
+	array(),
+	'1.0.0'
+);
 }
 
 add_action('wp_enqueue_scripts', 'group_c_enqueue_assets');

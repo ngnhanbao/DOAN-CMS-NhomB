@@ -8,34 +8,20 @@
 
 	<!-- Query tìm kiếm -->
 	<!-- wp:query {"query":{"inherit":true},"displayLayout":{"type":"list"},"className":"group-c-search-query"} -->
-	<div class="wp-block-query group-c-search-query">
+	<!-- wp:group {"align":"full","className":"group-c-no-results","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group alignfull group-c-no-results">
 
-		<!-- Kết quả có bài -->
-		<!-- wp:post-template -->
+		<!-- wp:paragraph {"className":"group-c-no-results-text"} -->
+		<p class="group-c-no-results-text">
+			We could not find any results for your search.
+			You can give it another try through the search form below.
+		</p>
+		<!-- /wp:paragraph -->
 
-			<!-- wp:group {"className":"group-c-search-result"} -->
-			<div class="wp-block-group group-c-search-result">
-
-				<!-- wp:post-featured-image {"isLink":true} /-->
-
-				<!-- wp:post-title {"isLink":true} /-->
-
-				<!-- wp:post-excerpt /-->
-
-			</div>
-			<!-- /wp:group -->
-
-		<!-- /wp:post-template -->
-
-		<!-- CHỈ HIỆN KHI KHÔNG CÓ KẾT QUẢ -->
-		<!-- wp:query-no-results -->
-
-			<!-- wp:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
-
-		<!-- /wp:query-no-results -->
+		<!-- wp:search {"label":"Search","showLabel":false,"placeholder":"Search topics or keywords","buttonText":"Search","className":"group-c-search-form"} /-->
 
 	</div>
-	<!-- /wp:query -->
+	<!-- /wp:group -->
 
 </main>
 <!-- /wp:group -->
