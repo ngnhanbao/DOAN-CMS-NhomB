@@ -203,6 +203,15 @@ function group_c_enqueue_assets()
 		array(),
 		'1.0.0'
 	);
+
+
+	// Custom Search Form CSS
+	wp_enqueue_style(
+		'group-c-search',
+		get_template_directory_uri() . '/assets/css/group-c-search.css',
+		array(),
+		'1.0.0'
+	);
 }
 
 add_action('wp_enqueue_scripts', 'group_c_enqueue_assets');
@@ -361,19 +370,19 @@ class TDC_News_Widget extends WP_Widget
 		$title = !empty($instance['title']) ? $instance['title'] : 'Tin mới nhất';
 		$posts = !empty($instance['posts']) ? $instance['posts'] : 5;
 		?>
-				<p>
-					<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề Widget:</label>
-					<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
-						name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
-						value="<?php echo esc_attr($title); ?>">
-				</p>
-				<p>
-					<label for="<?php echo esc_attr($this->get_field_id('posts')); ?>">Số lượng bài viết hiển thị:</label>
-					<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('posts')); ?>"
-						name="<?php echo esc_attr($this->get_field_name('posts')); ?>" type="number" step="1" min="1"
-						value="<?php echo esc_attr($posts); ?>" size="3">
-				</p>
-				<?php
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề Widget:</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('posts')); ?>">Số lượng bài viết hiển thị:</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('posts')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('posts')); ?>" type="number" step="1" min="1"
+				value="<?php echo esc_attr($posts); ?>" size="3">
+		</p>
+		<?php
 	}
 
 	// Lưu dữ liệu cập nhật
