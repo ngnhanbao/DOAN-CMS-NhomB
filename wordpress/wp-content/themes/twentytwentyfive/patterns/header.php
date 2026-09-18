@@ -12,21 +12,194 @@
  */
 
 ?>
-<!-- wp:group {"align":"full","layout":{"type":"default"}} -->
-<div class="wp-block-group alignfull">
-	<!-- wp:group {"layout":{"type":"constrained"}} -->
-	<div class="wp-block-group">
-		<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
-		<div class="wp-block-group alignwide" style="padding-top:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--30)">
-			<!-- wp:site-title {"level":0} /-->
-			<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|10"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"right"}} -->
-			<div class="wp-block-group">
-				<!-- wp:navigation {"overlayBackgroundColor":"base","overlayTextColor":"contrast","layout":{"type":"flex","justifyContent":"right","flexWrap":"wrap"}} /-->
+<?php
+/**
+ * Title: Header
+ * Slug: twentytwentyfive/header
+ * Categories: header
+ * Block Types: core/template-part/header
+ * Description: Group C header.
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twenty_Five
+ */
+?>
+
+<header class="group-c-header">
+
+	<nav class="navbar">
+
+		<div class="container-fluid">
+
+			<!-- =========================
+				 GROUP C
+				 ========================= -->
+			<a class="group-c-logo" href="<?php echo esc_url(home_url('/')); ?>">
+				Group C
+			</a>
+
+
+			<!-- =========================
+				 HOME
+				 ========================= -->
+			<a class="group-c-home" href="<?php echo esc_url(home_url('/')); ?>">
+				Home
+			</a>
+
+
+			<!-- =========================
+				 SEARCH FORM
+				 ========================= -->
+			<form class="group-c-search" method="get" action="<?php echo esc_url(home_url('/')); ?>"
+				onsubmit="return validationGroupRearch(this);">
+
+				<input type="search" name="s" value="<?php echo esc_attr(get_search_query()); ?>" placeholder="Search">
+
+				<button type="submit">
+					Submit
+				</button>
+
+			</form>
+
+
+			<!-- =========================
+				 CATEGORIES
+				 LẤY TỪ DATABASE
+				 ========================= -->
+			<div class="group-c-categories">
+
+				<?php
+				$categories = get_categories(
+					array(
+						'hide_empty' => false,
+					)
+				);
+
+				foreach ($categories as $category):
+					?>
+
+					<a href="<?php echo esc_url(
+						get_category_link($category->term_id)
+					); ?>">
+						<?php echo esc_html($category->name); ?>
+					</a>
+
+				<?php endforeach; ?>
+
 			</div>
-			<!-- /wp:group -->
+
+
+			<!-- =========================
+				 MENU ICON
+				 KHÔNG XỬ LÝ THEO YÊU CẦU
+				 ========================= -->
+			<div class="group-c-icon-item">
+
+				<button type="button">
+
+					<i class="fa-solid fa-ellipsis"></i>
+
+					<span>
+						Menu
+					</span>
+
+				</button>
+
+			</div>
+
+
+			<!-- =========================
+				 SEARCH ICON
+				 ========================= -->
+			<div class="group-c-icon-item">
+
+				<button type="button">
+
+					<i class="fa-solid fa-magnifying-glass"></i>
+
+					<span>
+						Search
+					</span>
+
+				</button>
+
+			</div>
+
+
+			<!-- =========================
+				 ACCOUNT DROPDOWN
+				 ========================= -->
+			<div class="group-c-account">
+
+				<button type="button" class="group-c-account-button">
+
+					<i class="fa-solid fa-circle-user"></i>
+
+					<span>
+						Account
+					</span>
+
+					<i class="fa-solid fa-caret-down"></i>
+
+				</button>
+
+
+				<!-- Dropdown -->
+				<div class="group-c-account-dropdown">
+
+					<?php if (is_user_logged_in()): ?>
+
+						<!-- Người dùng đã đăng nhập -->
+
+						<a href="<?php echo esc_url(
+							admin_url()
+						); ?>">
+							Dashboard
+						</a>
+
+						<a href="<?php echo esc_url(
+							wp_logout_url(
+								home_url('/')
+							)
+						); ?>">
+							Đăng xuất
+						</a>
+
+					<?php else: ?>
+
+						<!-- Người dùng chưa đăng nhập -->
+
+						<a href="<?php echo esc_url(
+							wp_login_url()
+						); ?>">
+							Đăng nhập
+						</a>
+
+						<a href="<?php echo esc_url(
+							wp_registration_url()
+						); ?>">
+							Đăng ký
+						</a>
+
+					<?php endif; ?>
+
+				</div>
+
+			</div>
+
 		</div>
-		<!-- /wp:group -->
-	</div>
-	<!-- /wp:group -->
-</div>
-<!-- /wp:group -->
+
+	</nav>
+
+</header>
+<script>
+	function validationGroupRearch(form) {
+		const input = form.querySelector('input[name="s"]'); 
+		if (!input || input.value.trim() === '') {
+			alert('Vui lòng nhập từ khóa tìm kiếm!');
+			input.focus();
+			return false;
+		}
+		return true; // Cho phép gửi form
+	}
+</script>
