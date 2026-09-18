@@ -1,3 +1,10 @@
+<?php if (is_active_sidebar('my-custom-sidebar')): ?>
+	<div class="my-sidebar-wrapper">
+		<?php dynamic_sidebar('my-custom-sidebar'); ?>
+	</div>
+<?php endif; ?>
+
+
 <?php
 /**
  * Title: Header
@@ -194,7 +201,7 @@
 </header>
 <script>
 	function validationGroupRearch(form) {
-		const input = form.querySelector('input[name="s"]'); 
+		const input = form.querySelector('input[name="s"]');
 		if (!input || input.value.trim() === '') {
 			alert('Vui lòng nhập từ khóa tìm kiếm!');
 			input.focus();

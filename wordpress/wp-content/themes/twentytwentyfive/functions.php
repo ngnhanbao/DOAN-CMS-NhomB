@@ -9,7 +9,7 @@
  * @since Twenty Twenty-Five 1.0
  */
 
-if ( ! function_exists( 'twentytwentyfive_post_format_setup' ) ) :
+if (!function_exists('twentytwentyfive_post_format_setup')):
 	/**
 	 * Adds theme support for post formats.
 	 *
@@ -17,13 +17,14 @@ if ( ! function_exists( 'twentytwentyfive_post_format_setup' ) ) :
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_post_format_setup() {
-		add_theme_support( 'post-formats', array( 'aside', 'audio', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video' ) );
+	function twentytwentyfive_post_format_setup()
+	{
+		add_theme_support('post-formats', array('aside', 'audio', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video'));
 	}
 endif;
-add_action( 'after_setup_theme', 'twentytwentyfive_post_format_setup' );
+add_action('after_setup_theme', 'twentytwentyfive_post_format_setup');
 
-if ( ! function_exists( 'twentytwentyfive_editor_style' ) ) :
+if (!function_exists('twentytwentyfive_editor_style')):
 	/**
 	 * Enqueues editor-style.css in the editors.
 	 *
@@ -31,13 +32,14 @@ if ( ! function_exists( 'twentytwentyfive_editor_style' ) ) :
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_editor_style() {
-		add_editor_style( 'assets/css/editor-style.css' );
+	function twentytwentyfive_editor_style()
+	{
+		add_editor_style('assets/css/editor-style.css');
 	}
 endif;
-add_action( 'after_setup_theme', 'twentytwentyfive_editor_style' );
+add_action('after_setup_theme', 'twentytwentyfive_editor_style');
 
-if ( ! function_exists( 'twentytwentyfive_enqueue_styles' ) ) :
+if (!function_exists('twentytwentyfive_enqueue_styles')):
 	/**
 	 * Enqueues the theme stylesheet on the front.
 	 *
@@ -45,26 +47,27 @@ if ( ! function_exists( 'twentytwentyfive_enqueue_styles' ) ) :
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_enqueue_styles() {
+	function twentytwentyfive_enqueue_styles()
+	{
 		$suffix = SCRIPT_DEBUG ? '' : '.min';
-		$src    = 'style' . $suffix . '.css';
+		$src = 'style' . $suffix . '.css';
 
 		wp_enqueue_style(
 			'twentytwentyfive-style',
-			get_parent_theme_file_uri( $src ),
+			get_parent_theme_file_uri($src),
 			array(),
-			wp_get_theme()->get( 'Version' )
+			wp_get_theme()->get('Version')
 		);
 		wp_style_add_data(
 			'twentytwentyfive-style',
 			'path',
-			get_parent_theme_file_path( $src )
+			get_parent_theme_file_path($src)
 		);
 	}
 endif;
-add_action( 'wp_enqueue_scripts', 'twentytwentyfive_enqueue_styles' );
+add_action('wp_enqueue_scripts', 'twentytwentyfive_enqueue_styles');
 
-if ( ! function_exists( 'twentytwentyfive_block_styles' ) ) :
+if (!function_exists('twentytwentyfive_block_styles')):
 	/**
 	 * Registers custom block styles.
 	 *
@@ -72,12 +75,13 @@ if ( ! function_exists( 'twentytwentyfive_block_styles' ) ) :
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_block_styles() {
+	function twentytwentyfive_block_styles()
+	{
 		register_block_style(
 			'core/list',
 			array(
-				'name'         => 'checkmark-list',
-				'label'        => __( 'Checkmark', 'twentytwentyfive' ),
+				'name' => 'checkmark-list',
+				'label' => __('Checkmark', 'twentytwentyfive'),
 				'inline_style' => '
 				ul.is-style-checkmark-list {
 					list-style-type: "\2713";
@@ -90,9 +94,9 @@ if ( ! function_exists( 'twentytwentyfive_block_styles' ) ) :
 		);
 	}
 endif;
-add_action( 'init', 'twentytwentyfive_block_styles' );
+add_action('init', 'twentytwentyfive_block_styles');
 
-if ( ! function_exists( 'twentytwentyfive_pattern_categories' ) ) :
+if (!function_exists('twentytwentyfive_pattern_categories')):
 	/**
 	 * Registers pattern categories.
 	 *
@@ -100,28 +104,29 @@ if ( ! function_exists( 'twentytwentyfive_pattern_categories' ) ) :
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_pattern_categories() {
+	function twentytwentyfive_pattern_categories()
+	{
 
 		register_block_pattern_category(
 			'twentytwentyfive_page',
 			array(
-				'label'       => __( 'Pages', 'twentytwentyfive' ),
-				'description' => __( 'A collection of full page layouts.', 'twentytwentyfive' ),
+				'label' => __('Pages', 'twentytwentyfive'),
+				'description' => __('A collection of full page layouts.', 'twentytwentyfive'),
 			)
 		);
 
 		register_block_pattern_category(
 			'twentytwentyfive_post-format',
 			array(
-				'label'       => __( 'Post formats', 'twentytwentyfive' ),
-				'description' => __( 'A collection of post format patterns.', 'twentytwentyfive' ),
+				'label' => __('Post formats', 'twentytwentyfive'),
+				'description' => __('A collection of post format patterns.', 'twentytwentyfive'),
 			)
 		);
 	}
 endif;
-add_action( 'init', 'twentytwentyfive_pattern_categories' );
+add_action('init', 'twentytwentyfive_pattern_categories');
 
-if ( ! function_exists( 'twentytwentyfive_register_block_bindings' ) ) :
+if (!function_exists('twentytwentyfive_register_block_bindings')):
 	/**
 	 * Registers the post format block binding source.
 	 *
@@ -129,19 +134,20 @@ if ( ! function_exists( 'twentytwentyfive_register_block_bindings' ) ) :
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_register_block_bindings() {
+	function twentytwentyfive_register_block_bindings()
+	{
 		register_block_bindings_source(
 			'twentytwentyfive/format',
 			array(
-				'label'              => _x( 'Post format name', 'Label for the block binding placeholder in the editor', 'twentytwentyfive' ),
+				'label' => _x('Post format name', 'Label for the block binding placeholder in the editor', 'twentytwentyfive'),
 				'get_value_callback' => 'twentytwentyfive_format_binding',
 			)
 		);
 	}
 endif;
-add_action( 'init', 'twentytwentyfive_register_block_bindings' );
+add_action('init', 'twentytwentyfive_register_block_bindings');
 
-if ( ! function_exists( 'twentytwentyfive_format_binding' ) ) :
+if (!function_exists('twentytwentyfive_format_binding')):
 	/**
 	 * Callback function for the post format name block binding source.
 	 *
@@ -149,11 +155,12 @@ if ( ! function_exists( 'twentytwentyfive_format_binding' ) ) :
 	 *
 	 * @return string|void Post format name, or nothing if the format is 'standard'.
 	 */
-	function twentytwentyfive_format_binding() {
+	function twentytwentyfive_format_binding()
+	{
 		$post_format_slug = get_post_format();
 
-		if ( $post_format_slug && 'standard' !== $post_format_slug ) {
-			return get_post_format_string( $post_format_slug );
+		if ($post_format_slug && 'standard' !== $post_format_slug) {
+			return get_post_format_string($post_format_slug);
 		}
 	}
 endif;
@@ -161,7 +168,8 @@ endif;
 /**
  * Load assets for Group C custom header.
  */
-function group_c_enqueue_assets() {
+function group_c_enqueue_assets()
+{
 
 	// Bootstrap CSS
 	wp_enqueue_style(
@@ -197,4 +205,19 @@ function group_c_enqueue_assets() {
 	);
 }
 
-add_action( 'wp_enqueue_scripts', 'group_c_enqueue_assets' );
+add_action('wp_enqueue_scripts', 'group_c_enqueue_assets');
+
+function my_custom_widgets_init()
+{
+	register_sidebar(array(
+		'name' => 'Khu vực Widget của tôi', // Tên hiển thị trong trang quản trị
+		'id' => 'my-custom-sidebar', // ID dùng để gọi ra template (viết thường, không dấu, cách nhau bằng gạch ngang)
+		'description' => 'Thêm các widget vào đây để hiển thị ra ngoài website.',
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget' => '</section>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
+}
+// Móc hàm my_custom_widgets_init vào hook widgets_init của WordPress
+add_action('widgets_init', 'my_custom_widgets_init');
