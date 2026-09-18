@@ -1,0 +1,497 @@
+/* =========================================================
+   GROUP C - SEARCH PAGE
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   SEARCH PAGE
+   --------------------------------------------------------- */
+
+.group-c-search-page {
+	width: 100%;
+	max-width: 1100px !important;
+	margin: 0 auto !important;
+	padding: 50px 20px 70px;
+	box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   SEARCH TITLE
+   Ví dụ:
+   Search: "messi"
+   --------------------------------------------------------- */
+
+.group-c-search-title {
+	width: 100%;
+	margin: 0 0 35px !important;
+	padding: 0;
+
+	text-align: center;
+
+	font-size: 20px !important;
+	line-height: 1.4;
+	font-weight: 700;
+
+	color: #e91e4d;
+}
+
+
+/* ---------------------------------------------------------
+   SEARCH QUERY
+   --------------------------------------------------------- */
+
+.group-c-search-query {
+	width: 100%;
+	max-width: 1100px;
+	margin: 0 auto;
+}
+
+
+/* ---------------------------------------------------------
+   DANH SÁCH KẾT QUẢ
+   --------------------------------------------------------- */
+
+.group-c-search-query .wp-block-post-template {
+	width: 100%;
+}
+
+
+/* ---------------------------------------------------------
+   TỪNG BÀI VIẾT
+   --------------------------------------------------------- */
+
+.group-c-search-result {
+	width: 100%;
+	margin: 0 0 30px !important;
+	padding: 0;
+
+	box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   ẢNH BÀI VIẾT
+   --------------------------------------------------------- */
+
+.group-c-search-result .wp-block-post-featured-image {
+	width: 100%;
+	margin: 0 0 15px;
+}
+
+.group-c-search-result .wp-block-post-featured-image img {
+	width: 100%;
+	height: auto;
+
+	display: block;
+
+	object-fit: cover;
+}
+
+
+/* ---------------------------------------------------------
+   TIÊU ĐỀ BÀI VIẾT
+   --------------------------------------------------------- */
+
+.group-c-search-result .wp-block-post-title {
+	margin: 0 0 10px;
+
+	font-size: 22px;
+	line-height: 1.4;
+	font-weight: 700;
+}
+
+.group-c-search-result .wp-block-post-title a {
+	color: #222;
+	text-decoration: none;
+}
+
+.group-c-search-result .wp-block-post-title a:hover {
+	color: #20a84a;
+}
+
+
+/* ---------------------------------------------------------
+   MÔ TẢ BÀI VIẾT
+   --------------------------------------------------------- */
+
+.group-c-search-result .wp-block-post-excerpt {
+	margin: 0;
+
+	font-size: 14px;
+	line-height: 1.7;
+
+	color: #666;
+}
+
+
+/* =========================================================
+   NO RESULTS
+   Chỉ xuất hiện khi KHÔNG tìm thấy bài
+   ========================================================= */
+
+.group-c-no-results {
+	width: 100%;
+	max-width: 800px;
+
+	margin: 0 auto;
+	padding: 10px 20px 50px;
+
+	box-sizing: border-box;
+
+	text-align: center;
+}
+
+
+/* ---------------------------------------------------------
+   THÔNG BÁO KHÔNG CÓ KẾT QUẢ
+   --------------------------------------------------------- */
+
+.group-c-no-results-text {
+	max-width: 550px;
+
+	margin: 0 auto 45px !important;
+	padding: 0;
+
+	font-size: 14px;
+	line-height: 1.7;
+
+	color: #555;
+
+	text-align: center;
+}
+
+
+/* =========================================================
+   SEARCH FORM
+   ========================================================= */
+
+.group-c-search-form {
+	width: 100%;
+	max-width: 650px;
+
+	margin: 0 auto !important;
+}
+
+
+/* ---------------------------------------------------------
+   KHUNG SEARCH
+   --------------------------------------------------------- */
+
+.group-c-search-form .wp-block-search__inside-wrapper {
+	width: 100%;
+
+	min-height: 55px;
+
+	margin: 0;
+	padding: 0;
+
+	display: flex;
+	align-items: center;
+
+	background: #fff;
+
+	border: 1px solid #ddd;
+	border-radius: 0;
+
+	box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   ICON SEARCH
+   --------------------------------------------------------- */
+
+.group-c-search-form .wp-block-search__inside-wrapper::before {
+	content: "\f002";
+
+	font-family: "Font Awesome 6 Free";
+	font-weight: 900;
+
+	margin-left: 15px;
+	margin-right: 8px;
+
+	font-size: 14px;
+
+	color: #222;
+}
+
+
+/* ---------------------------------------------------------
+   Ô NHẬP TỪ KHÓA
+   --------------------------------------------------------- */
+
+.group-c-search-form input[type="search"] {
+	flex: 1;
+
+	width: 100%;
+	height: 55px;
+
+	margin: 0;
+	padding: 0 12px;
+
+	border: none !important;
+	outline: none !important;
+
+	background: #fff;
+
+	font-family: inherit;
+	font-size: 14px;
+
+	color: #555;
+
+	box-shadow: none !important;
+}
+
+
+/* Placeholder */
+
+.group-c-search-form input[type="search"]::placeholder {
+	color: #888;
+	opacity: 1;
+}
+
+
+/* Khi click vào ô */
+
+.group-c-search-form input[type="search"]:focus {
+	border: none !important;
+	outline: none !important;
+
+	box-shadow: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   NÚT SEARCH
+   --------------------------------------------------------- */
+
+.group-c-search-form .wp-block-search__button {
+	height: 55px;
+
+	margin: 0 !important;
+	padding: 0 25px;
+
+	border: none !important;
+	border-radius: 0;
+
+	background: #20a84a;
+
+	color: #fff;
+
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: 600;
+
+	cursor: pointer;
+
+	transition:
+		background-color 0.2s ease,
+		transform 0.2s ease;
+}
+
+
+/* Hover */
+
+.group-c-search-form .wp-block-search__button:hover {
+	background: #188b3c;
+}
+
+
+/* Click */
+
+.group-c-search-form .wp-block-search__button:active {
+	transform: translateY(1px);
+}
+
+
+/* =========================================================
+   SEARCH RESULT GRID
+   ========================================================= */
+
+/* Nếu Query đang hiển thị dạng 3 cột */
+
+.group-c-search-query .wp-block-post-template {
+	display: grid;
+
+	grid-template-columns: repeat(3, 1fr);
+
+	gap: 30px;
+}
+
+
+/* =========================================================
+   CARD KẾT QUẢ
+   ========================================================= */
+
+.group-c-search-query .wp-block-post-template > li {
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+}
+
+
+/* =========================================================
+   NO RESULTS - BACKGROUND
+   ========================================================= */
+
+.group-c-no-results::before {
+	content: "";
+
+	display: block;
+
+	width: 100%;
+	height: 1px;
+
+	margin-bottom: 35px;
+
+	background: #eee;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+	.group-c-search-page {
+		padding: 40px 20px 60px;
+	}
+
+	.group-c-search-title {
+		font-size: 19px !important;
+	}
+
+	.group-c-search-query .wp-block-post-template {
+		grid-template-columns: repeat(2, 1fr);
+
+		gap: 25px;
+	}
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+	.group-c-search-page {
+		width: 100%;
+
+		padding: 30px 15px 50px;
+	}
+
+
+	/* Search title */
+
+	.group-c-search-title {
+		margin-bottom: 25px !important;
+
+		font-size: 18px !important;
+	}
+
+
+	/* Kết quả chuyển thành 1 cột */
+
+	.group-c-search-query .wp-block-post-template {
+		grid-template-columns: 1fr;
+
+		gap: 25px;
+	}
+
+
+	/* No result */
+
+	.group-c-no-results {
+		padding: 10px 5px 40px;
+	}
+
+
+	/* Text */
+
+	.group-c-no-results-text {
+		margin-bottom: 30px !important;
+
+		font-size: 13px;
+	}
+
+
+	/* Search form */
+
+	.group-c-search-form {
+		max-width: 100%;
+	}
+
+
+	/* Search box */
+
+	.group-c-search-form .wp-block-search__inside-wrapper {
+		min-height: 50px;
+	}
+
+
+	/* Input */
+
+	.group-c-search-form input[type="search"] {
+		height: 50px;
+
+		font-size: 13px;
+	}
+
+
+	/* Button */
+
+	.group-c-search-form .wp-block-search__button {
+		height: 50px;
+
+		padding: 0 16px;
+
+		font-size: 13px;
+	}
+
+
+	/* Search icon */
+
+	.group-c-search-form .wp-block-search__inside-wrapper::before {
+		margin-left: 10px;
+		margin-right: 5px;
+
+		font-size: 13px;
+	}
+
+
+	/* Post title */
+
+	.group-c-search-result .wp-block-post-title {
+		font-size: 19px;
+	}
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+	.group-c-search-page {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+
+	.group-c-search-form .wp-block-search__button {
+		padding: 0 12px;
+	}
+
+
+	.group-c-search-form input[type="search"] {
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+
+}

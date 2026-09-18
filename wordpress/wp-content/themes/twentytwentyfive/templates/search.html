@@ -1,11 +1,42 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
-<main class="wp-block-group" style="margin-top:var(--wp--preset--spacing--60)">
-	<!-- wp:query-title {"type":"search"} /-->
-	<!-- wp:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
-	<!-- wp:pattern {"slug":"twentytwentyfive/template-query-loop"} /-->
-	<!-- wp:pattern {"slug":"twentytwentyfive/more-posts"} /-->
+<!-- wp:group {"tagName":"main","className":"group-c-search-page","layout":{"type":"constrained"}} -->
+<main class="wp-block-group group-c-search-page">
+
+	<!-- Tiêu đề: Search: "messi" -->
+	<!-- wp:query-title {"type":"search","className":"group-c-search-title"} /-->
+
+	<!-- Query tìm kiếm -->
+	<!-- wp:query {"query":{"inherit":true},"displayLayout":{"type":"list"},"className":"group-c-search-query"} -->
+	<div class="wp-block-query group-c-search-query">
+
+		<!-- Kết quả có bài -->
+		<!-- wp:post-template -->
+
+			<!-- wp:group {"className":"group-c-search-result"} -->
+			<div class="wp-block-group group-c-search-result">
+
+				<!-- wp:post-featured-image {"isLink":true} /-->
+
+				<!-- wp:post-title {"isLink":true} /-->
+
+				<!-- wp:post-excerpt /-->
+
+			</div>
+			<!-- /wp:group -->
+
+		<!-- /wp:post-template -->
+
+		<!-- CHỈ HIỆN KHI KHÔNG CÓ KẾT QUẢ -->
+		<!-- wp:query-no-results -->
+
+			<!-- wp:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
+
+		<!-- /wp:query-no-results -->
+
+	</div>
+	<!-- /wp:query -->
+
 </main>
 <!-- /wp:group -->
 
