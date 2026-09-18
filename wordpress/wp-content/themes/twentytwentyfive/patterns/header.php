@@ -50,10 +50,10 @@
 			<!-- =========================
 				 SEARCH FORM
 				 ========================= -->
-			<form class="group-c-search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
+			<form class="group-c-search" method="get" action="<?php echo esc_url(home_url('/')); ?>"
+				onsubmit="return validationGroupRearch(this);">
 
-				<input type="search" name="s" value="<?php echo esc_attr(get_search_query()); ?>"
-					placeholder="Search">
+				<input type="search" name="s" value="<?php echo esc_attr(get_search_query()); ?>" placeholder="Search">
 
 				<button type="submit">
 					Submit
@@ -192,3 +192,14 @@
 	</nav>
 
 </header>
+<script>
+	function validationGroupRearch(form) {
+		const input = form.querySelector('input[name="s"]'); 
+		if (!input || input.value.trim() === '') {
+			alert('Vui lòng nhập từ khóa tìm kiếm!');
+			input.focus();
+			return false;
+		}
+		return true; // Cho phép gửi form
+	}
+</script>
