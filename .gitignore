@@ -21,5 +21,3 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
-# WordPress config
-wordpress/wp-config.php
