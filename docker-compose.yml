@@ -1,0 +1,38 @@
+services:
+
+  wordpress:
+    image: wordpress:latest
+    container_name: doan-wordpress
+    restart: unless-stopped
+
+    ports:
+      - "8081:80"
+
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+
+    volumes:
+      - ./wordpress:/var/www/html
+
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: doan-wordpress-db
+    restart: unless-stopped
+
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+
+    volumes:
+      - doan-db-data:/var/lib/mysql
+
+volumes:
+  doan-db-data:
