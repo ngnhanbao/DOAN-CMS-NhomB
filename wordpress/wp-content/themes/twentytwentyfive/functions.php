@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Twenty Twenty-Five functions and definitions.
  *
@@ -280,3 +280,210 @@ function tdc_custom_news_shortcode($atts) {
     return $output;
 }
 add_shortcode('tdc_news', 'tdc_custom_news_shortcode');
+
+// --- TẠO WIDGET TRỰC QUAN TRONG BẢNG ĐIỀU KHIỂN ---
+class TDC_News_Widget extends WP_Widget
+{
+
+	public function __construct()
+	{
+		parent::__construct(
+			'tdc_news_widget', // ID cơ sở của widget
+			'Danh sách Tin tức (TDC)', // Tên widget sẽ hiển thị
+			array('description' => 'Kéo thả để hiển thị danh sách tin tức với ngày tháng lớn.')
+		);
+	}
+
+	// Hiển thị widget ra ngoài trang web
+	public function widget($args, $instance)
+	{
+		echo $args['before_widget'];
+
+		if (!empty($instance['title'])) {
+			echo $args['before_title'] . apply_filters('widget_title', $instance['title']) . $args['after_title'];
+		}
+
+		$posts_count = !empty($instance['posts']) ? $instance['posts'] : 5;
+
+		$query = new WP_Query(array(
+			'post_type' => 'post',
+			'posts_per_page' => $posts_count,
+			'post_status' => 'publish',
+		));
+
+		if ($query->have_posts()) {
+			echo '<style>
+                .tdc-news-list { display: flex; flex-direction: column; gap: 15px; font-family: sans-serif; }
+                .tdc-news-item { display: flex; border: 1px solid #eaeaea; background: #fff; padding: 15px; align-items: stretch; }
+                .tdc-news-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #eaeaea; padding-right: 20px; margin-right: 20px; min-width: 75px; }
+                .tdc-day { font-size: 42px; font-weight: 700; font-family: "Times New Roman", Times, serif; line-height: 1; color: #333; }
+                .tdc-month { font-size: 11px; text-transform: uppercase; color: #888; margin-top: 5px; letter-spacing: 0.5px; }
+                .tdc-news-content { flex: 1; }
+                .tdc-title { margin: 0 0 10px 0; font-size: 16px; line-height: 1.4; }
+                .tdc-title a { color: #0056b3; text-decoration: none; text-transform: uppercase; font-weight: 700; }
+                .tdc-title a:hover { color: #003d82; text-decoration: underline; }
+                .tdc-excerpt { font-size: 14px; color: #555; line-height: 1.5; margin: 0; }
+            </style>';
+
+			echo '<div class="tdc-news-list">';
+			while ($query->have_posts()) {
+				$query->the_post();
+				$day = get_the_time('d');
+				$month = get_the_time('m');
+				$title = get_the_title();
+				$link = get_permalink();
+				$excerpt = wp_trim_words(get_the_excerpt(), 20, ' [...]');
+
+				echo '<div class="tdc-news-item">';
+				echo '  <div class="tdc-news-date">';
+				echo '    <span class="tdc-day">' . $day . '</span>';
+				echo '    <span class="tdc-month">THÁNG ' . $month . '</span>';
+				echo '  </div>';
+				echo '  <div class="tdc-news-content">';
+				echo '    <h3 class="tdc-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h3>';
+				echo '    <p class="tdc-excerpt">' . esc_html($excerpt) . '</p>';
+				echo '  </div>';
+				echo '</div>';
+			}
+			echo '</div>';
+			wp_reset_postdata();
+		} else {
+			echo '<p>Không có bài viết nào.</p>';
+		}
+
+		echo $args['after_widget'];
+	}
+
+	// Form cấu hình trong trang quản trị
+	public function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Tin mới nhất';
+		$posts = !empty($instance['posts']) ? $instance['posts'] : 5;
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề Widget:</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('posts')); ?>">Số lượng bài viết hiển thị:</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('posts')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('posts')); ?>" type="number" step="1" min="1"
+				value="<?php echo esc_attr($posts); ?>" size="3">
+		</p>
+		<?php
+	}
+
+	// Lưu dữ liệu cập nhật
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+		$instance['posts'] = (!empty($new_instance['posts'])) ? absint($new_instance['posts']) : 5;
+		return $instance;
+	}
+}
+
+// Đăng ký Widget với WordPress
+function register_tdc_news_widget()
+{
+	register_widget('TDC_News_Widget');
+}
+add_action('widgets_init', 'register_tdc_news_widget');
+
+// --- SHORTCODE HIỂN THỊ KẾT QUẢ TÌM KIẾM ---
+function tdc_search_results_shortcode()
+{
+	$search_query = get_search_query();
+
+	if (empty($search_query)) {
+		return '';
+	}
+
+	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+	$query = new WP_Query(array(
+		's' => $search_query,
+		'post_type' => 'post',
+		'posts_per_page' => 10,
+		'paged' => $paged
+	));
+
+	if (!$query->have_posts()) {
+		return '<p style="margin-top:20px;">Không tìm thấy bài viết nào phù hợp với từ khóa: <strong>' . esc_html($search_query) . '</strong></p>';
+	}
+
+	$output = '<style>
+        .tdc-search-list { display: flex; flex-direction: column; gap: 20px; font-family: sans-serif; margin-top: 30px; }
+        .tdc-search-item { display: flex; border: 1px solid #eaeaea; background: #fff; align-items: stretch; }
+        .tdc-search-thumbnail { width: 250px; flex-shrink: 0; }
+        .tdc-search-thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .tdc-search-content-wrapper { display: flex; padding: 20px; flex: 1; align-items: stretch; }
+        .tdc-search-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #eaeaea; padding-right: 20px; margin-right: 20px; min-width: 80px; }
+        .tdc-search-day { font-size: 48px; font-weight: 700; font-family: "Times New Roman", Times, serif; line-height: 1; color: #333; }
+        .tdc-search-month { font-size: 12px; text-transform: uppercase; color: #888; margin-top: 5px; letter-spacing: 0.5px; }
+        .tdc-search-text { flex: 1; }
+        .tdc-search-title { margin: 0 0 10px 0; font-size: 18px; line-height: 1.4; }
+        .tdc-search-title a { color: #0056b3; text-decoration: none; text-transform: uppercase; font-weight: 700; }
+        .tdc-search-title a:hover { color: #003d82; text-decoration: underline; }
+        .tdc-search-excerpt { font-size: 14px; color: #555; line-height: 1.5; margin: 0; }
+        
+        @media (max-width: 768px) {
+            .tdc-search-item { flex-direction: column; }
+            .tdc-search-thumbnail { width: 100%; height: 200px; }
+            .tdc-search-content-wrapper { flex-direction: column; }
+            .tdc-search-date { border-right: none; border-bottom: 1px solid #eaeaea; padding-right: 0; padding-bottom: 15px; margin-right: 0; margin-bottom: 15px; flex-direction: row; gap: 10px; align-items: baseline; }
+        }
+        
+        .tdc-pagination { display: flex; gap: 10px; margin-top: 30px; }
+        .tdc-pagination a, .tdc-pagination span { padding: 8px 12px; border: 1px solid #ddd; text-decoration: none; color: #333; }
+        .tdc-pagination span.current { background: #0056b3; color: white; border-color: #0056b3; }
+    </style>';
+
+	$output .= '<div class="tdc-search-list">';
+
+	while ($query->have_posts()) {
+		$query->the_post();
+		$day = get_the_time('d');
+		$month = get_the_time('m');
+		$title = get_the_title();
+		$link = get_permalink();
+		$excerpt = wp_trim_words(get_the_excerpt(), 25, ' [...]');
+
+		$thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'medium_large') : 'https://via.placeholder.com/250x180?text=No+Image';
+
+		$output .= '<div class="tdc-search-item">';
+
+		$output .= '  <div class="tdc-search-thumbnail">';
+		$output .= '    <a href="' . esc_url($link) . '"><img src="' . esc_url($thumbnail_url) . '" alt="' . esc_attr($title) . '"></a>';
+		$output .= '  </div>';
+
+		$output .= '  <div class="tdc-search-content-wrapper">';
+		$output .= '    <div class="tdc-search-date">';
+		$output .= '      <span class="tdc-search-day">' . $day . '</span>';
+		$output .= '      <span class="tdc-search-month">THÁNG ' . $month . '</span>';
+		$output .= '    </div>';
+		$output .= '    <div class="tdc-search-text">';
+		$output .= '      <h3 class="tdc-search-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h3>';
+		$output .= '      <p class="tdc-search-excerpt">' . esc_html($excerpt) . '</p>';
+		$output .= '    </div>';
+		$output .= '  </div>';
+
+		$output .= '</div>';
+	}
+
+	$output .= '</div>';
+
+	$output .= '<div class="tdc-pagination">';
+	$output .= paginate_links(array(
+		'total' => $query->max_num_pages,
+		'current' => $paged,
+		'prev_text' => '&laquo; Trước',
+		'next_text' => 'Sau &raquo;',
+	));
+	$output .= '</div>';
+
+	wp_reset_postdata();
+	return $output;
+}
+add_shortcode('tdc_search_results', 'tdc_search_results_shortcode');
