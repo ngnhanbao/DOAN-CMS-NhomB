@@ -17,13 +17,14 @@ if (!function_exists('twentytwentyfive_post_format_setup')):
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_post_format_setup() {
-		add_theme_support( 'post-formats', array( 'aside', 'audio', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video' ) );
+	function twentytwentyfive_post_format_setup()
+	{
+		add_theme_support('post-formats', array('aside', 'audio', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video'));
 	}
 endif;
-add_action( 'after_setup_theme', 'twentytwentyfive_post_format_setup' );
+add_action('after_setup_theme', 'twentytwentyfive_post_format_setup');
 
-if ( ! function_exists( 'twentytwentyfive_editor_style' ) ) :
+if (!function_exists('twentytwentyfive_editor_style')):
 	/**
 	 * Enqueues editor-style.css in the editors.
 	 *
@@ -31,13 +32,14 @@ if ( ! function_exists( 'twentytwentyfive_editor_style' ) ) :
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_editor_style() {
-		add_editor_style( 'assets/css/editor-style.css' );
+	function twentytwentyfive_editor_style()
+	{
+		add_editor_style('assets/css/editor-style.css');
 	}
 endif;
-add_action( 'after_setup_theme', 'twentytwentyfive_editor_style' );
+add_action('after_setup_theme', 'twentytwentyfive_editor_style');
 
-if ( ! function_exists( 'twentytwentyfive_enqueue_styles' ) ) :
+if (!function_exists('twentytwentyfive_enqueue_styles')):
 	/**
 	 * Enqueues the theme stylesheet on the front.
 	 *
@@ -45,26 +47,27 @@ if ( ! function_exists( 'twentytwentyfive_enqueue_styles' ) ) :
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_enqueue_styles() {
+	function twentytwentyfive_enqueue_styles()
+	{
 		$suffix = SCRIPT_DEBUG ? '' : '.min';
-		$src    = 'style' . $suffix . '.css';
+		$src = 'style' . $suffix . '.css';
 
 		wp_enqueue_style(
 			'twentytwentyfive-style',
-			get_parent_theme_file_uri( $src ),
+			get_parent_theme_file_uri($src),
 			array(),
-			wp_get_theme()->get( 'Version' )
+			wp_get_theme()->get('Version')
 		);
 		wp_style_add_data(
 			'twentytwentyfive-style',
 			'path',
-			get_parent_theme_file_path( $src )
+			get_parent_theme_file_path($src)
 		);
 	}
 endif;
-add_action( 'wp_enqueue_scripts', 'twentytwentyfive_enqueue_styles' );
+add_action('wp_enqueue_scripts', 'twentytwentyfive_enqueue_styles');
 
-if ( ! function_exists( 'twentytwentyfive_block_styles' ) ) :
+if (!function_exists('twentytwentyfive_block_styles')):
 	/**
 	 * Registers custom block styles.
 	 *
@@ -72,12 +75,13 @@ if ( ! function_exists( 'twentytwentyfive_block_styles' ) ) :
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_block_styles() {
+	function twentytwentyfive_block_styles()
+	{
 		register_block_style(
 			'core/list',
 			array(
-				'name'         => 'checkmark-list',
-				'label'        => __( 'Checkmark', 'twentytwentyfive' ),
+				'name' => 'checkmark-list',
+				'label' => __('Checkmark', 'twentytwentyfive'),
 				'inline_style' => '
 				ul.is-style-checkmark-list {
 					list-style-type: "\2713";
@@ -90,9 +94,9 @@ if ( ! function_exists( 'twentytwentyfive_block_styles' ) ) :
 		);
 	}
 endif;
-add_action( 'init', 'twentytwentyfive_block_styles' );
+add_action('init', 'twentytwentyfive_block_styles');
 
-if ( ! function_exists( 'twentytwentyfive_pattern_categories' ) ) :
+if (!function_exists('twentytwentyfive_pattern_categories')):
 	/**
 	 * Registers pattern categories.
 	 *
@@ -100,28 +104,29 @@ if ( ! function_exists( 'twentytwentyfive_pattern_categories' ) ) :
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_pattern_categories() {
+	function twentytwentyfive_pattern_categories()
+	{
 
 		register_block_pattern_category(
 			'twentytwentyfive_page',
 			array(
-				'label'       => __( 'Pages', 'twentytwentyfive' ),
-				'description' => __( 'A collection of full page layouts.', 'twentytwentyfive' ),
+				'label' => __('Pages', 'twentytwentyfive'),
+				'description' => __('A collection of full page layouts.', 'twentytwentyfive'),
 			)
 		);
 
 		register_block_pattern_category(
 			'twentytwentyfive_post-format',
 			array(
-				'label'       => __( 'Post formats', 'twentytwentyfive' ),
-				'description' => __( 'A collection of post format patterns.', 'twentytwentyfive' ),
+				'label' => __('Post formats', 'twentytwentyfive'),
+				'description' => __('A collection of post format patterns.', 'twentytwentyfive'),
 			)
 		);
 	}
 endif;
-add_action( 'init', 'twentytwentyfive_pattern_categories' );
+add_action('init', 'twentytwentyfive_pattern_categories');
 
-if ( ! function_exists( 'twentytwentyfive_register_block_bindings' ) ) :
+if (!function_exists('twentytwentyfive_register_block_bindings')):
 	/**
 	 * Registers the post format block binding source.
 	 *
@@ -129,19 +134,20 @@ if ( ! function_exists( 'twentytwentyfive_register_block_bindings' ) ) :
 	 *
 	 * @return void
 	 */
-	function twentytwentyfive_register_block_bindings() {
+	function twentytwentyfive_register_block_bindings()
+	{
 		register_block_bindings_source(
 			'twentytwentyfive/format',
 			array(
-				'label'              => _x( 'Post format name', 'Label for the block binding placeholder in the editor', 'twentytwentyfive' ),
+				'label' => _x('Post format name', 'Label for the block binding placeholder in the editor', 'twentytwentyfive'),
 				'get_value_callback' => 'twentytwentyfive_format_binding',
 			)
 		);
 	}
 endif;
-add_action( 'init', 'twentytwentyfive_register_block_bindings' );
+add_action('init', 'twentytwentyfive_register_block_bindings');
 
-if ( ! function_exists( 'twentytwentyfive_format_binding' ) ) :
+if (!function_exists('twentytwentyfive_format_binding')):
 	/**
 	 * Callback function for the post format name block binding source.
 	 *
@@ -149,11 +155,12 @@ if ( ! function_exists( 'twentytwentyfive_format_binding' ) ) :
 	 *
 	 * @return string|void Post format name, or nothing if the format is 'standard'.
 	 */
-	function twentytwentyfive_format_binding() {
+	function twentytwentyfive_format_binding()
+	{
 		$post_format_slug = get_post_format();
 
-		if ( $post_format_slug && 'standard' !== $post_format_slug ) {
-			return get_post_format_string( $post_format_slug );
+		if ($post_format_slug && 'standard' !== $post_format_slug) {
+			return get_post_format_string($post_format_slug);
 		}
 	}
 endif;
@@ -216,24 +223,23 @@ function my_custom_widgets_init()
 add_action('widgets_init', 'my_custom_widgets_init');
 
 // Tạo shortcode [tdc_news] để hiển thị danh sách bài viết như thiết kế
-function tdc_custom_news_shortcode($atts)
-{
-	$atts = shortcode_atts(array(
-		'posts' => 5, // Số lượng bài viết
-	), $atts, 'tdc_news');
+function tdc_custom_news_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'posts' => 5, // Số lượng bài viết
+    ), $atts, 'tdc_news');
 
-	$query = new WP_Query(array(
-		'post_type' => 'post',
-		'posts_per_page' => $atts['posts'],
-		'post_status' => 'publish',
-	));
+    $query = new WP_Query(array(
+        'post_type'      => 'post',
+        'posts_per_page' => $atts['posts'],
+        'post_status'    => 'publish',
+    ));
 
-	if (!$query->have_posts()) {
-		return '<p>Không có bài viết nào.</p>';
-	}
+    if (!$query->have_posts()) {
+        return '<p>Không có bài viết nào.</p>';
+    }
 
-	// CSS được nhúng trực tiếp để đảm bảo hiển thị ngay lập tức
-	$output = '<style>
+    // CSS được nhúng trực tiếp để đảm bảo hiển thị ngay lập tức
+    $output = '<style>
         .tdc-news-list { display: flex; flex-direction: column; gap: 15px; font-family: sans-serif; }
         .tdc-news-item { display: flex; border: 1px solid #eaeaea; background: #fff; padding: 15px; align-items: stretch; }
         .tdc-news-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #eaeaea; padding-right: 20px; margin-right: 20px; min-width: 75px; }
@@ -246,32 +252,32 @@ function tdc_custom_news_shortcode($atts)
         .tdc-excerpt { font-size: 14px; color: #555; line-height: 1.5; margin: 0; }
     </style>';
 
-	$output .= '<div class="tdc-news-list">';
-
-	while ($query->have_posts()) {
-		$query->the_post();
-		$day = get_the_time('d');
-		$month = get_the_time('m');
-		$title = get_the_title();
-		$link = get_permalink();
-		$excerpt = wp_trim_words(get_the_excerpt(), 20, ' [...]');
-
-		$output .= '<div class="tdc-news-item">';
-		$output .= '  <div class="tdc-news-date">';
-		$output .= '    <span class="tdc-day">' . $day . '</span>';
-		$output .= '    <span class="tdc-month">THÁNG ' . $month . '</span>';
-		$output .= '  </div>';
-		$output .= '  <div class="tdc-news-content">';
-		$output .= '    <h3 class="tdc-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h3>';
-		$output .= '    <p class="tdc-excerpt">' . esc_html($excerpt) . '</p>';
-		$output .= '  </div>';
-		$output .= '</div>';
-	}
-
-	wp_reset_postdata();
-	$output .= '</div>';
-
-	return $output;
+    $output .= '<div class="tdc-news-list">';
+    
+    while ($query->have_posts()) {
+        $query->the_post();
+        $day = get_the_time('d');
+        $month = get_the_time('m');
+        $title = get_the_title();
+        $link = get_permalink();
+        $excerpt = wp_trim_words(get_the_excerpt(), 20, ' [...]');
+        
+        $output .= '<div class="tdc-news-item">';
+        $output .= '  <div class="tdc-news-date">';
+        $output .= '    <span class="tdc-day">' . $day . '</span>';
+        $output .= '    <span class="tdc-month">THÁNG ' . $month . '</span>';
+        $output .= '  </div>';
+        $output .= '  <div class="tdc-news-content">';
+        $output .= '    <h3 class="tdc-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h3>';
+        $output .= '    <p class="tdc-excerpt">' . esc_html($excerpt) . '</p>';
+        $output .= '  </div>';
+        $output .= '</div>';
+    }
+    
+    wp_reset_postdata();
+    $output .= '</div>';
+    
+    return $output;
 }
 add_shortcode('tdc_news', 'tdc_custom_news_shortcode');
 
