@@ -436,7 +436,7 @@ function tdc_search_results_shortcode()
 	));
 
 	if (!$query->have_posts()) {
-		return '<p style="margin-top:20px;">Không tìm thấy bài viết nào phù hợp với từ khóa: <strong>' . esc_html($search_query) . '</strong></p>';
+		return '';
 	}
 
 	$output = '<style>
@@ -513,3 +513,35 @@ function tdc_search_results_shortcode()
 	return $output;
 }
 add_shortcode('tdc_search_results', 'tdc_search_results_shortcode');
+
+/**
+ * Filter search query title format for Group C search style
+ */
+add_filter('render_block', function($block_content, $block) {
+    if (isset($block['blockName']) && $block['blockName'] === 'core/query-title' && isset($block['attrs']['type']) && $block['attrs']['type'] === 'search') {
+        $query = get_search_query();
+        return sprintf(
+            '<h1 class="wp-block-query-title group-c-search-title"><span class="group-c-search-label">Search:</span> <span class="group-c-search-keyword">"%s"</span></h1>',
+            esc_html($query)
+        );
+    }
+    return $block_content;
+}, 10, 2);
+
+/**
+ * Đăng ký khu vực Widget riêng cho Search (4) theo đúng chuẩn bài giảng
+ */
+function register_search_widget_4() {
+    register_sidebar( array(
+        'name'          => 'Search Widget #4',
+        'id'            => 'search-widget-4',
+        'description'   => 'Khu vực Widget hiển thị ô tìm kiếm cho phần Search (4)',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action( 'widgets_init', 'register_search_widget_4' );
+
+
