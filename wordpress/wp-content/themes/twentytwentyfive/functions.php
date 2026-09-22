@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Twenty Twenty-Five functions and definitions.
  *
@@ -209,6 +209,14 @@ function group_c_enqueue_assets()
 	wp_enqueue_style(
 		'group-c-search',
 		get_template_directory_uri() . '/assets/css/group-c-search.css',
+		array(),
+		'1.0.0'
+	);
+
+	// Custom Footer CSS
+	wp_enqueue_style(
+		'group-c-footer',
+		get_template_directory_uri() . '/assets/css/group-c-footer.css',
 		array(),
 		'1.0.0'
 	);
