@@ -220,6 +220,14 @@ function group_c_enqueue_assets()
 		array(),
 		'1.0.0'
 	);
+
+	// Custom Post Detail CSS
+	wp_enqueue_style(
+		'group-c-detail',
+		get_template_directory_uri() . '/assets/css/group-c-detail.css',
+		array(),
+		'1.0.0'
+	);
 }
 
 add_action('wp_enqueue_scripts', 'group_c_enqueue_assets');
