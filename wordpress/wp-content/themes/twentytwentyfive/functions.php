@@ -544,4 +544,111 @@ function register_search_widget_4() {
 }
 add_action( 'widgets_init', 'register_search_widget_4' );
 
+/**
+ * Shortcode [tdc_prev_next_post] cho phần (7) Prev - Next Post
+ */
+function tdc_prev_next_post_shortcode() {
+    if (!is_single()) {
+        return '';
+    }
+
+    $prev_post = get_previous_post();
+    $next_post = get_next_post();
+
+    if (!$prev_post && !$next_post) {
+        return '';
+    }
+
+    $output = '<style>
+        .tdc-post-nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 30px 0;
+            font-family: sans-serif;
+        }
+        .tdc-post-nav-item {
+            display: flex;
+            align-items: center;
+        }
+        .tdc-post-nav-date-box {
+            display: inline-flex;
+            align-items: center;
+            font-family: "Times New Roman", Times, serif;
+            min-width: 65px;
+            margin-right: 25px;
+            user-select: none;
+        }
+        .tdc-post-nav-date-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 1px solid #777;
+            padding-bottom: 1px;
+            margin-right: 3px;
+        }
+        .tdc-post-nav-day {
+            font-size: 15px;
+            line-height: 1;
+            color: #333;
+        }
+        .tdc-post-nav-month {
+            font-size: 15px;
+            line-height: 1;
+            color: #333;
+            margin-top: 2px;
+        }
+        .tdc-post-nav-year {
+            font-size: 15px;
+            line-height: 1;
+            color: #333;
+            margin-top: -8px;
+        }
+        .tdc-post-nav-title {
+            font-size: 16px;
+            margin: 0;
+            line-height: 1.4;
+            font-weight: normal;
+        }
+        .tdc-post-nav-title a {
+            color: #333333;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .tdc-post-nav-title a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>';
+
+    $output .= '<div class="tdc-post-nav-list">';
+
+    $posts_to_show = array_filter(array($prev_post, $next_post));
+    foreach ($posts_to_show as $p) {
+        $day = get_the_date('d', $p->ID);
+        $month = get_the_date('m', $p->ID);
+        $year = get_the_date('y', $p->ID);
+        $title = get_the_title($p->ID);
+        $link = get_permalink($p->ID);
+
+        $output .= '<div class="tdc-post-nav-item">';
+        $output .= '  <div class="tdc-post-nav-date-box">';
+        $output .= '    <div class="tdc-post-nav-date-stack">';
+        $output .= '      <span class="tdc-post-nav-day">' . esc_html($day) . '</span>';
+        $output .= '      <span class="tdc-post-nav-line"></span>';
+        $output .= '      <span class="tdc-post-nav-month">' . esc_html($month) . '</span>';
+        $output .= '    </div>';
+        $output .= '    <span class="tdc-post-nav-year">' . esc_html($year) . '</span>';
+        $output .= '  </div>';
+        $output .= '  <h4 class="tdc-post-nav-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h4>';
+        $output .= '</div>';
+    }
+
+    $output .= '</div>';
+
+    return $output;
+}
+add_shortcode('tdc_prev_next_post', 'tdc_prev_next_post_shortcode');
+
+
 
