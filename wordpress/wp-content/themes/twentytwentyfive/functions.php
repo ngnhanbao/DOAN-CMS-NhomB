@@ -893,14 +893,6 @@ function register_tdc_comments_widget() {
 add_action('widgets_init', 'register_tdc_comments_widget');
 
 
-// Tự động gán hình ảnh nét độc đáo cho các bài viết
-require_once get_template_directory() . '/auto_attach_images.php';
-
-// Tự động tạo 3 đến 4 bình luận cho mỗi bài viết
-require_once get_template_directory() . '/auto_insert_comments.php';
-
-
-
 
 
 
