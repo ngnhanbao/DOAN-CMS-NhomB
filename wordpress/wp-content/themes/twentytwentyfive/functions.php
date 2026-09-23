@@ -228,6 +228,14 @@ function group_c_enqueue_assets()
 		array(),
 		'1.0.0'
 	);
+
+	// Custom Comments Form CSS
+	wp_enqueue_style(
+		'group-c-comments',
+		get_template_directory_uri() . '/assets/css/group-c-comments.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-comments.css') ? filemtime(get_template_directory() . '/assets/css/group-c-comments.css') : '1.0.1'
+	);
 }
 
 add_action('wp_enqueue_scripts', 'group_c_enqueue_assets');
