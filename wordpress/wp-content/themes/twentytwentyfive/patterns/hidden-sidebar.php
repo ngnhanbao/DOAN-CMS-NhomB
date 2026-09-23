@@ -1,8 +1,19 @@
+<?php if (is_active_sidebar('sidebar-comments-12')): ?>
+	<div class="sidebar-comments-12-wrapper">
+		<?php dynamic_sidebar('sidebar-comments-12'); ?>
+	</div>
+<?php else: ?>
+	<div class="sidebar-comments-12-wrapper">
+		<?php echo do_shortcode('[tdc_recent_comments]'); ?>
+	</div>
+<?php endif; ?>
+
 <?php if (is_active_sidebar('my-custom-sidebar')): ?>
 	<div class="my-sidebar-wrapper">
 		<?php dynamic_sidebar('my-custom-sidebar'); ?>
 	</div>
 <?php endif; ?>
+
 
 <?php
 /**
