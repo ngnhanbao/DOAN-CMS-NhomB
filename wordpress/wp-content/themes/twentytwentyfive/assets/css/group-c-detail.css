@@ -1,0 +1,299 @@
+/* Post Detail Styles for Group C / FIT TDC Design */
+
+body.single-post {
+    background-color: #ffffff !important;
+}
+
+.tdc-detail-article {
+    max-width: 900px;
+    margin: 40px auto 60px auto;
+    padding: 0 20px;
+    background: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Header with Title and Date Badge */
+.tdc-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 10px;
+}
+
+.tdc-detail-title {
+    flex: 1;
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #1a1a1a;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+/* Circular Yellow Date Badge */
+.tdc-date-badge {
+    width: 68px;
+    height: 68px;
+    min-width: 68px;
+    background: #f5b000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #222222;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.tdc-date-badge-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tdc-date-fraction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tdc-date-day {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+    color: #222222;
+}
+
+.tdc-date-dash {
+    width: 20px;
+    height: 1.5px;
+    background: #222222;
+    margin: 2px 0;
+}
+
+.tdc-date-month {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+    color: #222222;
+}
+
+.tdc-date-year {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    color: #222222;
+    margin-left: 3px;
+    align-self: center;
+}
+
+/* Decorative Divider with Arrow Down */
+.tdc-detail-divider {
+    position: relative;
+    border-top: 1px solid #e0e0e0;
+    margin: 20px 0 35px 0;
+}
+
+.tdc-detail-divider .tdc-arrow-down {
+    position: absolute;
+    top: 0;
+    left: 60px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #999999;
+}
+
+/* Featured Image */
+.tdc-detail-featured-image {
+    margin-bottom: 30px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.tdc-detail-featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Article Content Typography */
+.tdc-detail-content {
+    font-size: 1.08rem;
+    line-height: 1.8;
+    color: #333333;
+}
+
+/* First paragraph (Sapo) */
+.tdc-detail-content > p:first-of-type {
+    font-style: italic;
+    color: #555555;
+    font-size: 1.12rem;
+    line-height: 1.75;
+    margin-bottom: 25px;
+}
+
+.tdc-detail-content p {
+    margin-bottom: 22px;
+    text-align: justify;
+}
+
+.tdc-detail-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 25px auto;
+    border-radius: 4px;
+}
+
+.tdc-detail-content h2,
+.tdc-detail-content h3,
+.tdc-detail-content h4 {
+    color: #1a1a1a;
+    font-weight: 700;
+    margin-top: 35px;
+    margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .tdc-detail-article {
+        margin: 20px auto 40px auto;
+        padding: 0 15px;
+    }
+
+    .tdc-detail-header {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .tdc-detail-title {
+        font-size: 1.5rem;
+    }
+
+    .tdc-date-badge {
+        width: 58px;
+        height: 58px;
+        min-width: 58px;
+    }
+
+    .tdc-date-day,
+    .tdc-date-month {
+        font-size: 13px;
+    }
+
+    .tdc-date-dash {
+        width: 16px;
+    }
+
+    .tdc-date-year {
+        font-size: 12px;
+    }
+
+    .tdc-detail-content p {
+        text-align: left;
+    }
+}
+
+/* =========================================================
+   (7) PREV - NEXT POST NAVIGATION STYLES
+   ========================================================= */
+.tdc-post-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 30px auto;
+    max-width: 900px;
+    padding: 0 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.tdc-post-nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.tdc-post-nav-date-box,
+.tdc-post-nav-date-box *,
+.tdc-post-nav-date-stack,
+.tdc-post-nav-month {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+.tdc-post-nav-date-box {
+    display: inline-flex;
+    align-items: center;
+    font-family: "Times New Roman", Times, serif;
+    min-width: 60px;
+    margin-right: 25px;
+    user-select: none;
+}
+
+.tdc-post-nav-date-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 3px;
+    border-bottom: none !important;
+}
+
+.tdc-post-nav-day {
+    font-size: 14px;
+    line-height: 1;
+    color: #0056b3;
+    margin-bottom: 2px;
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+.tdc-post-nav-line {
+    width: 22px;
+    height: 1px;
+    background-color: #333333 !important;
+    margin: 1px 0;
+    border: none !important;
+}
+
+.tdc-post-nav-month {
+    font-size: 14px;
+    line-height: 1;
+    color: #0056b3;
+    margin-top: 2px;
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+.tdc-post-nav-year {
+    font-size: 14px;
+    line-height: 1;
+    color: #0056b3;
+    align-self: center;
+    margin-left: 2px;
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+.tdc-post-nav-title {
+    font-size: 16px;
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+.tdc-post-nav-title a {
+    color: #222222;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.tdc-post-nav-title a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+

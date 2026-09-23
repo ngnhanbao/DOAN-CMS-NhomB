@@ -1,9 +1,30 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
-<main class="wp-block-group" style="margin-top:var(--wp--preset--spacing--60)">
-	<!-- wp:pattern {"slug":"twentytwentyfive/hidden-blog-heading"} /-->
-	<!-- wp:pattern {"slug":"twentytwentyfive/template-query-loop"} /-->
+<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|60"}}},"layout":{"type":"wide"}} -->
+<main class="wp-block-group alignwide" style="margin-top:var(--wp--preset--spacing--40);margin-bottom:var(--wp--preset--spacing--60);width:96%;max-width:1400px;margin-left:auto;margin-right:auto;padding-left:10px;padding-right:10px;">
+
+	<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|30"}}}} -->
+	<div class="wp-block-columns">
+
+		<!-- wp:column {"width":"75%"} -->
+		<div class="wp-block-column" style="flex-basis:75%">
+			<!-- wp:shortcode -->
+			[tdc_news posts="10"]
+			<!-- /wp:shortcode -->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- wp:column {"width":"25%"} -->
+		<div class="wp-block-column" style="flex-basis:25%">
+			<!-- wp:shortcode -->
+			[tdc_recent_comments count="5" title="Comments"]
+			<!-- /wp:shortcode -->
+		</div>
+		<!-- /wp:column -->
+
+	</div>
+	<!-- /wp:columns -->
+
 </main>
 <!-- /wp:group -->
 
