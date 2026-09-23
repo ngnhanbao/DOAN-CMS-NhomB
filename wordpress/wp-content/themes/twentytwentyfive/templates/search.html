@@ -1,11 +1,19 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
-<main class="wp-block-group" style="margin-top:var(--wp--preset--spacing--60)">
-	<!-- wp:query-title {"type":"search"} /-->
+<!-- wp:group {"tagName":"main","className":"group-c-search-page","layout":{"type":"constrained"}} -->
+<main class="wp-block-group group-c-search-page">
+
+	<!-- Tiêu đề: Search: "messi" -->
+	<!-- wp:query-title {"type":"search","className":"group-c-search-title"} /-->
+
+	<!-- Khung ô tìm kiếm màu kem luôn hiển thị ở vị trí Search (4) -->
 	<!-- wp:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
-	<!-- wp:pattern {"slug":"twentytwentyfive/template-query-loop"} /-->
-	<!-- wp:pattern {"slug":"twentytwentyfive/more-posts"} /-->
+
+	<!-- Danh sách bài viết tìm thấy (Search result (5)) -->
+	<!-- wp:shortcode -->
+	[tdc_search_results]
+	<!-- /wp:shortcode -->
+
 </main>
 <!-- /wp:group -->
 
