@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Twenty Twenty-Five functions and definitions.
  *
@@ -904,3 +904,4 @@ add_action('widgets_init', 'register_tdc_comments_widget');
 
 
 require_once get_template_directory() . '/widget-recent-posts.php';
+require_once get_template_directory() . '/widget-numbered-posts.php';
