@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Twenty Twenty-Five functions and definitions.
  *
@@ -476,7 +476,7 @@ function tdc_search_results_shortcode()
 		$link = get_permalink();
 		$excerpt = wp_trim_words(get_the_excerpt(), 25, ' [...]');
 
-		$thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'medium_large') : 'https://via.placeholder.com/250x180?text=No+Image';
+		$thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'medium_large') : get_theme_file_uri('assets/images/typewriter.webp');
 
 		$output .= '<div class="tdc-search-item">';
 
@@ -517,31 +517,35 @@ add_shortcode('tdc_search_results', 'tdc_search_results_shortcode');
 /**
  * Filter search query title format for Group C search style
  */
-add_filter('render_block', function($block_content, $block) {
-    if (isset($block['blockName']) && $block['blockName'] === 'core/query-title' && isset($block['attrs']['type']) && $block['attrs']['type'] === 'search') {
-        $query = get_search_query();
-        return sprintf(
-            '<h1 class="wp-block-query-title group-c-search-title"><span class="group-c-search-label">Search:</span> <span class="group-c-search-keyword">"%s"</span></h1>',
-            esc_html($query)
-        );
-    }
-    return $block_content;
+add_filter('render_block', function ($block_content, $block) {
+	if (isset($block['blockName']) && $block['blockName'] === 'core/query-title' && isset($block['attrs']['type']) && $block['attrs']['type'] === 'search') {
+		$query = get_search_query();
+		return sprintf(
+			'<h1 class="wp-block-query-title group-c-search-title"><span class="group-c-search-label">Search:</span> <span class="group-c-search-keyword">"%s"</span></h1>',
+			esc_html($query)
+		);
+	}
+	return $block_content;
 }, 10, 2);
 
 /**
  * Đăng ký khu vực Widget riêng cho Search (4) theo đúng chuẩn bài giảng
  */
-function register_search_widget_4() {
-    register_sidebar( array(
-        'name'          => 'Search Widget #4',
-        'id'            => 'search-widget-4',
-        'description'   => 'Khu vực Widget hiển thị ô tìm kiếm cho phần Search (4)',
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ) );
+function register_search_widget_4()
+{
+	register_sidebar(array(
+		'name' => 'Search Widget #4',
+		'id' => 'search-widget-4',
+		'description' => 'Khu vực Widget hiển thị ô tìm kiếm cho phần Search (4)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
 }
-add_action( 'widgets_init', 'register_search_widget_4' );
+add_action('widgets_init', 'register_search_widget_4');
 
-
+/**
+ * Require custom widgets
+ */
+require_once get_template_directory() . '/widget-recent-posts.php';
