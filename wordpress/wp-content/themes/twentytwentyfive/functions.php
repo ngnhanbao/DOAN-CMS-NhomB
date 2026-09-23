@@ -658,5 +658,249 @@ function tdc_prev_next_post_shortcode() {
 }
 add_shortcode('tdc_prev_next_post', 'tdc_prev_next_post_shortcode');
 
+/**
+ * Đăng ký khu vực Widget riêng cho Comments (12) theo đúng chuẩn bài giảng
+ */
+/**
+ * Đăng ký khu vực Widget riêng cho Archive (11) theo chuẩn bài giảng
+ */
+function register_archive_sidebar_11() {
+    register_sidebar( array(
+        'name'          => 'Archive Sidebar #11',
+        'id'            => 'sidebar-archive-11',
+        'description'   => 'Khu vực Widget hiển thị danh sách Lưu trữ cho phần Archive (11)',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action( 'widgets_init', 'register_archive_sidebar_11' );
+
+/**
+ * Shortcode [tdc_archive] cho phần (11) Archive
+ */
+function tdc_archive_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'title' => 'Archive'
+    ), $atts, 'tdc_archive');
+
+    $output = '<style>
+        .tdc-archive-widget-11 {
+            font-family: Arial, sans-serif;
+            margin-bottom: 25px;
+        }
+        .tdc-archive-title-11 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #333333;
+            margin: 0 0 4px 0;
+        }
+        .tdc-archive-line-11 {
+            width: 45px;
+            height: 2px;
+            background-color: #777777;
+            margin-bottom: 12px;
+        }
+        .tdc-archive-list-11 {
+            list-style: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .tdc-archive-list-11 li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .tdc-archive-list-11 li:last-child {
+            border-bottom: none;
+        }
+        .tdc-archive-list-11 li a {
+            color: #337ab7;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .tdc-archive-list-11 li a:hover {
+            color: #23527c;
+            text-decoration: underline;
+        }
+    </style>';
+
+    $output .= '<div class="tdc-archive-widget-11">';
+    if (!empty($atts['title'])) {
+        $output .= '<h3 class="tdc-archive-title-11">' . esc_html($atts['title']) . '</h3>';
+        $output .= '<div class="tdc-archive-line-11"></div>';
+    }
+    $output .= '<ul class="tdc-archive-list-11">';
+
+    $categories = get_categories(array('number' => 5, 'orderby' => 'count', 'order' => 'DESC'));
+    if (!empty($categories)) {
+        foreach ($categories as $cat) {
+            $output .= '<li><a href="' . esc_url(get_category_link($cat->term_id)) . '">' . esc_html($cat->name) . '</a></li>';
+        }
+    } else {
+        $output .= '<li><a href="#">Tháng 09 năm 2026</a></li>';
+    }
+
+    $output .= '</ul></div>';
+    return $output;
+}
+add_shortcode('tdc_archive', 'tdc_archive_shortcode');
+
+/**
+ * Đăng ký khu vực Widget riêng cho Comments (12) theo đúng chuẩn bài giảng
+ */
+function register_comments_sidebar_12() {
+    register_sidebar( array(
+        'name'          => 'Comments Sidebar #12',
+        'id'            => 'sidebar-comments-12',
+        'description'   => 'Khu vực Widget hiển thị danh sách bình luận cho phần Comments (12)',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action( 'widgets_init', 'register_comments_sidebar_12' );
+
+/**
+ * Shortcode [tdc_recent_comments] cho phần (12) Comments
+ * Khung hiển thị khớp 100% hình ảnh slide bài giảng (media_1790126661322.png)
+ */
+function tdc_recent_comments_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'count' => 5,
+        'title' => 'Comments'
+    ), $atts, 'tdc_recent_comments');
+
+    $output = '<style>
+        .tdc-comments-widget-12 {
+            font-family: Arial, sans-serif;
+            margin-bottom: 25px;
+        }
+        .tdc-comments-title-12 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #333333;
+            margin: 0 0 4px 0;
+        }
+        .tdc-comments-line-12 {
+            width: 45px;
+            height: 2px;
+            background-color: #777777;
+            margin-bottom: 12px;
+        }
+        .tdc-comments-list-12 {
+            list-style: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .tdc-comments-item-12 {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .tdc-comments-item-12:last-child {
+            border-bottom: none;
+        }
+        .tdc-comments-item-12 a {
+            color: #337ab7;
+            text-decoration: none;
+            font-size: 15px;
+            display: block;
+        }
+        .tdc-comments-item-12 a:hover {
+            color: #23527c;
+            text-decoration: underline;
+        }
+    </style>';
+
+    $output .= '<div class="tdc-comments-widget-12">';
+    if (!empty($atts['title'])) {
+        $output .= '<h3 class="tdc-comments-title-12">' . esc_html($atts['title']) . '</h3>';
+        $output .= '<div class="tdc-comments-line-12"></div>';
+    }
+    $output .= '<ul class="tdc-comments-list-12">';
+
+    $comments = get_comments(array(
+        'number' => $atts['count'],
+        'status' => 'approve'
+    ));
+
+    if (!empty($comments)) {
+        foreach ($comments as $comment) {
+            $text = wp_strip_all_tags($comment->comment_content);
+            $link = get_comment_link($comment);
+            $output .= '<li class="tdc-comments-item-12">';
+            $output .= '  <a href="' . esc_url($link) . '">' . esc_html($text) . '</a>';
+            $output .= '</li>';
+        }
+    } else {
+        // Mẫu bình luận chính xác theo hình ảnh slide (media_1790126661322.png)
+        $sample_comments = array(
+            'Bài viết hay quá',
+            'Cảm ơn tác giả',
+            'Bài viết thật hữu ích'
+        );
+
+        foreach ($sample_comments as $text) {
+            $output .= '<li class="tdc-comments-item-12">';
+            $output .= '  <a href="#">' . esc_html($text) . '</a>';
+            $output .= '</li>';
+        }
+    }
+
+    $output .= '</ul></div>';
+    return $output;
+}
+add_shortcode('tdc_recent_comments', 'tdc_recent_comments_shortcode');
+
+/**
+ * Tạo Widget TDC Comments cho Quản trị viên
+ */
+class TDC_Comments_Widget extends WP_Widget {
+    public function __construct() {
+        parent::__construct(
+            'tdc_comments_widget',
+            'Bình luận mới nhất (TDC #12)',
+            array('description' => 'Kéo thả để hiển thị danh sách bình luận mới nhất ở Sidebar #12.')
+        );
+    }
+
+    public function widget($args, $instance) {
+        echo $args['before_widget'];
+        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+        $count = !empty($instance['count']) ? $instance['count'] : 5;
+        echo do_shortcode('[tdc_recent_comments count="' . esc_attr($count) . '" title="' . esc_attr($title) . '"]');
+        echo $args['after_widget'];
+    }
+
+    public function form($instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+        $count = !empty($instance['count']) ? $instance['count'] : 5;
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('count')); ?>">Số lượng bình luận:</label>
+            <input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('count')); ?>" name="<?php echo esc_attr($this->get_field_name('count')); ?>" type="number" value="<?php echo esc_attr($count); ?>" min="1" max="10">
+        </p>
+        <?php
+    }
+
+    public function update($new_instance, $old_instance) {
+        $instance = array();
+        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+        $instance['count'] = (!empty($new_instance['count'])) ? absint($new_instance['count']) : 5;
+        return $instance;
+    }
+}
+function register_tdc_comments_widget() {
+    register_widget('TDC_Comments_Widget');
+}
+add_action('widgets_init', 'register_tdc_comments_widget');
+
+
+
 
 require_once get_template_directory() . '/widget-recent-posts.php';
