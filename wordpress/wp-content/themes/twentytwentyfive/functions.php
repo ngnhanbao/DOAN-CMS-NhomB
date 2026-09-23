@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Twenty Twenty-Five functions and definitions.
  *
@@ -484,7 +484,7 @@ function tdc_search_results_shortcode()
 		$link = get_permalink();
 		$excerpt = wp_trim_words(get_the_excerpt(), 25, ' [...]');
 
-		$thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'medium_large') : 'https://via.placeholder.com/250x180?text=No+Image';
+		$thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'medium_large') : get_theme_file_uri('assets/images/typewriter.webp');
 
 		$output .= '<div class="tdc-search-item">';
 
@@ -903,4 +903,4 @@ add_action('widgets_init', 'register_tdc_comments_widget');
 
 
 
-
+require_once get_template_directory() . '/widget-recent-posts.php';
