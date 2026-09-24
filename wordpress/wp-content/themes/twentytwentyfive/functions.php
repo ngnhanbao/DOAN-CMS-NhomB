@@ -210,7 +210,7 @@ function group_c_enqueue_assets()
 		'group-c-search',
 		get_template_directory_uri() . '/assets/css/group-c-search.css',
 		array(),
-		'1.0.0'
+		file_exists(get_template_directory() . '/assets/css/group-c-search.css') ? filemtime(get_template_directory() . '/assets/css/group-c-search.css') : '1.0.0'
 	);
 
 	// Custom Footer CSS
@@ -327,7 +327,7 @@ function twentytwentyfive_enable_widgets_support()
 }
 add_action('after_setup_theme', 'twentytwentyfive_enable_widgets_support');
 
-// Nạp stylesheet Categories & Footer vào Admin để xem trước trong màn hình Widgets
+// Nạp stylesheet Categories, Comments & Footer vào Admin để xem trước trong màn hình Widgets
 function group_c_admin_category_assets($hook)
 {
 	if ($hook === 'widgets.php' || $hook === 'customize.php') {
@@ -342,6 +342,12 @@ function group_c_admin_category_assets($hook)
 			get_template_directory_uri() . '/assets/css/group-c-footer.css',
 			array(),
 			file_exists(get_template_directory() . '/assets/css/group-c-footer.css') ? filemtime(get_template_directory() . '/assets/css/group-c-footer.css') : '1.0.0'
+		);
+		wp_enqueue_style(
+			'group-c-comments-admin',
+			get_template_directory_uri() . '/assets/css/group-c-comments.css',
+			array(),
+			file_exists(get_template_directory() . '/assets/css/group-c-comments.css') ? filemtime(get_template_directory() . '/assets/css/group-c-comments.css') : '1.0.0'
 		);
 	}
 }
@@ -358,6 +364,12 @@ add_action('enqueue_block_editor_assets', function () {
 		get_template_directory_uri() . '/assets/css/group-c-footer.css',
 		array(),
 		file_exists(get_template_directory() . '/assets/css/group-c-footer.css') ? filemtime(get_template_directory() . '/assets/css/group-c-footer.css') : '1.0.0'
+	);
+	wp_enqueue_style(
+		'group-c-comments-block-editor',
+		get_template_directory_uri() . '/assets/css/group-c-comments.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-comments.css') ? filemtime(get_template_directory() . '/assets/css/group-c-comments.css') : '1.0.0'
 	);
 });
 
@@ -793,36 +805,35 @@ function tdc_search_results_shortcode()
 {
 	$search_query = get_search_query();
 
-	if (empty($search_query)) {
-		return '';
-	}
-
 	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-	$query = new WP_Query(array(
-		's' => $search_query,
-		'post_type' => 'post',
+	$query_args = array(
+		'post_type'      => 'post',
 		'posts_per_page' => 10,
-		'paged' => $paged
-	));
+		'paged'          => $paged
+	);
+	if (!empty($search_query)) {
+		$query_args['s'] = $search_query;
+	}
+	$query = new WP_Query($query_args);
 
 	if (!$query->have_posts()) {
-		return '';
+		return '<div class="tdc-no-search-results" style="padding:25px;text-align:center;color:#666;background:#fff;border:1px solid #eaeaea;">Không tìm thấy bài viết nào phù hợp.</div>';
 	}
 
 	$output = '<style>
-        .tdc-search-list { display: flex; flex-direction: column; gap: 20px; font-family: sans-serif; margin-top: 30px; }
+        .tdc-search-list { display: flex; flex-direction: column; gap: 20px; font-family: sans-serif; margin-top: 0; }
         .tdc-search-item { display: flex; border: 1px solid #eaeaea; background: #fff; align-items: stretch; }
-        .tdc-search-thumbnail { width: 250px; flex-shrink: 0; }
+        .tdc-search-thumbnail { width: 190px; min-width: 190px; flex-shrink: 0; }
         .tdc-search-thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .tdc-search-content-wrapper { display: flex; padding: 20px; flex: 1; align-items: stretch; }
-        .tdc-search-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #eaeaea; padding-right: 20px; margin-right: 20px; min-width: 80px; }
-        .tdc-search-day { font-size: 48px; font-weight: 700; font-family: "Times New Roman", Times, serif; line-height: 1; color: #333; }
-        .tdc-search-month { font-size: 12px; text-transform: uppercase; color: #888; margin-top: 5px; letter-spacing: 0.5px; }
-        .tdc-search-text { flex: 1; }
-        .tdc-search-title { margin: 0 0 10px 0; font-size: 18px; line-height: 1.4; }
+        .tdc-search-content-wrapper { display: flex; padding: 15px 18px; flex: 1; align-items: stretch; min-width: 0; }
+        .tdc-search-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #eaeaea; padding-right: 15px; margin-right: 15px; min-width: 65px; }
+        .tdc-search-day { font-size: 38px; font-weight: 700; font-family: "Times New Roman", Times, serif; line-height: 1; color: #333; }
+        .tdc-search-month { font-size: 11px; text-transform: uppercase; color: #888; margin-top: 5px; letter-spacing: 0.5px; }
+        .tdc-search-text { flex: 1; min-width: 0; }
+        .tdc-search-title { margin: 0 0 8px 0; font-size: 16px; line-height: 1.4; }
         .tdc-search-title a { color: #0056b3; text-decoration: none; text-transform: uppercase; font-weight: 700; }
         .tdc-search-title a:hover { color: #003d82; text-decoration: underline; }
-        .tdc-search-excerpt { font-size: 14px; color: #555; line-height: 1.5; margin: 0; }
+        .tdc-search-excerpt { font-size: 13.5px; color: #555; line-height: 1.5; margin: 0; }
         
         @media (max-width: 768px) {
             .tdc-search-item { flex-direction: column; }
@@ -1305,8 +1316,300 @@ function register_tdc_comments_widget() {
 }
 add_action('widgets_init', 'register_tdc_comments_widget');
 
+/**
+ * =========================================================
+ * MODULE #14: COMMENTS CHO TRANG DANH SÁCH / TÌM KIẾM
+ * Thiết kế bong bóng hội thoại (Speech Bubble) chuẩn Image 1
+ * =========================================================
+ */
 
+/**
+ * 1. Xử lý gửi bình luận nhanh từ form Module 14
+ */
+add_action('init', 'tdc_handle_module_14_comment_submit');
+function tdc_handle_module_14_comment_submit() {
+    if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tdc_action']) && $_POST['tdc_action'] === 'submit_module_14_comment') {
+        if (!isset($_POST['tdc_comment_nonce']) || !wp_verify_nonce($_POST['tdc_comment_nonce'], 'tdc_comment_action')) {
+            return;
+        }
 
+        $author = sanitize_text_field($_POST['author_name']);
+        $content = sanitize_textarea_field($_POST['comment_content']);
+
+        if (!empty($author) && !empty($content)) {
+            $latest_posts = get_posts(array('numberposts' => 1, 'post_status' => 'publish'));
+            $post_id = !empty($latest_posts) ? $latest_posts[0]->ID : 1;
+
+            wp_insert_comment(array(
+                'comment_post_ID'      => $post_id,
+                'comment_author'       => $author,
+                'comment_author_email' => sanitize_email(sanitize_title($author) . '@example.com'),
+                'comment_content'      => $content,
+                'comment_type'         => 'comment',
+                'comment_approved'     => 1,
+                'comment_date'         => current_time('mysql'),
+            ));
+
+            $redirect = wp_get_referer() ? wp_get_referer() : $_SERVER['REQUEST_URI'];
+            $redirect = add_query_arg('comment_submitted', '1', remove_query_arg('comment_submitted', $redirect));
+            wp_safe_redirect($redirect);
+            exit;
+        }
+    }
+}
+
+/**
+ * 2. Hàm dựng giao diện bình luận dạng bong bóng chat (Speech Bubble) chuẩn Image 1
+ */
+function tdc_module_14_comments_render($args = array()) {
+    $title = !empty($args['title']) ? $args['title'] : 'Comments';
+    $count = !empty($args['count']) ? absint($args['count']) : 3;
+
+    $comments = get_comments(array(
+        'number' => $count,
+        'status' => 'approve',
+        'order'  => 'DESC',
+    ));
+
+    $display_list = array();
+    if (!empty($comments)) {
+        foreach ($comments as $comm) {
+            $display_list[] = array(
+                'author'  => $comm->comment_author ? $comm->comment_author : 'Anonymous',
+                'content' => wp_strip_all_tags($comm->comment_content),
+                'avatar'  => get_avatar_url($comm, array('size' => 96)),
+            );
+        }
+    }
+
+    // Nếu chưa có hoặc ít hơn 3 bình luận, bổ sung mẫu chuẩn theo Image 1
+    if (count($display_list) < 3) {
+        $default_samples = array(
+            array(
+                'author'  => 'John Doe',
+                'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                'avatar'  => '',
+            ),
+            array(
+                'author'  => 'Jane Doe',
+                'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                'avatar'  => '',
+            ),
+            array(
+                'author'  => 'John Doe',
+                'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                'avatar'  => '',
+            ),
+        );
+
+        while (count($display_list) < 3) {
+            $display_list[] = $default_samples[count($display_list)];
+        }
+    }
+
+    ob_start();
+    ?>
+    <div class="tdc-module-14-comments">
+        <h3 class="tdc-module-14-title"><?php echo esc_html($title); ?></h3>
+        <div class="tdc-module-14-divider"></div>
+
+        <?php if (!empty($_GET['comment_submitted'])): ?>
+            <div class="tdc-alert-success" style="background:#e6f4ea; color:#137333; padding:10px 14px; border-radius:4px; margin-bottom:15px; font-size:13.5px; border:1px solid #ceead6;">
+                ✓ Bình luận của bạn đã được đăng thành công!
+            </div>
+        <?php endif; ?>
+
+        <div class="tdc-comments-bubble-list">
+            <?php foreach ($display_list as $item): ?>
+                <div class="tdc-comment-bubble-item">
+                    <div class="tdc-comment-avatar">
+                        <?php if (!empty($item['avatar'])): ?>
+                            <img src="<?php echo esc_url($item['avatar']); ?>" alt="<?php echo esc_attr($item['author']); ?>" />
+                        <?php else: ?>
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="#9ca3af"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        <?php endif; ?>
+                    </div>
+                    <div class="tdc-comment-bubble-card">
+                        <div class="tdc-comment-bubble-header">
+                            <span class="tdc-comment-author-name"><?php echo esc_html($item['author']); ?></span>
+                        </div>
+                        <div class="tdc-comment-bubble-body">
+                            <p class="tdc-comment-text"><?php echo esc_html($item['content']); ?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="tdc-comment-input-box">
+            <h4 class="tdc-input-box-title">Thêm bình luận mới</h4>
+            <form method="post" action="" class="tdc-comment-form">
+                <?php wp_nonce_field('tdc_comment_action', 'tdc_comment_nonce'); ?>
+                <input type="hidden" name="tdc_action" value="submit_module_14_comment" />
+                <div class="tdc-form-group">
+                    <input type="text" name="author_name" placeholder="Họ và tên của bạn..." required class="tdc-form-control" />
+                </div>
+                <div class="tdc-form-group">
+                    <textarea name="comment_content" placeholder="Nhập nội dung bình luận..." rows="3" required class="tdc-form-control"></textarea>
+                </div>
+                <div class="tdc-form-group" style="text-align: right; margin-bottom: 0;">
+                    <button type="submit" class="tdc-btn-comment-submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+/**
+ * 3. Shortcode [tdc_module_14_comments]
+ */
+function tdc_module_14_comments_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'title' => 'Comments',
+        'count' => 3,
+    ), $atts, 'tdc_module_14_comments');
+
+    return tdc_module_14_comments_render($atts);
+}
+add_shortcode('tdc_module_14_comments', 'tdc_module_14_comments_shortcode');
+
+/**
+ * 4. Widget Module #14 Comments cho Admin
+ */
+class TDC_Comments_Module_14_Widget extends WP_Widget {
+    public function __construct() {
+        parent::__construct(
+            'tdc_comments_module_14_widget',
+            'Bình luận (TDC #14)',
+            array('description' => 'Hiển thị danh sách bình luận dạng bong bóng hội thoại và form nhập thông tin (Module #14).')
+        );
+    }
+
+    public function widget($args, $instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+        $count = !empty($instance['count']) ? absint($instance['count']) : 3;
+
+        echo $args['before_widget'];
+        echo tdc_module_14_comments_render(array(
+            'title' => $title,
+            'count' => $count
+        ));
+        echo $args['after_widget'];
+    }
+
+    public function form($instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+        $count = !empty($instance['count']) ? absint($instance['count']) : 3;
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('count')); ?>">Số lượng bình luận:</label>
+            <input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('count')); ?>" name="<?php echo esc_attr($this->get_field_name('count')); ?>" type="number" value="<?php echo esc_attr($count); ?>" min="1" max="10">
+        </p>
+        <?php
+    }
+
+    public function update($new_instance, $old_instance) {
+        $instance = array();
+        $instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : 'Comments';
+        $instance['count'] = (!empty($new_instance['count'])) ? absint($new_instance['count']) : 3;
+        return $instance;
+    }
+}
+function register_tdc_comments_module_14_widget() {
+    register_widget('TDC_Comments_Module_14_Widget');
+}
+add_action('widgets_init', 'register_tdc_comments_module_14_widget');
+
+/**
+ * 5. Đăng ký các khu vực Widget Sidebar cho Trang Danh Sách / Tìm Kiếm (Search Page)
+ */
+function register_search_sidebars() {
+    register_sidebar( array(
+        'name'          => 'Search Sidebar - Trái (#13)',
+        'id'            => 'sidebar-search-left-13',
+        'description'   => 'Khu vực Widget cột trái (Module #13) cho trang danh sách / tìm kiếm.',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+
+    register_sidebar( array(
+        'name'          => 'Search Sidebar - Phải / Comments (#14)',
+        'id'            => 'sidebar-comments-14',
+        'description'   => 'Khu vực Widget cột phải hiển thị bình luận (Module #14) cho trang danh sách / tìm kiếm.',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+
+    register_sidebar( array(
+        'name'          => 'Search Bottom - Dưới (#15)',
+        'id'            => 'sidebar-search-bottom-15',
+        'description'   => 'Khu vực Widget phía dưới (Module #15) cho trang danh sách / tìm kiếm.',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action('widgets_init', 'register_search_sidebars');
+
+/**
+ * 6. Tự động tương thích: nếu người dùng thêm block Bình luận (core/comments) vào widget hoặc trang tìm kiếm,
+ * tự động hiển thị giao diện Module 14 chuẩn bong bóng hội thoại (Speech Bubble).
+ */
+add_filter('render_block', function($block_content, $block) {
+    if (!empty($block['blockName']) && $block['blockName'] === 'core/comments') {
+        if (is_search() || empty(trim(strip_tags($block_content)))) {
+            return tdc_module_14_comments_render();
+        }
+    }
+    return $block_content;
+}, 10, 2);
+
+/**
+ * 7. Shortcodes cho layout Trang tìm kiếm / danh sách (Image 2)
+ */
+function tdc_sidebar_search_left_shortcode() {
+    ob_start();
+    if (is_active_sidebar('sidebar-search-left-13')) {
+        dynamic_sidebar('sidebar-search-left-13');
+    }
+    return ob_get_clean();
+}
+add_shortcode('tdc_sidebar_search_left', 'tdc_sidebar_search_left_shortcode');
+
+function tdc_sidebar_search_right_shortcode() {
+    ob_start();
+    if (is_active_sidebar('sidebar-comments-14')) {
+        dynamic_sidebar('sidebar-comments-14');
+    }
+    $sidebar_output = ob_get_clean();
+
+    // Nếu sidebar không có widget hoặc widget sinh ra rỗng (chẳng hạn block comments mặc định của WP bị rỗng trên trang search)
+    if (empty(trim(strip_tags($sidebar_output)))) {
+        return tdc_module_14_comments_render();
+    }
+    return $sidebar_output;
+}
+add_shortcode('tdc_sidebar_search_right', 'tdc_sidebar_search_right_shortcode');
+
+function tdc_sidebar_search_bottom_shortcode() {
+    ob_start();
+    if (is_active_sidebar('sidebar-search-bottom-15')) {
+        dynamic_sidebar('sidebar-search-bottom-15');
+    }
+    return ob_get_clean();
+}
+add_shortcode('tdc_sidebar_search_bottom', 'tdc_sidebar_search_bottom_shortcode');
 
 require_once get_template_directory() . '/widget-recent-posts.php';
 require_once get_template_directory() . '/widget-numbered-posts.php';
