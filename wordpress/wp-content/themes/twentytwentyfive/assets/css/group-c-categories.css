@@ -7,25 +7,17 @@
 /* --------------------------------------------------------------------------
    1. Khung Card bao bọc Danh mục Categories
    -------------------------------------------------------------------------- */
-.tdc-categories-card,
+/* Reset các container wrapper của widget / block bên ngoài để KHÔNG bị lặp khung viền */
 .widget_categories,
-div.wp-block-categories,
-ul.wp-block-categories:not(div.wp-block-categories ul) {
-    background: #ffffff;
-    border: 1px solid #e9ecef;
-    border-radius: 6px;
-    padding: 22px 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    margin-bottom: 30px;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
-.widget_tdc_categories_widget {
+.widget_block.widget_categories,
+.widget_tdc_categories_widget,
+.widget:has(.tdc-categories-card),
+div.wp-block-categories:has(.tdc-categories-card) {
     background: transparent !important;
     border: none !important;
     padding: 0 !important;
     box-shadow: none !important;
+    margin-bottom: 0 !important;
 }
 
 div.wp-block-categories ul.wp-block-categories-list {
@@ -33,6 +25,21 @@ div.wp-block-categories ul.wp-block-categories-list {
     border: none !important;
     padding: 0 !important;
     box-shadow: none !important;
+}
+
+/* Khung Card chính duy nhất cho Categories */
+.tdc-categories-card,
+.widget_categories:not(:has(.tdc-categories-card)),
+div.wp-block-categories:not(:has(.tdc-categories-card)),
+ul.wp-block-categories:not(div.wp-block-categories ul) {
+    background: #ffffff !important;
+    border: 1px solid #e9ecef !important;
+    border-radius: 6px !important;
+    padding: 22px 24px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    margin-bottom: 30px !important;
+    box-sizing: border-box !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -103,18 +110,38 @@ div.wp-block-categories ul.wp-block-categories-list {
 }
 
 /* Dấu chấm tròn màu vàng cam nổi bật (Yellow Bullet Dot) */
-.tdc-categories-list li .tdc-bullet,
-.widget_categories ul li::before,
-.wp-block-categories ul.wp-block-categories-list li::before {
+.tdc-categories-list li .tdc-bullet {
+    display: inline-block !important;
+    width: 8px !important;
+    height: 8px !important;
+    background-color: #f59e0b !important; /* Vàng cam đậm nét chuẩn mẫu */
+    border-radius: 50% !important;
+    margin-right: 14px !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2) !important;
+}
+
+/* Fallback cho block/widget Categories nguyên bản không có thẻ span.tdc-bullet */
+.widget_categories ul:not(.tdc-categories-list) li::before,
+.wp-block-categories ul.wp-block-categories-list:not(.tdc-categories-list) li::before {
     content: "";
     display: inline-block;
     width: 8px;
     height: 8px;
-    background-color: #f59e0b; /* Vàng cam đậm nét chuẩn mẫu */
+    background-color: #f59e0b;
     border-radius: 50%;
     margin-right: 14px;
     flex-shrink: 0;
     box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+/* TRIỆT TIÊU HOÀN TOÀN pseudo ::before để KHÔNG BỊ TRÙNG 2 DẤU CHẤM */
+.tdc-categories-list li::before,
+.widget_categories ul.tdc-categories-list li::before,
+.widget_categories li:has(.tdc-bullet)::before,
+li:has(.tdc-bullet)::before {
+    content: none !important;
+    display: none !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -149,8 +176,8 @@ div.wp-block-categories ul.wp-block-categories-list {
    -------------------------------------------------------------------------- */
 @media (max-width: 991.98px) {
     .tdc-categories-card,
-    .widget_categories,
-    .wp-block-categories {
+    .widget_categories:not(:has(.tdc-categories-card)),
+    .wp-block-categories:not(:has(.tdc-categories-card)) {
         margin-bottom: 25px;
         padding: 18px 20px;
     }
