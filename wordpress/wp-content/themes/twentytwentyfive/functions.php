@@ -218,7 +218,7 @@ function group_c_enqueue_assets()
 		'group-c-footer',
 		get_template_directory_uri() . '/assets/css/group-c-footer.css',
 		array(),
-		'1.0.0'
+		file_exists(get_template_directory() . '/assets/css/group-c-footer.css') ? filemtime(get_template_directory() . '/assets/css/group-c-footer.css') : '1.0.0'
 	);
 
 	// Custom Post Detail CSS
@@ -226,7 +226,7 @@ function group_c_enqueue_assets()
 		'group-c-detail',
 		get_template_directory_uri() . '/assets/css/group-c-detail.css',
 		array(),
-		'1.0.0'
+		file_exists(get_template_directory() . '/assets/css/group-c-detail.css') ? filemtime(get_template_directory() . '/assets/css/group-c-detail.css') : '1.0.0'
 	);
 
 	// Custom Comments Form CSS
@@ -281,11 +281,45 @@ function my_custom_widgets_init()
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
 	));
+
+	// --- CÁC KHU VỰC WIDGET CHO FOOTER (MODULE #3) ---
+	// Footer #1 (Cột 1)
+	register_sidebar(array(
+		'name'          => 'Footer #1',
+		'id'            => 'footer-1',
+		'description'   => 'Khu vực Widget cho Cột 1 của Footer (Mặc định: Quick links)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h5 class="widget-title">',
+		'after_title'   => '</h5>',
+	));
+
+	// Footer #2 (Cột 2)
+	register_sidebar(array(
+		'name'          => 'Footer #2',
+		'id'            => 'footer-2',
+		'description'   => 'Khu vực Widget cho Cột 2 của Footer (Mặc định: Quick links)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h5 class="widget-title">',
+		'after_title'   => '</h5>',
+	));
+
+	// Footer #3 (Cột 3)
+	register_sidebar(array(
+		'name'          => 'Footer #3',
+		'id'            => 'footer-3',
+		'description'   => 'Khu vực Widget cho Cột 3 của Footer (Mặc định: Quick links)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h5 class="widget-title">',
+		'after_title'   => '</h5>',
+	));
 }
 // Móc hàm my_custom_widgets_init vào hook widgets_init của WordPress
 add_action('widgets_init', 'my_custom_widgets_init');
 
-// Kích hoạt hỗ trợ Widgets và hiển thị menu Widgets trong bảng điều khiển Quản trị (wp-admin)
+// Kích hoạt hỗ trợ Widgets trong bảng điều khiển Quản trị (wp-admin)
 function twentytwentyfive_enable_widgets_support()
 {
 	add_theme_support('widgets');
@@ -293,11 +327,7 @@ function twentytwentyfive_enable_widgets_support()
 }
 add_action('after_setup_theme', 'twentytwentyfive_enable_widgets_support');
 
-add_action('admin_menu', function () {
-	add_theme_page(__('Widgets'), __('Widgets'), 'edit_theme_options', 'widgets.php');
-});
-
-// Nạp stylesheet Categories vào cả Admin để xem trước trong màn hình Widgets
+// Nạp stylesheet Categories & Footer vào Admin để xem trước trong màn hình Widgets
 function group_c_admin_category_assets($hook)
 {
 	if ($hook === 'widgets.php' || $hook === 'customize.php') {
@@ -306,6 +336,12 @@ function group_c_admin_category_assets($hook)
 			get_template_directory_uri() . '/assets/css/group-c-categories.css',
 			array(),
 			file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
+		);
+		wp_enqueue_style(
+			'group-c-footer-admin',
+			get_template_directory_uri() . '/assets/css/group-c-footer.css',
+			array(),
+			file_exists(get_template_directory() . '/assets/css/group-c-footer.css') ? filemtime(get_template_directory() . '/assets/css/group-c-footer.css') : '1.0.0'
 		);
 	}
 }
@@ -317,7 +353,88 @@ add_action('enqueue_block_editor_assets', function () {
 		array(),
 		file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
 	);
+	wp_enqueue_style(
+		'group-c-footer-block-editor',
+		get_template_directory_uri() . '/assets/css/group-c-footer.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-footer.css') ? filemtime(get_template_directory() . '/assets/css/group-c-footer.css') : '1.0.0'
+	);
 });
+
+// --- WIDGET QUICK LINKS CHO BẢNG ĐIỀU KHIỂN ADMIN (FOOTER MODULE #3) ---
+class TDC_Quick_Links_Widget extends WP_Widget
+{
+	public function __construct()
+	{
+		parent::__construct(
+			'tdc_quick_links_widget',
+			'Liên kết nhanh - Quick Links',
+			array('description' => 'Hiển thị danh sách liên kết nhanh Quick links với mũi tên kép chuẩn giao diện Footer.')
+		);
+	}
+
+	public function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Quick links';
+		$links = !empty($instance['links']) ? $instance['links'] : "Home | /\nAbout | #\nFAQ | #\nGet Started | #\nVideos | #";
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('links')); ?>">Danh sách liên kết (mỗi dòng một mục: <code>Tên | URL</code>):</label>
+			<textarea class="widefat" id="<?php echo esc_attr($this->get_field_id('links')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('links')); ?>" rows="6"><?php echo esc_textarea($links); ?></textarea>
+		</p>
+		<?php
+	}
+
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : 'Quick links';
+		$instance['links'] = (!empty($new_instance['links'])) ? sanitize_textarea_field($new_instance['links']) : '';
+		return $instance;
+	}
+
+	public function widget($args, $instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Quick links';
+		$links_text = !empty($instance['links']) ? $instance['links'] : "Home | /\nAbout | #\nFAQ | #\nGet Started | #\nVideos | #";
+
+		echo $args['before_widget'];
+		echo '<h5 class="widget-title">' . esc_html($title) . '</h5>';
+		echo '<ul class="list-unstyled quick-links">';
+
+		$lines = explode("\n", $links_text);
+		foreach ($lines as $line) {
+			$line = trim($line);
+			if (empty($line)) continue;
+			$parts = explode('|', $line, 2);
+			$label = trim($parts[0]);
+			$url   = isset($parts[1]) ? trim($parts[1]) : '#';
+			if ($url === '/') $url = home_url('/');
+
+			echo '<li>';
+			echo '  <a href="' . esc_url($url) . '">';
+			echo '    <i class="fa-solid fa-angles-right arrow-icon"></i>' . esc_html($label);
+			echo '  </a>';
+			echo '</li>';
+		}
+
+		echo '</ul>';
+		echo $args['after_widget'];
+	}
+}
+
+function register_tdc_quick_links_widget()
+{
+	register_widget('TDC_Quick_Links_Widget');
+}
+add_action('widgets_init', 'register_tdc_quick_links_widget');
 
 // Tạo shortcode [tdc_news] để hiển thị danh sách bài viết như thiết kế
 function tdc_custom_news_shortcode($atts)
@@ -818,53 +935,96 @@ function tdc_prev_next_post_shortcode() {
             flex-direction: column;
             gap: 16px;
             margin: 30px 0;
-            font-family: sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
         .tdc-post-nav-item {
             display: flex;
             align-items: center;
         }
         .tdc-post-nav-date-box {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            max-width: 50px;
+            background: #f0be1a;
+            border-radius: 50%;
             display: inline-flex;
             align-items: center;
-            font-family: "Times New Roman", Times, serif;
-            min-width: 65px;
-            margin-right: 25px;
+            justify-content: center;
+            color: #222222;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+            margin-right: 18px;
+            flex-shrink: 0;
+            box-sizing: border-box;
             user-select: none;
+            font-family: "Times New Roman", Times, Georgia, serif;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 0;
+            overflow: hidden;
+        }
+        .tdc-post-nav-item:hover .tdc-post-nav-date-box {
+            transform: scale(1.06);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
         }
         .tdc-post-nav-date-stack {
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-bottom: 1px solid #777;
-            padding-bottom: 1px;
-            margin-right: 3px;
+            justify-content: center;
+            line-height: 1;
+            margin-right: 2px;
+            border-bottom: none !important;
+            padding: 0;
         }
         .tdc-post-nav-day {
-            font-size: 15px;
+            font-size: 11px;
+            font-weight: 700;
             line-height: 1;
-            color: #333;
+            color: #222222;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+        .tdc-post-nav-line {
+            display: block;
+            width: 14px;
+            height: 1px;
+            background-color: #222222 !important;
+            margin: 2px 0;
+            border: none !important;
+            padding: 0;
         }
         .tdc-post-nav-month {
-            font-size: 15px;
+            font-size: 11px;
+            font-weight: 700;
             line-height: 1;
-            color: #333;
-            margin-top: 2px;
+            color: #222222;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: block;
         }
         .tdc-post-nav-year {
-            font-size: 15px;
+            font-size: 11px;
+            font-weight: 700;
             line-height: 1;
-            color: #333;
-            margin-top: -8px;
+            color: #222222;
+            margin: 0 0 0 3px;
+            align-self: center;
+            white-space: nowrap;
+            display: inline-block;
         }
         .tdc-post-nav-title {
             font-size: 16px;
             margin: 0;
             line-height: 1.4;
-            font-weight: normal;
+            font-weight: 400;
         }
         .tdc-post-nav-title a {
-            color: #333333;
+            color: #222222;
             text-decoration: none;
             transition: color 0.2s ease;
         }
@@ -885,14 +1045,14 @@ function tdc_prev_next_post_shortcode() {
         $link = get_permalink($p->ID);
 
         $output .= '<div class="tdc-post-nav-item">';
-        $output .= '  <div class="tdc-post-nav-date-box">';
+        $output .= '  <a href="' . esc_url($link) . '" class="tdc-post-nav-date-box" title="' . esc_attr($title) . '">';
         $output .= '    <div class="tdc-post-nav-date-stack">';
         $output .= '      <span class="tdc-post-nav-day">' . esc_html($day) . '</span>';
         $output .= '      <span class="tdc-post-nav-line"></span>';
         $output .= '      <span class="tdc-post-nav-month">' . esc_html($month) . '</span>';
         $output .= '    </div>';
         $output .= '    <span class="tdc-post-nav-year">' . esc_html($year) . '</span>';
-        $output .= '  </div>';
+        $output .= '  </a>';
         $output .= '  <h4 class="tdc-post-nav-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h4>';
         $output .= '</div>';
     }
@@ -1149,3 +1309,4 @@ add_action('widgets_init', 'register_tdc_comments_widget');
 
 
 require_once get_template_directory() . '/widget-recent-posts.php';
+require_once get_template_directory() . '/widget-numbered-posts.php';
