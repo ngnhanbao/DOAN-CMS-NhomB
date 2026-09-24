@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#022c22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1000" cy="180" r="260" fill="#34d399" opacity="0.12"/>
+  <polyline points="100,500 300,420 500,450 700,310 900,340 1100,180" fill="none" stroke="#34d399" stroke-width="8"/>
+  <polygon points="1100,180 1060,190 1090,220" fill="#34d399"/>
+  <rect x="100" y="120" width="200" height="40" rx="8" fill="url(#accent)"/>
+  <text x="200" y="145" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">KINH TẾ &amp; PHÁT TRIỂN</text>
+  <text x="100" y="240" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="#ffffff">Chính Sách Phát Triển Kinh Tế Xã Hội</text>
+  <text x="100" y="295" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="#34d399">Giai Đoạn Mới &amp; Tầm Nhìn Chiến Lược</text>
+  <text x="100" y="360" font-family="system-ui, sans-serif" font-size="20" fill="#a7f3d0">Đột phá cơ chế, thu hút đầu tư và thúc đẩy tăng trưởng toàn diện.</text>
+</svg>

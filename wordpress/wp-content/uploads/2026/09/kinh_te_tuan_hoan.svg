@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#022c22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <path d="M950,160 A140,140 0 0,1 1090,300 L1040,300 A90,90 0 0,0 950,210 Z" fill="#34d399"/>
+  <path d="M1090,330 A140,140 0 0,1 810,330 L860,330 A90,90 0 0,0 1040,330 Z" fill="#10b981"/>
+  <path d="M810,300 A140,140 0 0,1 950,160 L950,210 A90,90 0 0,0 860,300 Z" fill="#059669"/>
+  <rect x="100" y="120" width="220" height="40" rx="8" fill="url(#accent)"/>
+  <text x="210" y="145" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">KINH TẾ TUẦN HOÀN</text>
+  <text x="100" y="240" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="#ffffff">Mô Hình Kinh Tế Tuần Hoàn</text>
+  <text x="100" y="295" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="#34d399">&amp; Tăng Trưởng Xanh Bền Vững</text>
+  <text x="100" y="360" font-family="system-ui, sans-serif" font-size="20" fill="#a7f3d0">Tái chế chất thải, tiết kiệm tài nguyên và nâng cao năng lực cạnh tranh.</text>
+</svg>
