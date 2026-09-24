@@ -226,7 +226,7 @@ function group_c_enqueue_assets()
 		'group-c-detail',
 		get_template_directory_uri() . '/assets/css/group-c-detail.css',
 		array(),
-		'1.0.0'
+		file_exists(get_template_directory() . '/assets/css/group-c-detail.css') ? filemtime(get_template_directory() . '/assets/css/group-c-detail.css') : '1.0.0'
 	);
 
 	// Custom Comments Form CSS
@@ -319,17 +319,13 @@ function my_custom_widgets_init()
 // Móc hàm my_custom_widgets_init vào hook widgets_init của WordPress
 add_action('widgets_init', 'my_custom_widgets_init');
 
-// Kích hoạt hỗ trợ Widgets và hiển thị menu Widgets trong bảng điều khiển Quản trị (wp-admin)
+// Kích hoạt hỗ trợ Widgets trong bảng điều khiển Quản trị (wp-admin)
 function twentytwentyfive_enable_widgets_support()
 {
 	add_theme_support('widgets');
 	add_theme_support('widgets-block-editor');
 }
 add_action('after_setup_theme', 'twentytwentyfive_enable_widgets_support');
-
-add_action('admin_menu', function () {
-	add_theme_page(__('Widgets'), __('Widgets'), 'edit_theme_options', 'widgets.php');
-});
 
 // Nạp stylesheet Categories & Footer vào Admin để xem trước trong màn hình Widgets
 function group_c_admin_category_assets($hook)
@@ -939,53 +935,96 @@ function tdc_prev_next_post_shortcode() {
             flex-direction: column;
             gap: 16px;
             margin: 30px 0;
-            font-family: sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
         .tdc-post-nav-item {
             display: flex;
             align-items: center;
         }
         .tdc-post-nav-date-box {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            max-width: 50px;
+            background: #f0be1a;
+            border-radius: 50%;
             display: inline-flex;
             align-items: center;
-            font-family: "Times New Roman", Times, serif;
-            min-width: 65px;
-            margin-right: 25px;
+            justify-content: center;
+            color: #222222;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+            margin-right: 18px;
+            flex-shrink: 0;
+            box-sizing: border-box;
             user-select: none;
+            font-family: "Times New Roman", Times, Georgia, serif;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 0;
+            overflow: hidden;
+        }
+        .tdc-post-nav-item:hover .tdc-post-nav-date-box {
+            transform: scale(1.06);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
         }
         .tdc-post-nav-date-stack {
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-bottom: 1px solid #777;
-            padding-bottom: 1px;
-            margin-right: 3px;
+            justify-content: center;
+            line-height: 1;
+            margin-right: 2px;
+            border-bottom: none !important;
+            padding: 0;
         }
         .tdc-post-nav-day {
-            font-size: 15px;
+            font-size: 11px;
+            font-weight: 700;
             line-height: 1;
-            color: #333;
+            color: #222222;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+        .tdc-post-nav-line {
+            display: block;
+            width: 14px;
+            height: 1px;
+            background-color: #222222 !important;
+            margin: 2px 0;
+            border: none !important;
+            padding: 0;
         }
         .tdc-post-nav-month {
-            font-size: 15px;
+            font-size: 11px;
+            font-weight: 700;
             line-height: 1;
-            color: #333;
-            margin-top: 2px;
+            color: #222222;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: block;
         }
         .tdc-post-nav-year {
-            font-size: 15px;
+            font-size: 11px;
+            font-weight: 700;
             line-height: 1;
-            color: #333;
-            margin-top: -8px;
+            color: #222222;
+            margin: 0 0 0 3px;
+            align-self: center;
+            white-space: nowrap;
+            display: inline-block;
         }
         .tdc-post-nav-title {
             font-size: 16px;
             margin: 0;
             line-height: 1.4;
-            font-weight: normal;
+            font-weight: 400;
         }
         .tdc-post-nav-title a {
-            color: #333333;
+            color: #222222;
             text-decoration: none;
             transition: color 0.2s ease;
         }
@@ -1006,14 +1045,14 @@ function tdc_prev_next_post_shortcode() {
         $link = get_permalink($p->ID);
 
         $output .= '<div class="tdc-post-nav-item">';
-        $output .= '  <div class="tdc-post-nav-date-box">';
+        $output .= '  <a href="' . esc_url($link) . '" class="tdc-post-nav-date-box" title="' . esc_attr($title) . '">';
         $output .= '    <div class="tdc-post-nav-date-stack">';
         $output .= '      <span class="tdc-post-nav-day">' . esc_html($day) . '</span>';
         $output .= '      <span class="tdc-post-nav-line"></span>';
         $output .= '      <span class="tdc-post-nav-month">' . esc_html($month) . '</span>';
         $output .= '    </div>';
         $output .= '    <span class="tdc-post-nav-year">' . esc_html($year) . '</span>';
-        $output .= '  </div>';
+        $output .= '  </a>';
         $output .= '  <h4 class="tdc-post-nav-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h4>';
         $output .= '</div>';
     }
