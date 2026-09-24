@@ -6,42 +6,13 @@
 	<!-- Tiêu đề: Search: "messi" -->
 	<!-- wp:query-title {"type":"search","className":"group-c-search-title"} /-->
 
-	<!-- Query tìm kiếm (Sử dụng shortcode) -->
+	<!-- Khung ô tìm kiếm màu kem luôn hiển thị ở vị trí Search (4) -->
+	<!-- wp:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
+
+	<!-- Danh sách bài viết tìm thấy (Search result (5)) -->
 	<!-- wp:shortcode -->
 	[tdc_search_results]
 	<!-- /wp:shortcode -->
-	<!-- Query tìm kiếm -->
-	<!-- wp:query {"query":{"inherit":true},"displayLayout":{"type":"list"},"className":"group-c-search-query"} -->
-	<!-- wp:group {"align":"full","className":"group-c-no-results","layout":{"type":"constrained"}} -->
-	<div class="wp-block-query group-c-search-query">
-
-		<!-- Có kết quả -->
-		<!-- wp:post-template -->
-
-			<!-- wp:group {"className":"group-c-search-result"} -->
-			<div class="wp-block-group group-c-search-result">
-
-				<!-- wp:post-featured-image {"isLink":true} /-->
-
-				<!-- wp:post-title {"isLink":true} /-->
-
-				<!-- wp:post-excerpt /-->
-
-			</div>
-			<!-- /wp:group -->
-
-		<!-- /wp:post-template -->
-
-
-		<!-- Không có kết quả -->
-		<!-- wp:query-no-results -->
-
-			<!-- wp:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
-
-		<!-- /wp:query-no-results -->
-
-	</div>
-	<!-- /wp:group -->
 
 </main>
 <!-- /wp:group -->

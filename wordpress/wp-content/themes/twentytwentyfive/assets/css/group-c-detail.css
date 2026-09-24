@@ -198,3 +198,102 @@ body.single-post {
         text-align: left;
     }
 }
+
+/* =========================================================
+   (7) PREV - NEXT POST NAVIGATION STYLES
+   ========================================================= */
+.tdc-post-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 30px auto;
+    max-width: 900px;
+    padding: 0 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.tdc-post-nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.tdc-post-nav-date-box,
+.tdc-post-nav-date-box *,
+.tdc-post-nav-date-stack,
+.tdc-post-nav-month {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+.tdc-post-nav-date-box {
+    display: inline-flex;
+    align-items: center;
+    font-family: "Times New Roman", Times, serif;
+    min-width: 60px;
+    margin-right: 25px;
+    user-select: none;
+}
+
+.tdc-post-nav-date-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 3px;
+    border-bottom: none !important;
+}
+
+.tdc-post-nav-day {
+    font-size: 14px;
+    line-height: 1;
+    color: #0056b3;
+    margin-bottom: 2px;
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+.tdc-post-nav-line {
+    width: 22px;
+    height: 1px;
+    background-color: #333333 !important;
+    margin: 1px 0;
+    border: none !important;
+}
+
+.tdc-post-nav-month {
+    font-size: 14px;
+    line-height: 1;
+    color: #0056b3;
+    margin-top: 2px;
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+.tdc-post-nav-year {
+    font-size: 14px;
+    line-height: 1;
+    color: #0056b3;
+    align-self: center;
+    margin-left: 2px;
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+.tdc-post-nav-title {
+    font-size: 16px;
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+.tdc-post-nav-title a {
+    color: #222222;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.tdc-post-nav-title a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
