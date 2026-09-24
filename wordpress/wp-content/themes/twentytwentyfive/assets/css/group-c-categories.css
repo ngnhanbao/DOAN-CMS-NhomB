@@ -1,0 +1,161 @@
+/* ==========================================================================
+   Group C - Categories Stylesheet
+   Module #9: Categories List Widget / Card
+   Design: FIT TDC Standard Style with Striped Divider & Yellow Bullet Dots
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Khung Card bao bọc Danh mục Categories
+   -------------------------------------------------------------------------- */
+.tdc-categories-card,
+.widget_categories,
+div.wp-block-categories,
+ul.wp-block-categories:not(div.wp-block-categories ul) {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 22px 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    margin-bottom: 30px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.widget_tdc_categories_widget {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+div.wp-block-categories ul.wp-block-categories-list {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. Tiêu đề Categories
+   -------------------------------------------------------------------------- */
+.tdc-categories-title,
+.widget_categories .widget-title,
+.wp-block-categories h2,
+.wp-block-categories h3,
+.tdc-categories-card .tdc-categories-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #2b2b2b;
+    margin: 0 0 10px 0;
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+    text-transform: capitalize;
+}
+
+/* --------------------------------------------------------------------------
+   3. Thanh gạch sọc chéo đặc trưng (Striped / Diagonal Hatched Divider)
+   -------------------------------------------------------------------------- */
+.tdc-stripe-divider,
+.widget_categories .widget-title::after,
+.wp-block-categories h2::after,
+.wp-block-categories h3::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 8px;
+    background: repeating-linear-gradient(
+        -45deg,
+        #e2e8f0,
+        #e2e8f0 2px,
+        transparent 2px,
+        transparent 6px
+    );
+    margin: 8px 0 14px 0;
+    border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Danh sách chuyên mục (List & Items)
+   -------------------------------------------------------------------------- */
+.tdc-categories-list,
+.widget_categories ul,
+.wp-block-categories ul.wp-block-categories-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.tdc-categories-list li,
+.widget_categories ul li,
+.wp-block-categories ul.wp-block-categories-list li {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.15s ease;
+}
+
+.tdc-categories-list li:last-child,
+.widget_categories ul li:last-child,
+.wp-block-categories ul.wp-block-categories-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Dấu chấm tròn màu vàng cam nổi bật (Yellow Bullet Dot) */
+.tdc-categories-list li .tdc-bullet,
+.widget_categories ul li::before,
+.wp-block-categories ul.wp-block-categories-list li::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #f59e0b; /* Vàng cam đậm nét chuẩn mẫu */
+    border-radius: 50%;
+    margin-right: 14px;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   5. Liên kết tên chuyên mục (Link Styling)
+   -------------------------------------------------------------------------- */
+.tdc-categories-list li a,
+.widget_categories ul li a,
+.wp-block-categories ul.wp-block-categories-list li a {
+    color: #3182ce; /* Màu xanh lam nhã nhặn của FIT TDC */
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.15s ease, transform 0.15s ease;
+    flex: 1;
+}
+
+.tdc-categories-list li a:hover,
+.widget_categories ul li a:hover,
+.wp-block-categories ul.wp-block-categories-list li a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+/* Ẩn số lượng đếm bài viết (count) nếu có trong block mặc định để giống hình mẫu */
+.wp-block-categories ul.wp-block-categories-list li span.wp-block-categories-list__post-count {
+    display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. Responsive cho màn hình nhỏ
+   -------------------------------------------------------------------------- */
+@media (max-width: 991.98px) {
+    .tdc-categories-card,
+    .widget_categories,
+    .wp-block-categories {
+        margin-bottom: 25px;
+        padding: 18px 20px;
+    }
+
+    .tdc-categories-title {
+        font-size: 20px;
+    }
+}

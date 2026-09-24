@@ -220,6 +220,30 @@ function group_c_enqueue_assets()
 		array(),
 		'1.0.0'
 	);
+
+	// Custom Post Detail CSS
+	wp_enqueue_style(
+		'group-c-detail',
+		get_template_directory_uri() . '/assets/css/group-c-detail.css',
+		array(),
+		'1.0.0'
+	);
+
+	// Custom Comments Form CSS
+	wp_enqueue_style(
+		'group-c-comments',
+		get_template_directory_uri() . '/assets/css/group-c-comments.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-comments.css') ? filemtime(get_template_directory() . '/assets/css/group-c-comments.css') : '1.0.1'
+	);
+
+	// Custom Categories List CSS (Module #9)
+	wp_enqueue_style(
+		'group-c-categories',
+		get_template_directory_uri() . '/assets/css/group-c-categories.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
+	);
 }
 
 add_action('wp_enqueue_scripts', 'group_c_enqueue_assets');
@@ -228,16 +252,72 @@ function my_custom_widgets_init()
 {
 	register_sidebar(array(
 		'name' => 'Khu vực Widget của tôi', // Tên hiển thị trong trang quản trị
-		'id' => 'my-custom-sidebar', // ID dùng để gọi ra template (viết thường, không dấu, cách nhau bằng gạch ngang)
+		'id' => 'my-custom-sidebar', // ID dùng để gọi ra template
 		'description' => 'Thêm các widget vào đây để hiển thị ra ngoài website.',
 		'before_widget' => '<section id="%1$s" class="widget %2$s">',
 		'after_widget' => '</section>',
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
 	));
+
+	// Sidebar dành riêng cho cột Trái của Trang chi tiết (Categories #9)
+	register_sidebar(array(
+		'name' => 'Sidebar Chi tiết - Trái (Categories #9)',
+		'id' => 'sidebar-detail-left',
+		'description' => 'Kéo thả widget Categories List vào đây để hiển thị ở cột bên trái trang chi tiết.',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
+
+	// Sidebar dành riêng cho cột Phải của Trang chi tiết (Recent Post #10)
+	register_sidebar(array(
+		'name' => 'Sidebar Chi tiết - Phải (Recent Post #10)',
+		'id' => 'sidebar-detail-right',
+		'description' => 'Kéo thả widget Recent Posts vào đây để hiển thị ở cột bên phải trang chi tiết.',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
 }
 // Móc hàm my_custom_widgets_init vào hook widgets_init của WordPress
 add_action('widgets_init', 'my_custom_widgets_init');
+
+// Kích hoạt hỗ trợ Widgets và hiển thị menu Widgets trong bảng điều khiển Quản trị (wp-admin)
+function twentytwentyfive_enable_widgets_support()
+{
+	add_theme_support('widgets');
+	add_theme_support('widgets-block-editor');
+}
+add_action('after_setup_theme', 'twentytwentyfive_enable_widgets_support');
+
+add_action('admin_menu', function () {
+	add_theme_page(__('Widgets'), __('Widgets'), 'edit_theme_options', 'widgets.php');
+});
+
+// Nạp stylesheet Categories vào cả Admin để xem trước trong màn hình Widgets
+function group_c_admin_category_assets($hook)
+{
+	if ($hook === 'widgets.php' || $hook === 'customize.php') {
+		wp_enqueue_style(
+			'group-c-categories-admin',
+			get_template_directory_uri() . '/assets/css/group-c-categories.css',
+			array(),
+			file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
+		);
+	}
+}
+add_action('admin_enqueue_scripts', 'group_c_admin_category_assets');
+add_action('enqueue_block_editor_assets', function () {
+	wp_enqueue_style(
+		'group-c-categories-block-editor',
+		get_template_directory_uri() . '/assets/css/group-c-categories.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
+	);
+});
 
 // Tạo shortcode [tdc_news] để hiển thị danh sách bài viết như thiết kế
 function tdc_custom_news_shortcode($atts)
@@ -410,6 +490,187 @@ function register_tdc_news_widget()
 }
 add_action('widgets_init', 'register_tdc_news_widget');
 
+// --- WIDGET CATEGORIES CHO BẢNG ĐIỀU KHIỂN ADMIN (MODULE #9) ---
+class TDC_Categories_Widget extends WP_Widget
+{
+	public function __construct()
+	{
+		parent::__construct(
+			'tdc_categories_widget',
+			'Chuyên mục - Categories List (TDC #9)',
+			array('description' => 'Hiển thị danh sách chuyên mục chuẩn giao diện FIT TDC với dải sọc và chấm vàng.')
+		);
+	}
+
+	public function form($instance)
+	{
+		$title   = !empty($instance['title']) ? $instance['title'] : 'Categories';
+		$number  = !empty($instance['number']) ? $instance['number'] : 10;
+		$orderby = !empty($instance['orderby']) ? $instance['orderby'] : 'name';
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('number')); ?>">Số lượng chuyên mục:</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('number')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('number')); ?>" type="number"
+				value="<?php echo esc_attr($number); ?>" min="1" max="50">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('orderby')); ?>">Sắp xếp theo:</label>
+			<select class="widefat" id="<?php echo esc_attr($this->get_field_id('orderby')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('orderby')); ?>">
+				<option value="name" <?php selected($orderby, 'name'); ?>>Tên (A-Z)</option>
+				<option value="id" <?php selected($orderby, 'id'); ?>>Thứ tự tạo (ID)</option>
+				<option value="count" <?php selected($orderby, 'count'); ?>>Số lượng bài viết</option>
+			</select>
+		</p>
+		<?php
+	}
+
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title']   = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : 'Categories';
+		$instance['number']  = (!empty($new_instance['number'])) ? absint($new_instance['number']) : 10;
+		$instance['orderby'] = (!empty($new_instance['orderby'])) ? sanitize_text_field($new_instance['orderby']) : 'name';
+		return $instance;
+	}
+
+	public function widget($args, $instance)
+	{
+		$title   = !empty($instance['title']) ? $instance['title'] : 'Categories';
+		$number  = !empty($instance['number']) ? $instance['number'] : 10;
+		$orderby = !empty($instance['orderby']) ? $instance['orderby'] : 'name';
+
+		echo $args['before_widget'];
+		echo tdc_categories_render_html(array(
+			'title'   => $title,
+			'number'  => $number,
+			'orderby' => $orderby,
+		));
+		echo $args['after_widget'];
+	}
+}
+
+function register_tdc_categories_widget()
+{
+	register_widget('TDC_Categories_Widget');
+}
+add_action('widgets_init', 'register_tdc_categories_widget');
+
+/**
+ * Hàm dựng giao diện Categories Card (Module #9) chuẩn thiết kế FIT TDC
+ */
+function tdc_categories_render_html($args = array())
+{
+	$title   = !empty($args['title']) ? $args['title'] : 'Categories';
+	$number  = !empty($args['number']) ? absint($args['number']) : 10;
+	$orderby = !empty($args['orderby']) ? $args['orderby'] : 'name';
+
+	$categories = get_categories(array(
+		'number'     => $number,
+		'orderby'    => $orderby,
+		'order'      => 'ASC',
+		'hide_empty' => false,
+		'exclude'    => array(1), // Ẩn chuyên mục mặc định 'Uncategorized' nếu có các chuyên mục khác
+	));
+
+	if (empty($categories)) {
+		$categories = get_categories(array(
+			'number'     => $number,
+			'orderby'    => $orderby,
+			'order'      => 'ASC',
+			'hide_empty' => false,
+		));
+	}
+
+	$html = '<div class="tdc-categories-card">';
+	$html .= '  <h3 class="tdc-categories-title">' . esc_html($title) . '</h3>';
+	$html .= '  <div class="tdc-stripe-divider"></div>';
+	$html .= '  <ul class="tdc-categories-list">';
+
+	if (!empty($categories)) {
+		foreach ($categories as $cat) {
+			$html .= '<li>';
+			$html .= '  <span class="tdc-bullet"></span>';
+			$html .= '  <a href="' . esc_url(get_category_link($cat->term_id)) . '">' . esc_html($cat->name) . '</a>';
+			$html .= '</li>';
+		}
+	} else {
+		$html .= '<li><span class="tdc-bullet"></span><span>' . esc_html__('Chưa có chuyên mục', 'twentytwentyfive') . '</span></li>';
+	}
+
+	$html .= '  </ul>';
+	$html .= '</div>';
+
+	return $html;
+}
+
+/**
+ * Shortcode [tdc_categories] cho Categories List (Module #9)
+ */
+function tdc_categories_shortcode($atts)
+{
+	$atts = shortcode_atts(array(
+		'title'   => 'Categories',
+		'number'  => 10,
+		'orderby' => 'name',
+	), $atts, 'tdc_categories');
+
+	return tdc_categories_render_html($atts);
+}
+add_shortcode('tdc_categories', 'tdc_categories_shortcode');
+
+/**
+ * Shortcode [tdc_sidebar_detail_left] cho cột bên trái trang chi tiết
+ * Hiển thị widget trong sidebar-detail-left nếu có, hoặc mặc định hiển thị Categories Card
+ */
+function tdc_sidebar_detail_left_shortcode()
+{
+	ob_start();
+	if (is_active_sidebar('sidebar-detail-left')) {
+		dynamic_sidebar('sidebar-detail-left');
+	} else {
+		echo tdc_categories_render_html();
+	}
+	return ob_get_clean();
+}
+add_shortcode('tdc_sidebar_detail_left', 'tdc_sidebar_detail_left_shortcode');
+
+/**
+ * Shortcode [tdc_sidebar_detail_right] cho cột bên phải trang chi tiết
+ * Hiển thị widget trong sidebar-detail-right nếu có, hoặc mặc định hiển thị Recent Posts
+ */
+function tdc_sidebar_detail_right_shortcode()
+{
+	ob_start();
+	if (is_active_sidebar('sidebar-detail-right')) {
+		dynamic_sidebar('sidebar-detail-right');
+	} else {
+		the_widget('TDC_Custom_Recent_Posts_Widget', array('number' => 3));
+	}
+	return ob_get_clean();
+}
+add_shortcode('tdc_sidebar_detail_right', 'tdc_sidebar_detail_right_shortcode');
+
+/**
+ * Bộ lọc render_block cho core/categories:
+ * Đảm bảo bất kể khi nào người dùng thêm Block "Categories List" trong Widget Admin hay Gutenberg,
+ * nó đều tự động hiển thị chuẩn giao diện FIT TDC với dải sọc và chấm vàng.
+ */
+add_filter('render_block', function ($block_content, $block) {
+	if (isset($block['blockName']) && $block['blockName'] === 'core/categories') {
+		return tdc_categories_render_html();
+	}
+	return $block_content;
+}, 10, 2);
+
+
 // --- SHORTCODE HIỂN THỊ KẾT QUẢ TÌM KIẾM ---
 function tdc_search_results_shortcode()
 {
@@ -428,7 +689,7 @@ function tdc_search_results_shortcode()
 	));
 
 	if (!$query->have_posts()) {
-		return '<p style="margin-top:20px;">Không tìm thấy bài viết nào phù hợp với từ khóa: <strong>' . esc_html($search_query) . '</strong></p>';
+		return '';
 	}
 
 	$output = '<style>
@@ -468,7 +729,7 @@ function tdc_search_results_shortcode()
 		$link = get_permalink();
 		$excerpt = wp_trim_words(get_the_excerpt(), 25, ' [...]');
 
-		$thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'medium_large') : 'https://via.placeholder.com/250x180?text=No+Image';
+		$thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'medium_large') : get_theme_file_uri('assets/images/typewriter.webp');
 
 		$output .= '<div class="tdc-search-item">';
 
@@ -505,3 +766,387 @@ function tdc_search_results_shortcode()
 	return $output;
 }
 add_shortcode('tdc_search_results', 'tdc_search_results_shortcode');
+
+/**
+ * Filter search query title format for Group C search style
+ */
+add_filter('render_block', function($block_content, $block) {
+    if (isset($block['blockName']) && $block['blockName'] === 'core/query-title' && isset($block['attrs']['type']) && $block['attrs']['type'] === 'search') {
+        $query = get_search_query();
+        return sprintf(
+            '<h1 class="wp-block-query-title group-c-search-title"><span class="group-c-search-label">Search:</span> <span class="group-c-search-keyword">"%s"</span></h1>',
+            esc_html($query)
+        );
+    }
+    return $block_content;
+}, 10, 2);
+
+/**
+ * Đăng ký khu vực Widget riêng cho Search (4) theo đúng chuẩn bài giảng
+ */
+function register_search_widget_4() {
+    register_sidebar( array(
+        'name'          => 'Search Widget #4',
+        'id'            => 'search-widget-4',
+        'description'   => 'Khu vực Widget hiển thị ô tìm kiếm cho phần Search (4)',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action( 'widgets_init', 'register_search_widget_4' );
+
+/**
+ * Shortcode [tdc_prev_next_post] cho phần (7) Prev - Next Post
+ */
+function tdc_prev_next_post_shortcode() {
+    if (!is_single()) {
+        return '';
+    }
+
+    $prev_post = get_previous_post();
+    $next_post = get_next_post();
+
+    if (!$prev_post && !$next_post) {
+        return '';
+    }
+
+    $output = '<style>
+        .tdc-post-nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 30px 0;
+            font-family: sans-serif;
+        }
+        .tdc-post-nav-item {
+            display: flex;
+            align-items: center;
+        }
+        .tdc-post-nav-date-box {
+            display: inline-flex;
+            align-items: center;
+            font-family: "Times New Roman", Times, serif;
+            min-width: 65px;
+            margin-right: 25px;
+            user-select: none;
+        }
+        .tdc-post-nav-date-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 1px solid #777;
+            padding-bottom: 1px;
+            margin-right: 3px;
+        }
+        .tdc-post-nav-day {
+            font-size: 15px;
+            line-height: 1;
+            color: #333;
+        }
+        .tdc-post-nav-month {
+            font-size: 15px;
+            line-height: 1;
+            color: #333;
+            margin-top: 2px;
+        }
+        .tdc-post-nav-year {
+            font-size: 15px;
+            line-height: 1;
+            color: #333;
+            margin-top: -8px;
+        }
+        .tdc-post-nav-title {
+            font-size: 16px;
+            margin: 0;
+            line-height: 1.4;
+            font-weight: normal;
+        }
+        .tdc-post-nav-title a {
+            color: #333333;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .tdc-post-nav-title a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>';
+
+    $output .= '<div class="tdc-post-nav-list">';
+
+    $posts_to_show = array_filter(array($prev_post, $next_post));
+    foreach ($posts_to_show as $p) {
+        $day = get_the_date('d', $p->ID);
+        $month = get_the_date('m', $p->ID);
+        $year = get_the_date('y', $p->ID);
+        $title = get_the_title($p->ID);
+        $link = get_permalink($p->ID);
+
+        $output .= '<div class="tdc-post-nav-item">';
+        $output .= '  <div class="tdc-post-nav-date-box">';
+        $output .= '    <div class="tdc-post-nav-date-stack">';
+        $output .= '      <span class="tdc-post-nav-day">' . esc_html($day) . '</span>';
+        $output .= '      <span class="tdc-post-nav-line"></span>';
+        $output .= '      <span class="tdc-post-nav-month">' . esc_html($month) . '</span>';
+        $output .= '    </div>';
+        $output .= '    <span class="tdc-post-nav-year">' . esc_html($year) . '</span>';
+        $output .= '  </div>';
+        $output .= '  <h4 class="tdc-post-nav-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h4>';
+        $output .= '</div>';
+    }
+
+    $output .= '</div>';
+
+    return $output;
+}
+add_shortcode('tdc_prev_next_post', 'tdc_prev_next_post_shortcode');
+
+/**
+ * Đăng ký khu vực Widget riêng cho Comments (12) theo đúng chuẩn bài giảng
+ */
+/**
+ * Đăng ký khu vực Widget riêng cho Archive (11) theo chuẩn bài giảng
+ */
+function register_archive_sidebar_11() {
+    register_sidebar( array(
+        'name'          => 'Archive Sidebar #11',
+        'id'            => 'sidebar-archive-11',
+        'description'   => 'Khu vực Widget hiển thị danh sách Lưu trữ cho phần Archive (11)',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action( 'widgets_init', 'register_archive_sidebar_11' );
+
+/**
+ * Shortcode [tdc_archive] cho phần (11) Archive
+ */
+function tdc_archive_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'title' => 'Archive'
+    ), $atts, 'tdc_archive');
+
+    $output = '<style>
+        .tdc-archive-widget-11 {
+            font-family: Arial, sans-serif;
+            margin-bottom: 25px;
+        }
+        .tdc-archive-title-11 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #333333;
+            margin: 0 0 4px 0;
+        }
+        .tdc-archive-line-11 {
+            width: 45px;
+            height: 2px;
+            background-color: #777777;
+            margin-bottom: 12px;
+        }
+        .tdc-archive-list-11 {
+            list-style: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .tdc-archive-list-11 li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .tdc-archive-list-11 li:last-child {
+            border-bottom: none;
+        }
+        .tdc-archive-list-11 li a {
+            color: #337ab7;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .tdc-archive-list-11 li a:hover {
+            color: #23527c;
+            text-decoration: underline;
+        }
+    </style>';
+
+    $output .= '<div class="tdc-archive-widget-11">';
+    if (!empty($atts['title'])) {
+        $output .= '<h3 class="tdc-archive-title-11">' . esc_html($atts['title']) . '</h3>';
+        $output .= '<div class="tdc-archive-line-11"></div>';
+    }
+    $output .= '<ul class="tdc-archive-list-11">';
+
+    $categories = get_categories(array('number' => 5, 'orderby' => 'count', 'order' => 'DESC'));
+    if (!empty($categories)) {
+        foreach ($categories as $cat) {
+            $output .= '<li><a href="' . esc_url(get_category_link($cat->term_id)) . '">' . esc_html($cat->name) . '</a></li>';
+        }
+    } else {
+        $output .= '<li><a href="#">Tháng 09 năm 2026</a></li>';
+    }
+
+    $output .= '</ul></div>';
+    return $output;
+}
+add_shortcode('tdc_archive', 'tdc_archive_shortcode');
+
+/**
+ * Đăng ký khu vực Widget riêng cho Comments (12) theo đúng chuẩn bài giảng
+ */
+function register_comments_sidebar_12() {
+    register_sidebar( array(
+        'name'          => 'Comments Sidebar #12',
+        'id'            => 'sidebar-comments-12',
+        'description'   => 'Khu vực Widget hiển thị danh sách bình luận cho phần Comments (12)',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action( 'widgets_init', 'register_comments_sidebar_12' );
+
+/**
+ * Shortcode [tdc_recent_comments] cho phần (12) Comments
+ * Khung hiển thị khớp 100% hình ảnh slide bài giảng (media_1790126661322.png)
+ */
+function tdc_recent_comments_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'count' => 5,
+        'title' => 'Comments'
+    ), $atts, 'tdc_recent_comments');
+
+    $output = '<style>
+        .tdc-comments-widget-12 {
+            font-family: Arial, sans-serif;
+            margin-bottom: 25px;
+        }
+        .tdc-comments-title-12 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #333333;
+            margin: 0 0 4px 0;
+        }
+        .tdc-comments-line-12 {
+            width: 45px;
+            height: 2px;
+            background-color: #777777;
+            margin-bottom: 12px;
+        }
+        .tdc-comments-list-12 {
+            list-style: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .tdc-comments-item-12 {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .tdc-comments-item-12:last-child {
+            border-bottom: none;
+        }
+        .tdc-comments-item-12 a {
+            color: #337ab7;
+            text-decoration: none;
+            font-size: 15px;
+            display: block;
+        }
+        .tdc-comments-item-12 a:hover {
+            color: #23527c;
+            text-decoration: underline;
+        }
+    </style>';
+
+    $output .= '<div class="tdc-comments-widget-12">';
+    if (!empty($atts['title'])) {
+        $output .= '<h3 class="tdc-comments-title-12">' . esc_html($atts['title']) . '</h3>';
+        $output .= '<div class="tdc-comments-line-12"></div>';
+    }
+    $output .= '<ul class="tdc-comments-list-12">';
+
+    $comments = get_comments(array(
+        'number' => $atts['count'],
+        'status' => 'approve'
+    ));
+
+    if (!empty($comments)) {
+        foreach ($comments as $comment) {
+            $text = wp_strip_all_tags($comment->comment_content);
+            $link = get_comment_link($comment);
+            $output .= '<li class="tdc-comments-item-12">';
+            $output .= '  <a href="' . esc_url($link) . '">' . esc_html($text) . '</a>';
+            $output .= '</li>';
+        }
+    } else {
+        // Mẫu bình luận chính xác theo hình ảnh slide (media_1790126661322.png)
+        $sample_comments = array(
+            'Bài viết hay quá',
+            'Cảm ơn tác giả',
+            'Bài viết thật hữu ích'
+        );
+
+        foreach ($sample_comments as $text) {
+            $output .= '<li class="tdc-comments-item-12">';
+            $output .= '  <a href="#">' . esc_html($text) . '</a>';
+            $output .= '</li>';
+        }
+    }
+
+    $output .= '</ul></div>';
+    return $output;
+}
+add_shortcode('tdc_recent_comments', 'tdc_recent_comments_shortcode');
+
+/**
+ * Tạo Widget TDC Comments cho Quản trị viên
+ */
+class TDC_Comments_Widget extends WP_Widget {
+    public function __construct() {
+        parent::__construct(
+            'tdc_comments_widget',
+            'Bình luận mới nhất (TDC #12)',
+            array('description' => 'Kéo thả để hiển thị danh sách bình luận mới nhất ở Sidebar #12.')
+        );
+    }
+
+    public function widget($args, $instance) {
+        echo $args['before_widget'];
+        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+        $count = !empty($instance['count']) ? $instance['count'] : 5;
+        echo do_shortcode('[tdc_recent_comments count="' . esc_attr($count) . '" title="' . esc_attr($title) . '"]');
+        echo $args['after_widget'];
+    }
+
+    public function form($instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+        $count = !empty($instance['count']) ? $instance['count'] : 5;
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('count')); ?>">Số lượng bình luận:</label>
+            <input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('count')); ?>" name="<?php echo esc_attr($this->get_field_name('count')); ?>" type="number" value="<?php echo esc_attr($count); ?>" min="1" max="10">
+        </p>
+        <?php
+    }
+
+    public function update($new_instance, $old_instance) {
+        $instance = array();
+        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+        $instance['count'] = (!empty($new_instance['count'])) ? absint($new_instance['count']) : 5;
+        return $instance;
+    }
+}
+function register_tdc_comments_widget() {
+    register_widget('TDC_Comments_Widget');
+}
+add_action('widgets_init', 'register_tdc_comments_widget');
+
+
+
+
+require_once get_template_directory() . '/widget-recent-posts.php';
+require_once get_template_directory() . '/widget-numbered-posts.php';
