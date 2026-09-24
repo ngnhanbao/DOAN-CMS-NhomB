@@ -218,7 +218,7 @@ function group_c_enqueue_assets()
 		'group-c-footer',
 		get_template_directory_uri() . '/assets/css/group-c-footer.css',
 		array(),
-		'1.0.0'
+		file_exists(get_template_directory() . '/assets/css/group-c-footer.css') ? filemtime(get_template_directory() . '/assets/css/group-c-footer.css') : '1.0.0'
 	);
 
 	// Custom Post Detail CSS
@@ -281,6 +281,40 @@ function my_custom_widgets_init()
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
 	));
+
+	// --- CÁC KHU VỰC WIDGET CHO FOOTER (MODULE #3) ---
+	// Footer #1 (Cột 1)
+	register_sidebar(array(
+		'name'          => 'Footer #1',
+		'id'            => 'footer-1',
+		'description'   => 'Khu vực Widget cho Cột 1 của Footer (Mặc định: Quick links)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h5 class="widget-title">',
+		'after_title'   => '</h5>',
+	));
+
+	// Footer #2 (Cột 2)
+	register_sidebar(array(
+		'name'          => 'Footer #2',
+		'id'            => 'footer-2',
+		'description'   => 'Khu vực Widget cho Cột 2 của Footer (Mặc định: Quick links)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h5 class="widget-title">',
+		'after_title'   => '</h5>',
+	));
+
+	// Footer #3 (Cột 3)
+	register_sidebar(array(
+		'name'          => 'Footer #3',
+		'id'            => 'footer-3',
+		'description'   => 'Khu vực Widget cho Cột 3 của Footer (Mặc định: Quick links)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h5 class="widget-title">',
+		'after_title'   => '</h5>',
+	));
 }
 // Móc hàm my_custom_widgets_init vào hook widgets_init của WordPress
 add_action('widgets_init', 'my_custom_widgets_init');
@@ -297,7 +331,7 @@ add_action('admin_menu', function () {
 	add_theme_page(__('Widgets'), __('Widgets'), 'edit_theme_options', 'widgets.php');
 });
 
-// Nạp stylesheet Categories vào cả Admin để xem trước trong màn hình Widgets
+// Nạp stylesheet Categories & Footer vào Admin để xem trước trong màn hình Widgets
 function group_c_admin_category_assets($hook)
 {
 	if ($hook === 'widgets.php' || $hook === 'customize.php') {
@@ -306,6 +340,12 @@ function group_c_admin_category_assets($hook)
 			get_template_directory_uri() . '/assets/css/group-c-categories.css',
 			array(),
 			file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
+		);
+		wp_enqueue_style(
+			'group-c-footer-admin',
+			get_template_directory_uri() . '/assets/css/group-c-footer.css',
+			array(),
+			file_exists(get_template_directory() . '/assets/css/group-c-footer.css') ? filemtime(get_template_directory() . '/assets/css/group-c-footer.css') : '1.0.0'
 		);
 	}
 }
@@ -317,7 +357,88 @@ add_action('enqueue_block_editor_assets', function () {
 		array(),
 		file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
 	);
+	wp_enqueue_style(
+		'group-c-footer-block-editor',
+		get_template_directory_uri() . '/assets/css/group-c-footer.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-footer.css') ? filemtime(get_template_directory() . '/assets/css/group-c-footer.css') : '1.0.0'
+	);
 });
+
+// --- WIDGET QUICK LINKS CHO BẢNG ĐIỀU KHIỂN ADMIN (FOOTER MODULE #3) ---
+class TDC_Quick_Links_Widget extends WP_Widget
+{
+	public function __construct()
+	{
+		parent::__construct(
+			'tdc_quick_links_widget',
+			'Liên kết nhanh - Quick Links',
+			array('description' => 'Hiển thị danh sách liên kết nhanh Quick links với mũi tên kép chuẩn giao diện Footer.')
+		);
+	}
+
+	public function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Quick links';
+		$links = !empty($instance['links']) ? $instance['links'] : "Home | /\nAbout | #\nFAQ | #\nGet Started | #\nVideos | #";
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('links')); ?>">Danh sách liên kết (mỗi dòng một mục: <code>Tên | URL</code>):</label>
+			<textarea class="widefat" id="<?php echo esc_attr($this->get_field_id('links')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('links')); ?>" rows="6"><?php echo esc_textarea($links); ?></textarea>
+		</p>
+		<?php
+	}
+
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : 'Quick links';
+		$instance['links'] = (!empty($new_instance['links'])) ? sanitize_textarea_field($new_instance['links']) : '';
+		return $instance;
+	}
+
+	public function widget($args, $instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Quick links';
+		$links_text = !empty($instance['links']) ? $instance['links'] : "Home | /\nAbout | #\nFAQ | #\nGet Started | #\nVideos | #";
+
+		echo $args['before_widget'];
+		echo '<h5 class="widget-title">' . esc_html($title) . '</h5>';
+		echo '<ul class="list-unstyled quick-links">';
+
+		$lines = explode("\n", $links_text);
+		foreach ($lines as $line) {
+			$line = trim($line);
+			if (empty($line)) continue;
+			$parts = explode('|', $line, 2);
+			$label = trim($parts[0]);
+			$url   = isset($parts[1]) ? trim($parts[1]) : '#';
+			if ($url === '/') $url = home_url('/');
+
+			echo '<li>';
+			echo '  <a href="' . esc_url($url) . '">';
+			echo '    <i class="fa-solid fa-angles-right arrow-icon"></i>' . esc_html($label);
+			echo '  </a>';
+			echo '</li>';
+		}
+
+		echo '</ul>';
+		echo $args['after_widget'];
+	}
+}
+
+function register_tdc_quick_links_widget()
+{
+	register_widget('TDC_Quick_Links_Widget');
+}
+add_action('widgets_init', 'register_tdc_quick_links_widget');
 
 // Tạo shortcode [tdc_news] để hiển thị danh sách bài viết như thiết kế
 function tdc_custom_news_shortcode($atts)
