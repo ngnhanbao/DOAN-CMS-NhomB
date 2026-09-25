@@ -33,61 +33,98 @@ body.single-post {
 
 /* Circular Yellow Date Badge */
 .tdc-date-badge {
-    width: 68px;
-    height: 68px;
-    min-width: 68px;
-    background: #f5b000;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #222222;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-    user-select: none;
-    flex-shrink: 0;
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+    background: #f0be1a !important; /* Vàng nghệ đặc trưng của FIT TDC */
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #222222 !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15) !important;
+    user-select: none !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    padding: 0 !important;
+    overflow: hidden !important;
 }
 
 .tdc-date-badge-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    color: #222222 !important;
+    white-space: nowrap !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 .tdc-date-fraction {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
-.tdc-date-day {
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1;
-    color: #222222;
+.tdc-date-badge .tdc-badge-day,
+.tdc-date-badge .tdc-date-day {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    color: #222222 !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    text-align: center !important;
+    display: block !important;
 }
 
-.tdc-date-dash {
-    width: 20px;
-    height: 1.5px;
-    background: #222222;
-    margin: 2px 0;
+.tdc-date-badge .tdc-badge-dash,
+.tdc-date-badge .tdc-date-dash {
+    display: block !important;
+    width: 17px !important;
+    height: 1px !important;
+    background-color: #222222 !important;
+    margin: 2px 0 !important;
+    border: none !important;
+    padding: 0 !important;
 }
 
-.tdc-date-month {
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1;
-    color: #222222;
+.tdc-date-badge .tdc-badge-month,
+.tdc-date-badge .tdc-date-month {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    color: #222222 !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    text-align: center !important;
+    display: block !important;
 }
 
-.tdc-date-year {
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1;
-    color: #222222;
-    margin-left: 3px;
-    align-self: center;
+.tdc-date-badge .tdc-badge-year,
+.tdc-date-badge .tdc-date-year {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    color: #222222 !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 0 0 3px !important;
+    align-self: center !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
 }
 
 /* Decorative Divider with Arrow Down */
@@ -176,22 +213,27 @@ body.single-post {
     }
 
     .tdc-date-badge {
-        width: 58px;
-        height: 58px;
-        min-width: 58px;
+        width: 58px !important;
+        height: 58px !important;
+        min-width: 58px !important;
+        max-width: 58px !important;
     }
 
-    .tdc-date-day,
-    .tdc-date-month {
-        font-size: 13px;
+    .tdc-date-badge .tdc-badge-day,
+    .tdc-date-badge .tdc-date-day,
+    .tdc-date-badge .tdc-badge-month,
+    .tdc-date-badge .tdc-date-month {
+        font-size: 12px !important;
     }
 
-    .tdc-date-dash {
-        width: 16px;
+    .tdc-date-badge .tdc-badge-dash,
+    .tdc-date-badge .tdc-date-dash {
+        width: 15px !important;
     }
 
-    .tdc-date-year {
-        font-size: 12px;
+    .tdc-date-badge .tdc-badge-year,
+    .tdc-date-badge .tdc-date-year {
+        font-size: 12px !important;
     }
 
     .tdc-detail-content p {
@@ -225,58 +267,94 @@ body.single-post {
     border-bottom: none !important;
 }
 
+/* Vòng tròn ngày tháng màu vàng nghệ đặc trưng FIT TDC */
 .tdc-post-nav-date-box {
-    display: inline-flex;
-    align-items: center;
-    font-family: "Times New Roman", Times, serif;
-    min-width: 60px;
-    margin-right: 25px;
-    user-select: none;
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    background: #f0be1a !important; /* Vàng nghệ đặc trưng của FIT TDC */
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #222222 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+    margin-right: 18px !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    user-select: none !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    cursor: pointer;
+}
+
+.tdc-post-nav-item:hover .tdc-post-nav-date-box {
+    transform: scale(1.06) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18) !important;
 }
 
 .tdc-post-nav-date-stack {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-right: 3px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-right: 2px !important;
     border-bottom: none !important;
+    line-height: 1 !important;
+    padding: 0 !important;
 }
 
 .tdc-post-nav-day {
-    font-size: 14px;
-    line-height: 1;
-    color: #0056b3;
-    margin-bottom: 2px;
-    text-decoration: none !important;
-    border-bottom: none !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    color: #222222 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    display: block !important;
 }
 
 .tdc-post-nav-line {
-    width: 22px;
-    height: 1px;
-    background-color: #333333 !important;
-    margin: 1px 0;
+    width: 14px !important;
+    height: 1px !important;
+    background-color: #222222 !important;
+    margin: 2px 0 !important;
     border: none !important;
+    padding: 0 !important;
+    display: block !important;
 }
 
 .tdc-post-nav-month {
-    font-size: 14px;
-    line-height: 1;
-    color: #0056b3;
-    margin-top: 2px;
-    text-decoration: none !important;
-    border-bottom: none !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    color: #222222 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    display: block !important;
 }
 
 .tdc-post-nav-year {
-    font-size: 14px;
-    line-height: 1;
-    color: #0056b3;
-    align-self: center;
-    margin-left: 2px;
-    text-decoration: none !important;
-    border-bottom: none !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    color: #222222 !important;
+    align-self: center !important;
+    margin: 0 0 0 3px !important;
+    padding: 0 !important;
+    border: none !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
 }
 
 .tdc-post-nav-title {

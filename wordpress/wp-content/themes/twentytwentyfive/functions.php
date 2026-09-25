@@ -210,7 +210,7 @@ function group_c_enqueue_assets()
 		'group-c-search',
 		get_template_directory_uri() . '/assets/css/group-c-search.css',
 		array(),
-		'1.0.0'
+		file_exists(get_template_directory() . '/assets/css/group-c-search.css') ? filemtime(get_template_directory() . '/assets/css/group-c-search.css') : '1.0.0'
 	);
 
 	// Custom Footer CSS
@@ -218,7 +218,7 @@ function group_c_enqueue_assets()
 		'group-c-footer',
 		get_template_directory_uri() . '/assets/css/group-c-footer.css',
 		array(),
-		'1.0.0'
+		file_exists(get_template_directory() . '/assets/css/group-c-footer.css') ? filemtime(get_template_directory() . '/assets/css/group-c-footer.css') : '1.0.0'
 	);
 
 	// Custom Post Detail CSS
@@ -226,7 +226,7 @@ function group_c_enqueue_assets()
 		'group-c-detail',
 		get_template_directory_uri() . '/assets/css/group-c-detail.css',
 		array(),
-		'1.0.0'
+		file_exists(get_template_directory() . '/assets/css/group-c-detail.css') ? filemtime(get_template_directory() . '/assets/css/group-c-detail.css') : '1.0.0'
 	);
 
 	// Custom Comments Form CSS
@@ -236,6 +236,14 @@ function group_c_enqueue_assets()
 		array(),
 		file_exists(get_template_directory() . '/assets/css/group-c-comments.css') ? filemtime(get_template_directory() . '/assets/css/group-c-comments.css') : '1.0.1'
 	);
+
+	// Custom Categories List CSS (Module #9)
+	wp_enqueue_style(
+		'group-c-categories',
+		get_template_directory_uri() . '/assets/css/group-c-categories.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
+	);
 }
 
 add_action('wp_enqueue_scripts', 'group_c_enqueue_assets');
@@ -244,16 +252,201 @@ function my_custom_widgets_init()
 {
 	register_sidebar(array(
 		'name' => 'Khu vực Widget của tôi', // Tên hiển thị trong trang quản trị
-		'id' => 'my-custom-sidebar', // ID dùng để gọi ra template (viết thường, không dấu, cách nhau bằng gạch ngang)
+		'id' => 'my-custom-sidebar', // ID dùng để gọi ra template
 		'description' => 'Thêm các widget vào đây để hiển thị ra ngoài website.',
 		'before_widget' => '<section id="%1$s" class="widget %2$s">',
 		'after_widget' => '</section>',
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
 	));
+
+	// Sidebar dành riêng cho cột Trái của Trang chi tiết (Categories #9)
+	register_sidebar(array(
+		'name' => 'Sidebar Chi tiết - Trái (Categories #9)',
+		'id' => 'sidebar-detail-left',
+		'description' => 'Kéo thả widget Categories List vào đây để hiển thị ở cột bên trái trang chi tiết.',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
+
+	// Sidebar dành riêng cho cột Phải của Trang chi tiết (Recent Post #10)
+	register_sidebar(array(
+		'name' => 'Sidebar Chi tiết - Phải (Recent Post #10)',
+		'id' => 'sidebar-detail-right',
+		'description' => 'Kéo thả widget Recent Posts vào đây để hiển thị ở cột bên phải trang chi tiết.',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
+
+	// --- CÁC KHU VỰC WIDGET CHO FOOTER (MODULE #3) ---
+	// Footer #1 (Cột 1)
+	register_sidebar(array(
+		'name'          => 'Footer #1',
+		'id'            => 'footer-1',
+		'description'   => 'Khu vực Widget cho Cột 1 của Footer (Mặc định: Quick links)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h5 class="widget-title">',
+		'after_title'   => '</h5>',
+	));
+
+	// Footer #2 (Cột 2)
+	register_sidebar(array(
+		'name'          => 'Footer #2',
+		'id'            => 'footer-2',
+		'description'   => 'Khu vực Widget cho Cột 2 của Footer (Mặc định: Quick links)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h5 class="widget-title">',
+		'after_title'   => '</h5>',
+	));
+
+	// Footer #3 (Cột 3)
+	register_sidebar(array(
+		'name'          => 'Footer #3',
+		'id'            => 'footer-3',
+		'description'   => 'Khu vực Widget cho Cột 3 của Footer (Mặc định: Quick links)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h5 class="widget-title">',
+		'after_title'   => '</h5>',
+	));
 }
 // Móc hàm my_custom_widgets_init vào hook widgets_init của WordPress
 add_action('widgets_init', 'my_custom_widgets_init');
+
+// Kích hoạt hỗ trợ Widgets trong bảng điều khiển Quản trị (wp-admin)
+function twentytwentyfive_enable_widgets_support()
+{
+	add_theme_support('widgets');
+	add_theme_support('widgets-block-editor');
+}
+add_action('after_setup_theme', 'twentytwentyfive_enable_widgets_support');
+
+// Nạp stylesheet Categories, Comments & Footer vào Admin để xem trước trong màn hình Widgets
+function group_c_admin_category_assets($hook)
+{
+	if ($hook === 'widgets.php' || $hook === 'customize.php') {
+		wp_enqueue_style(
+			'group-c-categories-admin',
+			get_template_directory_uri() . '/assets/css/group-c-categories.css',
+			array(),
+			file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
+		);
+		wp_enqueue_style(
+			'group-c-footer-admin',
+			get_template_directory_uri() . '/assets/css/group-c-footer.css',
+			array(),
+			file_exists(get_template_directory() . '/assets/css/group-c-footer.css') ? filemtime(get_template_directory() . '/assets/css/group-c-footer.css') : '1.0.0'
+		);
+		wp_enqueue_style(
+			'group-c-comments-admin',
+			get_template_directory_uri() . '/assets/css/group-c-comments.css',
+			array(),
+			file_exists(get_template_directory() . '/assets/css/group-c-comments.css') ? filemtime(get_template_directory() . '/assets/css/group-c-comments.css') : '1.0.0'
+		);
+	}
+}
+add_action('admin_enqueue_scripts', 'group_c_admin_category_assets');
+add_action('enqueue_block_editor_assets', function () {
+	wp_enqueue_style(
+		'group-c-categories-block-editor',
+		get_template_directory_uri() . '/assets/css/group-c-categories.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
+	);
+	wp_enqueue_style(
+		'group-c-footer-block-editor',
+		get_template_directory_uri() . '/assets/css/group-c-footer.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-footer.css') ? filemtime(get_template_directory() . '/assets/css/group-c-footer.css') : '1.0.0'
+	);
+	wp_enqueue_style(
+		'group-c-comments-block-editor',
+		get_template_directory_uri() . '/assets/css/group-c-comments.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-comments.css') ? filemtime(get_template_directory() . '/assets/css/group-c-comments.css') : '1.0.0'
+	);
+});
+
+// --- WIDGET QUICK LINKS CHO BẢNG ĐIỀU KHIỂN ADMIN (FOOTER MODULE #3) ---
+class TDC_Quick_Links_Widget extends WP_Widget
+{
+	public function __construct()
+	{
+		parent::__construct(
+			'tdc_quick_links_widget',
+			'Liên kết nhanh - Quick Links',
+			array('description' => 'Hiển thị danh sách liên kết nhanh Quick links với mũi tên kép chuẩn giao diện Footer.')
+		);
+	}
+
+	public function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Quick links';
+		$links = !empty($instance['links']) ? $instance['links'] : "Home | /\nAbout | #\nFAQ | #\nGet Started | #\nVideos | #";
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('links')); ?>">Danh sách liên kết (mỗi dòng một mục: <code>Tên | URL</code>):</label>
+			<textarea class="widefat" id="<?php echo esc_attr($this->get_field_id('links')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('links')); ?>" rows="6"><?php echo esc_textarea($links); ?></textarea>
+		</p>
+		<?php
+	}
+
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : 'Quick links';
+		$instance['links'] = (!empty($new_instance['links'])) ? sanitize_textarea_field($new_instance['links']) : '';
+		return $instance;
+	}
+
+	public function widget($args, $instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Quick links';
+		$links_text = !empty($instance['links']) ? $instance['links'] : "Home | /\nAbout | #\nFAQ | #\nGet Started | #\nVideos | #";
+
+		echo $args['before_widget'];
+		echo '<h5 class="widget-title">' . esc_html($title) . '</h5>';
+		echo '<ul class="list-unstyled quick-links">';
+
+		$lines = explode("\n", $links_text);
+		foreach ($lines as $line) {
+			$line = trim($line);
+			if (empty($line)) continue;
+			$parts = explode('|', $line, 2);
+			$label = trim($parts[0]);
+			$url   = isset($parts[1]) ? trim($parts[1]) : '#';
+			if ($url === '/') $url = home_url('/');
+
+			echo '<li>';
+			echo '  <a href="' . esc_url($url) . '">';
+			echo '    <i class="fa-solid fa-angles-right arrow-icon"></i>' . esc_html($label);
+			echo '  </a>';
+			echo '</li>';
+		}
+
+		echo '</ul>';
+		echo $args['after_widget'];
+	}
+}
+
+function register_tdc_quick_links_widget()
+{
+	register_widget('TDC_Quick_Links_Widget');
+}
+add_action('widgets_init', 'register_tdc_quick_links_widget');
 
 // Tạo shortcode [tdc_news] để hiển thị danh sách bài viết như thiết kế
 function tdc_custom_news_shortcode($atts)
@@ -426,41 +619,221 @@ function register_tdc_news_widget()
 }
 add_action('widgets_init', 'register_tdc_news_widget');
 
+// --- WIDGET CATEGORIES CHO BẢNG ĐIỀU KHIỂN ADMIN (MODULE #9) ---
+class TDC_Categories_Widget extends WP_Widget
+{
+	public function __construct()
+	{
+		parent::__construct(
+			'tdc_categories_widget',
+			'Chuyên mục - Categories List (TDC #9)',
+			array('description' => 'Hiển thị danh sách chuyên mục chuẩn giao diện FIT TDC với dải sọc và chấm vàng.')
+		);
+	}
+
+	public function form($instance)
+	{
+		$title   = !empty($instance['title']) ? $instance['title'] : 'Categories';
+		$number  = !empty($instance['number']) ? $instance['number'] : 10;
+		$orderby = !empty($instance['orderby']) ? $instance['orderby'] : 'name';
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('number')); ?>">Số lượng chuyên mục:</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('number')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('number')); ?>" type="number"
+				value="<?php echo esc_attr($number); ?>" min="1" max="50">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('orderby')); ?>">Sắp xếp theo:</label>
+			<select class="widefat" id="<?php echo esc_attr($this->get_field_id('orderby')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('orderby')); ?>">
+				<option value="name" <?php selected($orderby, 'name'); ?>>Tên (A-Z)</option>
+				<option value="id" <?php selected($orderby, 'id'); ?>>Thứ tự tạo (ID)</option>
+				<option value="count" <?php selected($orderby, 'count'); ?>>Số lượng bài viết</option>
+			</select>
+		</p>
+		<?php
+	}
+
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title']   = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : 'Categories';
+		$instance['number']  = (!empty($new_instance['number'])) ? absint($new_instance['number']) : 10;
+		$instance['orderby'] = (!empty($new_instance['orderby'])) ? sanitize_text_field($new_instance['orderby']) : 'name';
+		return $instance;
+	}
+
+	public function widget($args, $instance)
+	{
+		$title   = !empty($instance['title']) ? $instance['title'] : 'Categories';
+		$number  = !empty($instance['number']) ? $instance['number'] : 10;
+		$orderby = !empty($instance['orderby']) ? $instance['orderby'] : 'name';
+
+		echo $args['before_widget'];
+		echo tdc_categories_render_html(array(
+			'title'   => $title,
+			'number'  => $number,
+			'orderby' => $orderby,
+		));
+		echo $args['after_widget'];
+	}
+}
+
+function register_tdc_categories_widget()
+{
+	register_widget('TDC_Categories_Widget');
+}
+add_action('widgets_init', 'register_tdc_categories_widget');
+
+/**
+ * Hàm dựng giao diện Categories Card (Module #9) chuẩn thiết kế FIT TDC
+ */
+function tdc_categories_render_html($args = array())
+{
+	$title   = !empty($args['title']) ? $args['title'] : 'Categories';
+	$number  = !empty($args['number']) ? absint($args['number']) : 10;
+	$orderby = !empty($args['orderby']) ? $args['orderby'] : 'name';
+
+	$categories = get_categories(array(
+		'number'     => $number,
+		'orderby'    => $orderby,
+		'order'      => 'ASC',
+		'hide_empty' => false,
+		'exclude'    => array(1), // Ẩn chuyên mục mặc định 'Uncategorized' nếu có các chuyên mục khác
+	));
+
+	if (empty($categories)) {
+		$categories = get_categories(array(
+			'number'     => $number,
+			'orderby'    => $orderby,
+			'order'      => 'ASC',
+			'hide_empty' => false,
+		));
+	}
+
+	$html = '<div class="tdc-categories-card">';
+	$html .= '  <h3 class="tdc-categories-title">' . esc_html($title) . '</h3>';
+	$html .= '  <div class="tdc-stripe-divider"></div>';
+	$html .= '  <ul class="tdc-categories-list">';
+
+	if (!empty($categories)) {
+		foreach ($categories as $cat) {
+			$html .= '<li>';
+			$html .= '  <span class="tdc-bullet"></span>';
+			$html .= '  <a href="' . esc_url(get_category_link($cat->term_id)) . '">' . esc_html($cat->name) . '</a>';
+			$html .= '</li>';
+		}
+	} else {
+		$html .= '<li><span class="tdc-bullet"></span><span>' . esc_html__('Chưa có chuyên mục', 'twentytwentyfive') . '</span></li>';
+	}
+
+	$html .= '  </ul>';
+	$html .= '</div>';
+
+	return $html;
+}
+
+/**
+ * Shortcode [tdc_categories] cho Categories List (Module #9)
+ */
+function tdc_categories_shortcode($atts)
+{
+	$atts = shortcode_atts(array(
+		'title'   => 'Categories',
+		'number'  => 10,
+		'orderby' => 'name',
+	), $atts, 'tdc_categories');
+
+	return tdc_categories_render_html($atts);
+}
+add_shortcode('tdc_categories', 'tdc_categories_shortcode');
+
+/**
+ * Shortcode [tdc_sidebar_detail_left] cho cột bên trái trang chi tiết
+ * Hiển thị widget trong sidebar-detail-left nếu có, hoặc mặc định hiển thị Categories Card
+ */
+function tdc_sidebar_detail_left_shortcode()
+{
+	ob_start();
+	if (is_active_sidebar('sidebar-detail-left')) {
+		dynamic_sidebar('sidebar-detail-left');
+	} else {
+		echo tdc_categories_render_html();
+	}
+	return ob_get_clean();
+}
+add_shortcode('tdc_sidebar_detail_left', 'tdc_sidebar_detail_left_shortcode');
+
+/**
+ * Shortcode [tdc_sidebar_detail_right] cho cột bên phải trang chi tiết
+ * Hiển thị widget trong sidebar-detail-right nếu có, hoặc mặc định hiển thị Recent Posts
+ */
+function tdc_sidebar_detail_right_shortcode()
+{
+	ob_start();
+	if (is_active_sidebar('sidebar-detail-right')) {
+		dynamic_sidebar('sidebar-detail-right');
+	} else {
+		the_widget('TDC_Custom_Recent_Posts_Widget', array('number' => 3));
+	}
+	return ob_get_clean();
+}
+add_shortcode('tdc_sidebar_detail_right', 'tdc_sidebar_detail_right_shortcode');
+
+/**
+ * Bộ lọc render_block cho core/categories:
+ * Đảm bảo bất kể khi nào người dùng thêm Block "Categories List" trong Widget Admin hay Gutenberg,
+ * nó đều tự động hiển thị chuẩn giao diện FIT TDC với dải sọc và chấm vàng.
+ */
+add_filter('render_block', function ($block_content, $block) {
+	if (isset($block['blockName']) && $block['blockName'] === 'core/categories') {
+		return tdc_categories_render_html();
+	}
+	return $block_content;
+}, 10, 2);
+
+
 // --- SHORTCODE HIỂN THỊ KẾT QUẢ TÌM KIẾM ---
 function tdc_search_results_shortcode()
 {
 	$search_query = get_search_query();
 
-	if (empty($search_query)) {
-		return '';
-	}
-
 	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-	$query = new WP_Query(array(
-		's' => $search_query,
-		'post_type' => 'post',
+	$query_args = array(
+		'post_type'      => 'post',
 		'posts_per_page' => 10,
-		'paged' => $paged
-	));
+		'paged'          => $paged
+	);
+	if (!empty($search_query)) {
+		$query_args['s'] = $search_query;
+	}
+	$query = new WP_Query($query_args);
 
 	if (!$query->have_posts()) {
-		return '';
+		return '<div class="tdc-no-search-results" style="padding:25px;text-align:center;color:#666;background:#fff;border:1px solid #eaeaea;">Không tìm thấy bài viết nào phù hợp.</div>';
 	}
 
 	$output = '<style>
-        .tdc-search-list { display: flex; flex-direction: column; gap: 20px; font-family: sans-serif; margin-top: 30px; }
+        .tdc-search-list { display: flex; flex-direction: column; gap: 20px; font-family: sans-serif; margin-top: 0; }
         .tdc-search-item { display: flex; border: 1px solid #eaeaea; background: #fff; align-items: stretch; }
-        .tdc-search-thumbnail { width: 250px; flex-shrink: 0; }
+        .tdc-search-thumbnail { width: 190px; min-width: 190px; flex-shrink: 0; }
         .tdc-search-thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .tdc-search-content-wrapper { display: flex; padding: 20px; flex: 1; align-items: stretch; }
-        .tdc-search-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #eaeaea; padding-right: 20px; margin-right: 20px; min-width: 80px; }
-        .tdc-search-day { font-size: 48px; font-weight: 700; font-family: "Times New Roman", Times, serif; line-height: 1; color: #333; }
-        .tdc-search-month { font-size: 12px; text-transform: uppercase; color: #888; margin-top: 5px; letter-spacing: 0.5px; }
-        .tdc-search-text { flex: 1; }
-        .tdc-search-title { margin: 0 0 10px 0; font-size: 18px; line-height: 1.4; }
+        .tdc-search-content-wrapper { display: flex; padding: 15px 18px; flex: 1; align-items: stretch; min-width: 0; }
+        .tdc-search-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #eaeaea; padding-right: 15px; margin-right: 15px; min-width: 65px; }
+        .tdc-search-day { font-size: 38px; font-weight: 700; font-family: "Times New Roman", Times, serif; line-height: 1; color: #333; }
+        .tdc-search-month { font-size: 11px; text-transform: uppercase; color: #888; margin-top: 5px; letter-spacing: 0.5px; }
+        .tdc-search-text { flex: 1; min-width: 0; }
+        .tdc-search-title { margin: 0 0 8px 0; font-size: 16px; line-height: 1.4; }
         .tdc-search-title a { color: #0056b3; text-decoration: none; text-transform: uppercase; font-weight: 700; }
         .tdc-search-title a:hover { color: #003d82; text-decoration: underline; }
-        .tdc-search-excerpt { font-size: 14px; color: #555; line-height: 1.5; margin: 0; }
+        .tdc-search-excerpt { font-size: 13.5px; color: #555; line-height: 1.5; margin: 0; }
         
         @media (max-width: 768px) {
             .tdc-search-item { flex-direction: column; }
@@ -484,7 +857,7 @@ function tdc_search_results_shortcode()
 		$link = get_permalink();
 		$excerpt = wp_trim_words(get_the_excerpt(), 25, ' [...]');
 
-		$thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'medium_large') : 'https://via.placeholder.com/250x180?text=No+Image';
+		$thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'medium_large') : get_theme_file_uri('assets/images/typewriter.webp');
 
 		$output .= '<div class="tdc-search-item">';
 
@@ -573,53 +946,96 @@ function tdc_prev_next_post_shortcode() {
             flex-direction: column;
             gap: 16px;
             margin: 30px 0;
-            font-family: sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
         .tdc-post-nav-item {
             display: flex;
             align-items: center;
         }
         .tdc-post-nav-date-box {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            max-width: 50px;
+            background: #f0be1a;
+            border-radius: 50%;
             display: inline-flex;
             align-items: center;
-            font-family: "Times New Roman", Times, serif;
-            min-width: 65px;
-            margin-right: 25px;
+            justify-content: center;
+            color: #222222;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+            margin-right: 18px;
+            flex-shrink: 0;
+            box-sizing: border-box;
             user-select: none;
+            font-family: "Times New Roman", Times, Georgia, serif;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 0;
+            overflow: hidden;
+        }
+        .tdc-post-nav-item:hover .tdc-post-nav-date-box {
+            transform: scale(1.06);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
         }
         .tdc-post-nav-date-stack {
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-bottom: 1px solid #777;
-            padding-bottom: 1px;
-            margin-right: 3px;
+            justify-content: center;
+            line-height: 1;
+            margin-right: 2px;
+            border-bottom: none !important;
+            padding: 0;
         }
         .tdc-post-nav-day {
-            font-size: 15px;
+            font-size: 11px;
+            font-weight: 700;
             line-height: 1;
-            color: #333;
+            color: #222222;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+        .tdc-post-nav-line {
+            display: block;
+            width: 14px;
+            height: 1px;
+            background-color: #222222 !important;
+            margin: 2px 0;
+            border: none !important;
+            padding: 0;
         }
         .tdc-post-nav-month {
-            font-size: 15px;
+            font-size: 11px;
+            font-weight: 700;
             line-height: 1;
-            color: #333;
-            margin-top: 2px;
+            color: #222222;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: block;
         }
         .tdc-post-nav-year {
-            font-size: 15px;
+            font-size: 11px;
+            font-weight: 700;
             line-height: 1;
-            color: #333;
-            margin-top: -8px;
+            color: #222222;
+            margin: 0 0 0 3px;
+            align-self: center;
+            white-space: nowrap;
+            display: inline-block;
         }
         .tdc-post-nav-title {
             font-size: 16px;
             margin: 0;
             line-height: 1.4;
-            font-weight: normal;
+            font-weight: 400;
         }
         .tdc-post-nav-title a {
-            color: #333333;
+            color: #222222;
             text-decoration: none;
             transition: color 0.2s ease;
         }
@@ -640,14 +1056,14 @@ function tdc_prev_next_post_shortcode() {
         $link = get_permalink($p->ID);
 
         $output .= '<div class="tdc-post-nav-item">';
-        $output .= '  <div class="tdc-post-nav-date-box">';
+        $output .= '  <a href="' . esc_url($link) . '" class="tdc-post-nav-date-box" title="' . esc_attr($title) . '">';
         $output .= '    <div class="tdc-post-nav-date-stack">';
         $output .= '      <span class="tdc-post-nav-day">' . esc_html($day) . '</span>';
         $output .= '      <span class="tdc-post-nav-line"></span>';
         $output .= '      <span class="tdc-post-nav-month">' . esc_html($month) . '</span>';
         $output .= '    </div>';
         $output .= '    <span class="tdc-post-nav-year">' . esc_html($year) . '</span>';
-        $output .= '  </div>';
+        $output .= '  </a>';
         $output .= '  <h4 class="tdc-post-nav-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h4>';
         $output .= '</div>';
     }
@@ -1015,9 +1431,300 @@ function register_custom_widget_test_4() {
 }
 add_action( 'widgets_init', 'register_custom_widget_test_4' );
 
+/**
+ * =========================================================
+ * MODULE #14: COMMENTS CHO TRANG DANH SÁCH / TÌM KIẾM
+ * Thiết kế bong bóng hội thoại (Speech Bubble) chuẩn Image 1
+ * =========================================================
+ */
 
+/**
+ * 1. Xử lý gửi bình luận nhanh từ form Module 14
+ */
+add_action('init', 'tdc_handle_module_14_comment_submit');
+function tdc_handle_module_14_comment_submit() {
+    if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tdc_action']) && $_POST['tdc_action'] === 'submit_module_14_comment') {
+        if (!isset($_POST['tdc_comment_nonce']) || !wp_verify_nonce($_POST['tdc_comment_nonce'], 'tdc_comment_action')) {
+            return;
+        }
 
+        $author = sanitize_text_field($_POST['author_name']);
+        $content = sanitize_textarea_field($_POST['comment_content']);
 
+        if (!empty($author) && !empty($content)) {
+            $latest_posts = get_posts(array('numberposts' => 1, 'post_status' => 'publish'));
+            $post_id = !empty($latest_posts) ? $latest_posts[0]->ID : 1;
 
+            wp_insert_comment(array(
+                'comment_post_ID'      => $post_id,
+                'comment_author'       => $author,
+                'comment_author_email' => sanitize_email(sanitize_title($author) . '@example.com'),
+                'comment_content'      => $content,
+                'comment_type'         => 'comment',
+                'comment_approved'     => 1,
+                'comment_date'         => current_time('mysql'),
+            ));
 
+            $redirect = wp_get_referer() ? wp_get_referer() : $_SERVER['REQUEST_URI'];
+            $redirect = add_query_arg('comment_submitted', '1', remove_query_arg('comment_submitted', $redirect));
+            wp_safe_redirect($redirect);
+            exit;
+        }
+    }
+}
 
+/**
+ * 2. Hàm dựng giao diện bình luận dạng bong bóng chat (Speech Bubble) chuẩn Image 1
+ */
+function tdc_module_14_comments_render($args = array()) {
+    $title = !empty($args['title']) ? $args['title'] : 'Comments';
+    $count = !empty($args['count']) ? absint($args['count']) : 3;
+
+    $comments = get_comments(array(
+        'number' => $count,
+        'status' => 'approve',
+        'order'  => 'DESC',
+    ));
+
+    $display_list = array();
+    if (!empty($comments)) {
+        foreach ($comments as $comm) {
+            $display_list[] = array(
+                'author'  => $comm->comment_author ? $comm->comment_author : 'Anonymous',
+                'content' => wp_strip_all_tags($comm->comment_content),
+                'avatar'  => get_avatar_url($comm, array('size' => 96)),
+            );
+        }
+    }
+
+    // Nếu chưa có hoặc ít hơn 3 bình luận, bổ sung mẫu chuẩn theo Image 1
+    if (count($display_list) < 3) {
+        $default_samples = array(
+            array(
+                'author'  => 'John Doe',
+                'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                'avatar'  => '',
+            ),
+            array(
+                'author'  => 'Jane Doe',
+                'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                'avatar'  => '',
+            ),
+            array(
+                'author'  => 'John Doe',
+                'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                'avatar'  => '',
+            ),
+        );
+
+        while (count($display_list) < 3) {
+            $display_list[] = $default_samples[count($display_list)];
+        }
+    }
+
+    ob_start();
+    ?>
+    <div class="tdc-module-14-comments">
+        <h3 class="tdc-module-14-title"><?php echo esc_html($title); ?></h3>
+        <div class="tdc-module-14-divider"></div>
+
+        <?php if (!empty($_GET['comment_submitted'])): ?>
+            <div class="tdc-alert-success" style="background:#e6f4ea; color:#137333; padding:10px 14px; border-radius:4px; margin-bottom:15px; font-size:13.5px; border:1px solid #ceead6;">
+                ✓ Bình luận của bạn đã được đăng thành công!
+            </div>
+        <?php endif; ?>
+
+        <div class="tdc-comments-bubble-list">
+            <?php foreach ($display_list as $item): ?>
+                <div class="tdc-comment-bubble-item">
+                    <div class="tdc-comment-avatar">
+                        <?php if (!empty($item['avatar'])): ?>
+                            <img src="<?php echo esc_url($item['avatar']); ?>" alt="<?php echo esc_attr($item['author']); ?>" />
+                        <?php else: ?>
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="#9ca3af"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        <?php endif; ?>
+                    </div>
+                    <div class="tdc-comment-bubble-card">
+                        <div class="tdc-comment-bubble-header">
+                            <span class="tdc-comment-author-name"><?php echo esc_html($item['author']); ?></span>
+                        </div>
+                        <div class="tdc-comment-bubble-body">
+                            <p class="tdc-comment-text"><?php echo esc_html($item['content']); ?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="tdc-comment-input-box">
+            <h4 class="tdc-input-box-title">Thêm bình luận mới</h4>
+            <form method="post" action="" class="tdc-comment-form">
+                <?php wp_nonce_field('tdc_comment_action', 'tdc_comment_nonce'); ?>
+                <input type="hidden" name="tdc_action" value="submit_module_14_comment" />
+                <div class="tdc-form-group">
+                    <input type="text" name="author_name" placeholder="Họ và tên của bạn..." required class="tdc-form-control" />
+                </div>
+                <div class="tdc-form-group">
+                    <textarea name="comment_content" placeholder="Nhập nội dung bình luận..." rows="3" required class="tdc-form-control"></textarea>
+                </div>
+                <div class="tdc-form-group" style="text-align: right; margin-bottom: 0;">
+                    <button type="submit" class="tdc-btn-comment-submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+/**
+ * 3. Shortcode [tdc_module_14_comments]
+ */
+function tdc_module_14_comments_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'title' => 'Comments',
+        'count' => 3,
+    ), $atts, 'tdc_module_14_comments');
+
+    return tdc_module_14_comments_render($atts);
+}
+add_shortcode('tdc_module_14_comments', 'tdc_module_14_comments_shortcode');
+
+/**
+ * 4. Widget Module #14 Comments cho Admin
+ */
+class TDC_Comments_Module_14_Widget extends WP_Widget {
+    public function __construct() {
+        parent::__construct(
+            'tdc_comments_module_14_widget',
+            'Bình luận (TDC #14)',
+            array('description' => 'Hiển thị danh sách bình luận dạng bong bóng hội thoại và form nhập thông tin (Module #14).')
+        );
+    }
+
+    public function widget($args, $instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+        $count = !empty($instance['count']) ? absint($instance['count']) : 3;
+
+        echo $args['before_widget'];
+        echo tdc_module_14_comments_render(array(
+            'title' => $title,
+            'count' => $count
+        ));
+        echo $args['after_widget'];
+    }
+
+    public function form($instance) {
+        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+        $count = !empty($instance['count']) ? absint($instance['count']) : 3;
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('count')); ?>">Số lượng bình luận:</label>
+            <input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('count')); ?>" name="<?php echo esc_attr($this->get_field_name('count')); ?>" type="number" value="<?php echo esc_attr($count); ?>" min="1" max="10">
+        </p>
+        <?php
+    }
+
+    public function update($new_instance, $old_instance) {
+        $instance = array();
+        $instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : 'Comments';
+        $instance['count'] = (!empty($new_instance['count'])) ? absint($new_instance['count']) : 3;
+        return $instance;
+    }
+}
+function register_tdc_comments_module_14_widget() {
+    register_widget('TDC_Comments_Module_14_Widget');
+}
+add_action('widgets_init', 'register_tdc_comments_module_14_widget');
+
+/**
+ * 5. Đăng ký các khu vực Widget Sidebar cho Trang Danh Sách / Tìm Kiếm (Search Page)
+ */
+function register_search_sidebars() {
+    register_sidebar( array(
+        'name'          => 'Search Sidebar - Trái (#13)',
+        'id'            => 'sidebar-search-left-13',
+        'description'   => 'Khu vực Widget cột trái (Module #13) cho trang danh sách / tìm kiếm.',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+
+    register_sidebar( array(
+        'name'          => 'Search Sidebar - Phải / Comments (#14)',
+        'id'            => 'sidebar-comments-14',
+        'description'   => 'Khu vực Widget cột phải hiển thị bình luận (Module #14) cho trang danh sách / tìm kiếm.',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+
+    register_sidebar( array(
+        'name'          => 'Search Bottom - Dưới (#15)',
+        'id'            => 'sidebar-search-bottom-15',
+        'description'   => 'Khu vực Widget phía dưới (Module #15) cho trang danh sách / tìm kiếm.',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action('widgets_init', 'register_search_sidebars');
+
+/**
+ * 6. Tự động tương thích: nếu người dùng thêm block Bình luận (core/comments) vào widget hoặc trang tìm kiếm,
+ * tự động hiển thị giao diện Module 14 chuẩn bong bóng hội thoại (Speech Bubble).
+ */
+add_filter('render_block', function($block_content, $block) {
+    if (!empty($block['blockName']) && $block['blockName'] === 'core/comments') {
+        if (is_search() || empty(trim(strip_tags($block_content)))) {
+            return tdc_module_14_comments_render();
+        }
+    }
+    return $block_content;
+}, 10, 2);
+
+/**
+ * 7. Shortcodes cho layout Trang tìm kiếm / danh sách (Image 2)
+ */
+function tdc_sidebar_search_left_shortcode() {
+    ob_start();
+    if (is_active_sidebar('sidebar-search-left-13')) {
+        dynamic_sidebar('sidebar-search-left-13');
+    }
+    return ob_get_clean();
+}
+add_shortcode('tdc_sidebar_search_left', 'tdc_sidebar_search_left_shortcode');
+
+function tdc_sidebar_search_right_shortcode() {
+    ob_start();
+    if (is_active_sidebar('sidebar-comments-14')) {
+        dynamic_sidebar('sidebar-comments-14');
+    }
+    $sidebar_output = ob_get_clean();
+
+    // Nếu sidebar không có widget hoặc widget sinh ra rỗng (chẳng hạn block comments mặc định của WP bị rỗng trên trang search)
+    if (empty(trim(strip_tags($sidebar_output)))) {
+        return tdc_module_14_comments_render();
+    }
+    return $sidebar_output;
+}
+add_shortcode('tdc_sidebar_search_right', 'tdc_sidebar_search_right_shortcode');
+
+function tdc_sidebar_search_bottom_shortcode() {
+    ob_start();
+    if (is_active_sidebar('sidebar-search-bottom-15')) {
+        dynamic_sidebar('sidebar-search-bottom-15');
+    }
+    return ob_get_clean();
+}
+add_shortcode('tdc_sidebar_search_bottom', 'tdc_sidebar_search_bottom_shortcode');
+
+require_once get_template_directory() . '/widget-recent-posts.php';
+require_once get_template_directory() . '/widget-numbered-posts.php';
