@@ -188,15 +188,26 @@ function tdc_render_widget_test_4_html($count = 8) {
                     $badge_text = $minutes . ':' . $seconds;
                     $badge_class = 'is-time';
                 }
-                $video_embed_url = 'https://www.youtube-nocookie.com/embed/haZJb_D5gy8?autoplay=1';
+                // Một mảng các ID video YouTube đa dạng hơn về chủ đề thể thao
+                $diverse_video_ids = [
+                    'haZJb_D5gy8', // (Video gốc của bạn)
+                    'PS6pmEeQK4w',
+                    'AbCIqNBf14U',
+                    'ZKyOJgReRQ4',
+                    'tNteMfg7QIc',
+                    'ZxZwZ-UCExU'
+                ];
+                $random_video_id = $diverse_video_ids[array_rand($diverse_video_ids)];
+                $video_embed_url = 'https://www.youtube-nocookie.com/embed/' . $random_video_id . '?autoplay=1';
             ?>
                 <div class="widget-test-4-item">
                     <a href="<?php echo esc_url($item['link']); ?>" class="widget-test-4-thumb-link" onclick="tdcOpenVideoModal('<?php echo esc_url($video_embed_url); ?>'); return false;" title="Bấm để xem video: <?php echo esc_attr($item['full_title']); ?>">
                         <div class="widget-test-4-thumb">
+                            <?php if ($index === 0): ?>
+                                <span class="widget-test-4-overlay-live"></span>
+                            <?php endif; ?>
                             <img src="<?php echo esc_url($item['thumb']); ?>" alt="<?php echo esc_attr($item['full_title']); ?>" loading="lazy" />
-                            <span class="widget-test-4-badge <?php echo esc_attr($badge_class); ?>">
-                                <?php echo esc_html($badge_text); ?>
-                            </span>
+                            <span class="widget-test-4-badge <?php echo esc_attr($badge_class); ?>"><?php echo esc_html(trim($badge_text)); ?></span>
                         </div>
                     </a>
                     <div class="widget-test-4-content">
