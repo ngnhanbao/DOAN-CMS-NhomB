@@ -18,6 +18,8 @@
 		<?php 
 		if ( is_active_sidebar( 'widget_test_4' ) ) {
 			dynamic_sidebar( 'widget_test_4' );
+		} elseif ( is_active_sidebar( 'above-footer' ) ) {
+			dynamic_sidebar( 'above-footer' );
 		} else {
 			the_widget( 'Widget_Test_4' );
 		}

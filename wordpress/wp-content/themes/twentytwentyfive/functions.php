@@ -260,6 +260,17 @@ function my_custom_widgets_init()
 		'after_title' => '</h3>',
 	));
 
+	// Sidebar Phía trên Footer
+	register_sidebar(array(
+		'name'          => 'Phía trên Footer',
+		'id'            => 'above-footer',
+		'description'   => 'Khu vực Widget hiển thị phía trên Footer.',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	));
+
 	// Sidebar dành riêng cho cột Trái của Trang chi tiết (Categories #9)
 	register_sidebar(array(
 		'name' => 'Sidebar Chi tiết - Trái (Categories #9)',
@@ -1728,3 +1739,4 @@ add_shortcode('tdc_sidebar_search_bottom', 'tdc_sidebar_search_bottom_shortcode'
 
 require_once get_template_directory() . '/widget-recent-posts.php';
 require_once get_template_directory() . '/widget-numbered-posts.php';
+require_once get_template_directory() . '/widget-test-4.php';
