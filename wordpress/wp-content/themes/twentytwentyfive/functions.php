@@ -244,6 +244,14 @@ function group_c_enqueue_assets()
 		array(),
 		file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
 	);
+
+	// Custom Widget Test 4 CSS (Above Footer)
+	wp_enqueue_style(
+		'group-c-widget-test-4',
+		get_template_directory_uri() . '/assets/css/group-c-widget-test-4.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-widget-test-4.css') ? filemtime(get_template_directory() . '/assets/css/group-c-widget-test-4.css') : '1.0.0'
+	);
 }
 
 add_action('wp_enqueue_scripts', 'group_c_enqueue_assets');
@@ -314,6 +322,17 @@ function my_custom_widgets_init()
 		'after_widget'  => '</div>',
 		'before_title'  => '<h5 class="widget-title">',
 		'after_title'   => '</h5>',
+	));
+
+	// Khu vực Widget Phía trên Footer (Above Footer - widget_test_4)
+	register_sidebar(array(
+		'name'          => 'Phía trên Footer (Above Footer)',
+		'id'            => 'sidebar-above-footer',
+		'description'   => 'Khu vực hiển thị widget phía trên Footer (Trang chủ, Trang danh sách, Trang chi tiết)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
 	));
 }
 // Móc hàm my_custom_widgets_init vào hook widgets_init của WordPress
@@ -1613,3 +1632,4 @@ add_shortcode('tdc_sidebar_search_bottom', 'tdc_sidebar_search_bottom_shortcode'
 
 require_once get_template_directory() . '/widget-recent-posts.php';
 require_once get_template_directory() . '/widget-numbered-posts.php';
+require_once get_template_directory() . '/widget-test-4.php';

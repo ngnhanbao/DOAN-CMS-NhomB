@@ -12,6 +12,13 @@
  */
 ?>
 
+<?php
+// Hiển thị widget_test_4 tại khu vực phía trên Footer (Trang chủ, Trang danh sách, Trang chi tiết)
+if (function_exists('tdc_render_above_footer_area')) {
+	tdc_render_above_footer_area();
+}
+?>
+
 <section id="footer">
 	<div class="container">
 		<div class="row">
