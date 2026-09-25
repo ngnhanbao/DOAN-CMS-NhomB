@@ -4,90 +4,104 @@
  * Slug: twentytwentyfive/footer
  * Categories: footer
  * Block Types: core/template-part/footer
- * Description: Footer columns with logo, title, tagline and links.
+ * Description: Custom 3-column footer with Quick links, widget support, social icons, and copyright.
  *
  * @package WordPress
  * @subpackage Twenty_Twenty_Five
  * @since Twenty Twenty-Five 1.0
  */
-
 ?>
-<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|50"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--50)">
-	<!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
-	<div class="wp-block-group alignwide">
-		<!-- wp:site-logo /-->
 
-		<!-- wp:group {"align":"full","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"top"}} -->
-		<div class="wp-block-group alignfull">
-			<!-- wp:columns -->
-			<div class="wp-block-columns">
-				<!-- wp:column {"width":"100%"} -->
-				<div class="wp-block-column" style="flex-basis:100%"><!-- wp:site-title {"level":2} /-->
+<?php if (is_home() || is_front_page() || is_archive() || is_search() || is_single()): ?>
+<section class="tdc-above-footer-area" style="padding: 40px 0; background: #fff; border-top: 1px solid #eaeaea;">
+    <div class="container">
+        <?php 
+        if (is_active_sidebar('above-footer')) {
+            dynamic_sidebar('above-footer'); 
+        } else {
+            the_widget('TDC_Widget_Test_4', array('title' => 'Widget Test 4', 'number' => 5));
+        }
+        ?>
+    </div>
+</section>
+<?php endif; ?>
 
-				<!-- wp:site-tagline /-->
-				</div>
-				<!-- /wp:column -->
-
-				<!-- wp:column {"width":""} -->
-				<div class="wp-block-column">
-					<!-- wp:spacer {"height":"var:preset|spacing|40","width":"0px"} -->
-					<div style="height:var(--wp--preset--spacing--40);width:0px" aria-hidden="true" class="wp-block-spacer"></div>
-					<!-- /wp:spacer -->
-				</div>
-				<!-- /wp:column -->
+<section id="footer">
+	<div class="container">
+		<div class="row">
+			<!-- Column 1: Footer #1 -->
+			<div class="col-12 col-md-4 mb-4 mb-md-0">
+				<?php if (is_active_sidebar('footer-1')): ?>
+					<?php dynamic_sidebar('footer-1'); ?>
+				<?php else: ?>
+					<h5>Quick links</h5>
+					<ul class="list-unstyled quick-links">
+						<li><a href="<?php echo esc_url(home_url('/')); ?>"><i class="fa-solid fa-angles-right arrow-icon"></i>Home</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>About</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>FAQ</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>Get Started</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>Videos</a></li>
+					</ul>
+				<?php endif; ?>
 			</div>
-			<!-- /wp:columns -->
 
-			<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|80"}},"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"top","justifyContent":"space-between"}} -->
-			<div class="wp-block-group">
-				<!-- wp:navigation {"overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"}} -->
-					<!-- wp:navigation-link {"label":"<?php esc_html_e( 'Blog', 'twentytwentyfive' ); ?>","url":"#"} /-->
-
-					<!-- wp:navigation-link {"label":"<?php esc_html_e( 'About', 'twentytwentyfive' ); ?>","url":"#"} /-->
-
-					<!-- wp:navigation-link {"label":"<?php esc_html_e( 'FAQs', 'twentytwentyfive' ); ?>","url":"#"} /-->
-
-					<!-- wp:navigation-link {"label":"<?php esc_html_e( 'Authors', 'twentytwentyfive' ); ?>","url":"#"} /-->
-				<!-- /wp:navigation -->
-
-				<!-- wp:navigation {"overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"}} -->
-					<!-- wp:navigation-link {"label":"<?php esc_html_e( 'Events', 'twentytwentyfive' ); ?>","url":"#"} /-->
-
-					<!-- wp:navigation-link {"label":"<?php esc_html_e( 'Shop', 'twentytwentyfive' ); ?>","url":"#"} /-->
-
-					<!-- wp:navigation-link {"label":"<?php esc_html_e( 'Patterns', 'twentytwentyfive' ); ?>","url":"#"} /-->
-
-					<!-- wp:navigation-link {"label":"<?php esc_html_e( 'Themes', 'twentytwentyfive' ); ?>","url":"#"} /-->
-				<!-- /wp:navigation -->
+			<!-- Column 2: Footer #2 -->
+			<div class="col-12 col-md-4 mb-4 mb-md-0">
+				<?php if (is_active_sidebar('footer-2')): ?>
+					<?php dynamic_sidebar('footer-2'); ?>
+				<?php else: ?>
+					<h5>Quick links</h5>
+					<ul class="list-unstyled quick-links">
+						<li><a href="<?php echo esc_url(home_url('/')); ?>"><i class="fa-solid fa-angles-right arrow-icon"></i>Home</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>About</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>FAQ</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>Get Started</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>Videos</a></li>
+					</ul>
+				<?php endif; ?>
 			</div>
-				<!-- /wp:group -->
-		</div>
-		<!-- /wp:group -->
 
-		<!-- wp:spacer {"height":"var:preset|spacing|70"} -->
-		<div style="height:var(--wp--preset--spacing--70)" aria-hidden="true" class="wp-block-spacer"></div>
-		<!-- /wp:spacer -->
-
-		<!-- wp:group {"align":"full","style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
-		<div class="wp-block-group alignfull">
-			<!-- wp:paragraph {"fontSize":"small"} -->
-			<p class="has-small-font-size"><?php esc_html_e( 'Twenty Twenty-Five', 'twentytwentyfive' ); ?></p>
-			<!-- /wp:paragraph -->
-			<!-- wp:paragraph {"fontSize":"small"} -->
-			<p class="has-small-font-size">
-				<?php
-				printf(
-					/* translators: Designed with WordPress. %s: WordPress link. */
-					esc_html__( 'Designed with %s', 'twentytwentyfive' ),
-					'<a href="' . esc_url( __( 'https://wordpress.org', 'twentytwentyfive' ) ) . '" rel="nofollow">WordPress</a>'
-				);
-				?>
-			</p>
-			<!-- /wp:paragraph -->
+			<!-- Column 3: Footer #3 -->
+			<div class="col-12 col-md-4 mb-4 mb-md-0">
+				<?php if (is_active_sidebar('footer-3')): ?>
+					<?php dynamic_sidebar('footer-3'); ?>
+				<?php else: ?>
+					<h5>Quick links</h5>
+					<ul class="list-unstyled quick-links">
+						<li><a href="<?php echo esc_url(home_url('/')); ?>"><i class="fa-solid fa-angles-right arrow-icon"></i>Home</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>About</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>FAQ</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>Get Started</a></li>
+						<li><a href="#"><i class="fa-solid fa-angles-right arrow-icon"></i>Imprint</a></li>
+					</ul>
+				<?php endif; ?>
+			</div>
 		</div>
-		<!-- /wp:group -->
+
+		<!-- Social Icons -->
+		<div class="row">
+			<div class="col-12 text-center">
+				<ul class="social">
+					<li><a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
+					<li><a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a></li>
+					<li><a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+					<li><a href="#" aria-label="Google Plus"><i class="fa-brands fa-google-plus-g"></i></a></li>
+					<li><a href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a></li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- Divider & Information -->
+		<div class="footer-divider"></div>
+		<div class="row">
+			<div class="col-12 text-center">
+				<p class="footer-bottom-info">
+					<a href="#">National Transaction Corporation</a> is a Registered MSP/ISO of Elavon, Inc. Georgia [a wholly owned subsidiary of U.S. Bancorp, Minneapolis, MN]
+				</p>
+				<p class="footer-copyright">
+					&copy; All right Reversed. <a href="#">Sunlimetech</a>
+				</p>
+			</div>
+		</div>
 	</div>
-	<!-- /wp:group -->
-</div>
-<!-- /wp:group -->
+</section>
