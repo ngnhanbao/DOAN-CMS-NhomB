@@ -1,0 +1,241 @@
+/* ==========================================================================
+   Group C - Footer Stylesheet (Module #3: Sunlimetech Layout)
+   Matching Teacher's Design & Admin Widget Support
+   ========================================================================== */
+
+footer.wp-block-template-part {
+    margin-top: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+#footer {
+    background: #007b5e !important; /* Màu xanh lục bảo đặc trưng Sunlimetech */
+    padding: 45px 0 25px 0;
+    margin-top: 40px;
+    width: 100%;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+#footer * {
+    box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. Tiêu đề các cột Footer & Widget (Vạch trắng đứng | Tiêu đề)
+   -------------------------------------------------------------------------- */
+#footer h5,
+#footer .widget-title,
+#footer .wp-block-heading,
+#footer .widgettitle {
+    padding-left: 12px !important;
+    border-left: 3px solid #ffffff !important;
+    padding-bottom: 2px !important;
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+    color: #ffffff !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    text-transform: capitalize !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. Định dạng Widget trong Footer (Hỗ trợ kéo thả trong Admin)
+   -------------------------------------------------------------------------- */
+#footer .footer-widget,
+#footer .widget {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    margin-bottom: 20px;
+}
+
+#footer a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   3. Danh sách Quick links & Danh sách trong Widget
+   -------------------------------------------------------------------------- */
+#footer ul.quick-links,
+#footer .footer-widget ul,
+#footer .widget ul,
+#footer .wp-block-categories-list,
+#footer .wp-block-page-list,
+#footer .wp-block-latest-posts {
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin-bottom: 20px !important;
+}
+
+#footer ul.quick-links li,
+#footer .footer-widget ul li,
+#footer .widget ul li,
+#footer .wp-block-categories-list li,
+#footer .wp-block-page-list li,
+#footer .wp-block-latest-posts li {
+    padding: 6px 0 !important;
+    transition: all 0.25s ease;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    color: #ffffff !important;
+}
+
+#footer ul.quick-links li:hover,
+#footer .footer-widget ul li:hover,
+#footer .widget ul li:hover,
+#footer .wp-block-categories-list li:hover,
+#footer .wp-block-page-list li:hover,
+#footer .wp-block-latest-posts li:hover {
+    padding-left: 6px !important;
+    font-weight: 700;
+}
+
+#footer ul.quick-links li a,
+#footer .footer-widget ul li a,
+#footer .widget ul li a,
+#footer .wp-block-categories-list li a,
+#footer .wp-block-page-list li a,
+#footer .wp-block-latest-posts li a {
+    display: inline-block;
+    color: #ffffff !important;
+}
+
+#footer ul.quick-links li a:hover,
+#footer .footer-widget ul li a:hover,
+#footer .widget ul li a:hover,
+#footer .wp-block-categories-list li a:hover,
+#footer .wp-block-page-list li a:hover,
+#footer .wp-block-latest-posts li a:hover {
+    text-decoration: underline !important;
+}
+
+/* Dấu mũi tên kép (» / Font Awesome) */
+#footer ul.quick-links li a i,
+#footer ul.quick-links li a .arrow-icon {
+    margin-right: 8px;
+    font-weight: 700;
+}
+
+/* Thêm mũi tên » tự động cho các widget kéo thả trong admin (categories, menu, recent posts...) */
+#footer .footer-widget ul:not(.quick-links) li::before,
+#footer .widget:not(.widget_tdc_quick_links_widget) ul li::before {
+    content: "\00bb";
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1;
+    margin-right: 8px;
+    color: #ffffff;
+    display: inline-block;
+}
+
+#footer ul.quick-links li .empty-notice {
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+}
+
+/* --------------------------------------------------------------------------
+   4. Các biểu tượng Mạng xã hội (Social Icons)
+   -------------------------------------------------------------------------- */
+#footer ul.social {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#footer ul.social li {
+    display: inline-block;
+}
+
+#footer ul.social li a {
+    font-size: 20px;
+    color: #ffffff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+#footer ul.social li a:hover {
+    transform: translateY(-4px);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. Đường kẻ phân cách & Thông tin bản quyền
+   -------------------------------------------------------------------------- */
+#footer .footer-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    margin: 15px auto;
+    width: 100%;
+}
+
+#footer .footer-bottom-info {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+#footer .footer-bottom-info a {
+    text-decoration: underline !important;
+}
+
+#footer .footer-bottom-info a:hover {
+    color: #c9ffe7 !important;
+}
+
+#footer .footer-copyright {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0;
+}
+
+#footer .footer-copyright a {
+    text-decoration: none !important;
+}
+
+#footer .footer-copyright a:hover {
+    text-decoration: underline !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. Tương thích thiết bị di động (Responsive)
+   -------------------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+    #footer {
+        padding: 35px 15px 20px 15px;
+    }
+    #footer h5,
+    #footer .widget-title {
+        margin-top: 15px;
+    }
+    #footer ul.social {
+        gap: 15px;
+        margin: 20px 0 12px 0;
+    }
+}

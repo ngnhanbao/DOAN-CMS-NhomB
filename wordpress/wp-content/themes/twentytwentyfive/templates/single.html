@@ -1,0 +1,47 @@
+<!-- wp:template-part {"slug":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|60"}}},"layout":{"type":"wide"}} -->
+<main class="wp-block-group alignwide group-c-detail-page" style="margin-top:var(--wp--preset--spacing--40);margin-bottom:var(--wp--preset--spacing--60);width:96%;max-width:1400px;margin-left:auto;margin-right:auto;padding-left:10px;padding-right:10px;">
+
+	<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"30px"}}}} -->
+	<div class="wp-block-columns">
+
+		<!-- Cột 1 (Trái): Categories List (Module #9) -->
+		<!-- wp:column {"width":"25%"} -->
+		<div class="wp-block-column" style="flex-basis:25%">
+			<!-- wp:shortcode -->
+			[tdc_sidebar_detail_left]
+			<!-- /wp:shortcode -->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- Cột 2 (Giữa): Post Detail (Module #6) -->
+		<!-- wp:column {"width":"50%"} -->
+		<div class="wp-block-column" style="flex-basis:50%">
+			<!-- wp:pattern {"slug":"twentytwentyfive/post-detail"} /-->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- Cột 3 (Phải): Recent Posts (Module #10) -->
+		<!-- wp:column {"width":"25%"} -->
+		<div class="wp-block-column" style="flex-basis:25%">
+			<!-- wp:shortcode -->
+			[tdc_sidebar_detail_right]
+			<!-- /wp:shortcode -->
+		</div>
+		<!-- /wp:column -->
+
+	</div>
+	<!-- /wp:columns -->
+
+	<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--60)">
+		<!-- wp:pattern {"slug":"twentytwentyfive/post-navigation"} /-->
+		<!-- wp:pattern {"slug":"twentytwentyfive/comments"} /-->
+	</div>
+	<!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer"} /-->
