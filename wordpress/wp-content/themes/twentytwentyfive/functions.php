@@ -262,13 +262,13 @@ function my_custom_widgets_init()
 
 	// Sidebar Phía trên Footer
 	register_sidebar(array(
-		'name'          => 'Phía trên Footer',
-		'id'            => 'above-footer',
-		'description'   => 'Khu vực Widget hiển thị phía trên Footer.',
+		'name' => 'Phía trên Footer',
+		'id' => 'above-footer',
+		'description' => 'Khu vực Widget hiển thị phía trên Footer.',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h3 class="widget-title">',
-		'after_title'   => '</h3>',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
 	));
 
 	// Sidebar dành riêng cho cột Trái của Trang chi tiết (Categories #9)
@@ -296,35 +296,35 @@ function my_custom_widgets_init()
 	// --- CÁC KHU VỰC WIDGET CHO FOOTER (MODULE #3) ---
 	// Footer #1 (Cột 1)
 	register_sidebar(array(
-		'name'          => 'Footer #1',
-		'id'            => 'footer-1',
-		'description'   => 'Khu vực Widget cho Cột 1 của Footer (Mặc định: Quick links)',
+		'name' => 'Footer #1',
+		'id' => 'footer-1',
+		'description' => 'Khu vực Widget cho Cột 1 của Footer (Mặc định: Quick links)',
 		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h5 class="widget-title">',
-		'after_title'   => '</h5>',
+		'after_widget' => '</div>',
+		'before_title' => '<h5 class="widget-title">',
+		'after_title' => '</h5>',
 	));
 
 	// Footer #2 (Cột 2)
 	register_sidebar(array(
-		'name'          => 'Footer #2',
-		'id'            => 'footer-2',
-		'description'   => 'Khu vực Widget cho Cột 2 của Footer (Mặc định: Quick links)',
+		'name' => 'Footer #2',
+		'id' => 'footer-2',
+		'description' => 'Khu vực Widget cho Cột 2 của Footer (Mặc định: Quick links)',
 		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h5 class="widget-title">',
-		'after_title'   => '</h5>',
+		'after_widget' => '</div>',
+		'before_title' => '<h5 class="widget-title">',
+		'after_title' => '</h5>',
 	));
 
 	// Footer #3 (Cột 3)
 	register_sidebar(array(
-		'name'          => 'Footer #3',
-		'id'            => 'footer-3',
-		'description'   => 'Khu vực Widget cho Cột 3 của Footer (Mặc định: Quick links)',
+		'name' => 'Footer #3',
+		'id' => 'footer-3',
+		'description' => 'Khu vực Widget cho Cột 3 của Footer (Mặc định: Quick links)',
 		'before_widget' => '<div id="%1$s" class="widget %2$s footer-widget">',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h5 class="widget-title">',
-		'after_title'   => '</h5>',
+		'after_widget' => '</div>',
+		'before_title' => '<h5 class="widget-title">',
+		'after_title' => '</h5>',
 	));
 }
 // Móc hàm my_custom_widgets_init vào hook widgets_init của WordPress
@@ -408,9 +408,11 @@ class TDC_Quick_Links_Widget extends WP_Widget
 				value="<?php echo esc_attr($title); ?>">
 		</p>
 		<p>
-			<label for="<?php echo esc_attr($this->get_field_id('links')); ?>">Danh sách liên kết (mỗi dòng một mục: <code>Tên | URL</code>):</label>
+			<label for="<?php echo esc_attr($this->get_field_id('links')); ?>">Danh sách liên kết (mỗi dòng một mục:
+				<code>Tên | URL</code>):</label>
 			<textarea class="widefat" id="<?php echo esc_attr($this->get_field_id('links')); ?>"
-				name="<?php echo esc_attr($this->get_field_name('links')); ?>" rows="6"><?php echo esc_textarea($links); ?></textarea>
+				name="<?php echo esc_attr($this->get_field_name('links')); ?>"
+				rows="6"><?php echo esc_textarea($links); ?></textarea>
 		</p>
 		<?php
 	}
@@ -435,11 +437,13 @@ class TDC_Quick_Links_Widget extends WP_Widget
 		$lines = explode("\n", $links_text);
 		foreach ($lines as $line) {
 			$line = trim($line);
-			if (empty($line)) continue;
+			if (empty($line))
+				continue;
 			$parts = explode('|', $line, 2);
 			$label = trim($parts[0]);
-			$url   = isset($parts[1]) ? trim($parts[1]) : '#';
-			if ($url === '/') $url = home_url('/');
+			$url = isset($parts[1]) ? trim($parts[1]) : '#';
+			if ($url === '/')
+				$url = home_url('/');
 
 			echo '<li>';
 			echo '  <a href="' . esc_url($url) . '">';
@@ -644,8 +648,8 @@ class TDC_Categories_Widget extends WP_Widget
 
 	public function form($instance)
 	{
-		$title   = !empty($instance['title']) ? $instance['title'] : 'Categories';
-		$number  = !empty($instance['number']) ? $instance['number'] : 10;
+		$title = !empty($instance['title']) ? $instance['title'] : 'Categories';
+		$number = !empty($instance['number']) ? $instance['number'] : 10;
 		$orderby = !empty($instance['orderby']) ? $instance['orderby'] : 'name';
 		?>
 		<p>
@@ -675,22 +679,22 @@ class TDC_Categories_Widget extends WP_Widget
 	public function update($new_instance, $old_instance)
 	{
 		$instance = array();
-		$instance['title']   = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : 'Categories';
-		$instance['number']  = (!empty($new_instance['number'])) ? absint($new_instance['number']) : 10;
+		$instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : 'Categories';
+		$instance['number'] = (!empty($new_instance['number'])) ? absint($new_instance['number']) : 10;
 		$instance['orderby'] = (!empty($new_instance['orderby'])) ? sanitize_text_field($new_instance['orderby']) : 'name';
 		return $instance;
 	}
 
 	public function widget($args, $instance)
 	{
-		$title   = !empty($instance['title']) ? $instance['title'] : 'Categories';
-		$number  = !empty($instance['number']) ? $instance['number'] : 10;
+		$title = !empty($instance['title']) ? $instance['title'] : 'Categories';
+		$number = !empty($instance['number']) ? $instance['number'] : 10;
 		$orderby = !empty($instance['orderby']) ? $instance['orderby'] : 'name';
 
 		echo $args['before_widget'];
 		echo tdc_categories_render_html(array(
-			'title'   => $title,
-			'number'  => $number,
+			'title' => $title,
+			'number' => $number,
 			'orderby' => $orderby,
 		));
 		echo $args['after_widget'];
@@ -708,23 +712,23 @@ add_action('widgets_init', 'register_tdc_categories_widget');
  */
 function tdc_categories_render_html($args = array())
 {
-	$title   = !empty($args['title']) ? $args['title'] : 'Categories';
-	$number  = !empty($args['number']) ? absint($args['number']) : 10;
+	$title = !empty($args['title']) ? $args['title'] : 'Categories';
+	$number = !empty($args['number']) ? absint($args['number']) : 10;
 	$orderby = !empty($args['orderby']) ? $args['orderby'] : 'name';
 
 	$categories = get_categories(array(
-		'number'     => $number,
-		'orderby'    => $orderby,
-		'order'      => 'ASC',
+		'number' => $number,
+		'orderby' => $orderby,
+		'order' => 'ASC',
 		'hide_empty' => false,
-		'exclude'    => array(1), // Ẩn chuyên mục mặc định 'Uncategorized' nếu có các chuyên mục khác
+		'exclude' => array(1), // Ẩn chuyên mục mặc định 'Uncategorized' nếu có các chuyên mục khác
 	));
 
 	if (empty($categories)) {
 		$categories = get_categories(array(
-			'number'     => $number,
-			'orderby'    => $orderby,
-			'order'      => 'ASC',
+			'number' => $number,
+			'orderby' => $orderby,
+			'order' => 'ASC',
 			'hide_empty' => false,
 		));
 	}
@@ -757,8 +761,8 @@ function tdc_categories_render_html($args = array())
 function tdc_categories_shortcode($atts)
 {
 	$atts = shortcode_atts(array(
-		'title'   => 'Categories',
-		'number'  => 10,
+		'title' => 'Categories',
+		'number' => 10,
 		'orderby' => 'name',
 	), $atts, 'tdc_categories');
 
@@ -818,9 +822,9 @@ function tdc_search_results_shortcode()
 
 	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 	$query_args = array(
-		'post_type'      => 'post',
+		'post_type' => 'post',
 		'posts_per_page' => 10,
-		'paged'          => $paged
+		'paged' => $paged
 	);
 	if (!empty($search_query)) {
 		$query_args['s'] = $search_query;
@@ -909,49 +913,51 @@ add_shortcode('tdc_search_results', 'tdc_search_results_shortcode');
 /**
  * Filter search query title format for Group C search style
  */
-add_filter('render_block', function($block_content, $block) {
-    if (isset($block['blockName']) && $block['blockName'] === 'core/query-title' && isset($block['attrs']['type']) && $block['attrs']['type'] === 'search') {
-        $query = get_search_query();
-        return sprintf(
-            '<h1 class="wp-block-query-title group-c-search-title"><span class="group-c-search-label">Search:</span> <span class="group-c-search-keyword">"%s"</span></h1>',
-            esc_html($query)
-        );
-    }
-    return $block_content;
+add_filter('render_block', function ($block_content, $block) {
+	if (isset($block['blockName']) && $block['blockName'] === 'core/query-title' && isset($block['attrs']['type']) && $block['attrs']['type'] === 'search') {
+		$query = get_search_query();
+		return sprintf(
+			'<h1 class="wp-block-query-title group-c-search-title"><span class="group-c-search-label">Search:</span> <span class="group-c-search-keyword">"%s"</span></h1>',
+			esc_html($query)
+		);
+	}
+	return $block_content;
 }, 10, 2);
 
 /**
  * Đăng ký khu vực Widget riêng cho Search (4) theo đúng chuẩn bài giảng
  */
-function register_search_widget_4() {
-    register_sidebar( array(
-        'name'          => 'Search Widget #4',
-        'id'            => 'search-widget-4',
-        'description'   => 'Khu vực Widget hiển thị ô tìm kiếm cho phần Search (4)',
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ) );
+function register_search_widget_4()
+{
+	register_sidebar(array(
+		'name' => 'Search Widget #4',
+		'id' => 'search-widget-4',
+		'description' => 'Khu vực Widget hiển thị ô tìm kiếm cho phần Search (4)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
 }
-add_action( 'widgets_init', 'register_search_widget_4' );
+add_action('widgets_init', 'register_search_widget_4');
 
 /**
  * Shortcode [tdc_prev_next_post] cho phần (7) Prev - Next Post
  */
-function tdc_prev_next_post_shortcode() {
-    if (!is_single()) {
-        return '';
-    }
+function tdc_prev_next_post_shortcode()
+{
+	if (!is_single()) {
+		return '';
+	}
 
-    $prev_post = get_previous_post();
-    $next_post = get_next_post();
+	$prev_post = get_previous_post();
+	$next_post = get_next_post();
 
-    if (!$prev_post && !$next_post) {
-        return '';
-    }
+	if (!$prev_post && !$next_post) {
+		return '';
+	}
 
-    $output = '<style>
+	$output = '<style>
         .tdc-post-nav-list {
             display: flex;
             flex-direction: column;
@@ -1056,32 +1062,32 @@ function tdc_prev_next_post_shortcode() {
         }
     </style>';
 
-    $output .= '<div class="tdc-post-nav-list">';
+	$output .= '<div class="tdc-post-nav-list">';
 
-    $posts_to_show = array_filter(array($prev_post, $next_post));
-    foreach ($posts_to_show as $p) {
-        $day = get_the_date('d', $p->ID);
-        $month = get_the_date('m', $p->ID);
-        $year = get_the_date('y', $p->ID);
-        $title = get_the_title($p->ID);
-        $link = get_permalink($p->ID);
+	$posts_to_show = array_filter(array($prev_post, $next_post));
+	foreach ($posts_to_show as $p) {
+		$day = get_the_date('d', $p->ID);
+		$month = get_the_date('m', $p->ID);
+		$year = get_the_date('y', $p->ID);
+		$title = get_the_title($p->ID);
+		$link = get_permalink($p->ID);
 
-        $output .= '<div class="tdc-post-nav-item">';
-        $output .= '  <a href="' . esc_url($link) . '" class="tdc-post-nav-date-box" title="' . esc_attr($title) . '">';
-        $output .= '    <div class="tdc-post-nav-date-stack">';
-        $output .= '      <span class="tdc-post-nav-day">' . esc_html($day) . '</span>';
-        $output .= '      <span class="tdc-post-nav-line"></span>';
-        $output .= '      <span class="tdc-post-nav-month">' . esc_html($month) . '</span>';
-        $output .= '    </div>';
-        $output .= '    <span class="tdc-post-nav-year">' . esc_html($year) . '</span>';
-        $output .= '  </a>';
-        $output .= '  <h4 class="tdc-post-nav-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h4>';
-        $output .= '</div>';
-    }
+		$output .= '<div class="tdc-post-nav-item">';
+		$output .= '  <a href="' . esc_url($link) . '" class="tdc-post-nav-date-box" title="' . esc_attr($title) . '">';
+		$output .= '    <div class="tdc-post-nav-date-stack">';
+		$output .= '      <span class="tdc-post-nav-day">' . esc_html($day) . '</span>';
+		$output .= '      <span class="tdc-post-nav-line"></span>';
+		$output .= '      <span class="tdc-post-nav-month">' . esc_html($month) . '</span>';
+		$output .= '    </div>';
+		$output .= '    <span class="tdc-post-nav-year">' . esc_html($year) . '</span>';
+		$output .= '  </a>';
+		$output .= '  <h4 class="tdc-post-nav-title"><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h4>';
+		$output .= '</div>';
+	}
 
-    $output .= '</div>';
+	$output .= '</div>';
 
-    return $output;
+	return $output;
 }
 add_shortcode('tdc_prev_next_post', 'tdc_prev_next_post_shortcode');
 
@@ -1091,28 +1097,30 @@ add_shortcode('tdc_prev_next_post', 'tdc_prev_next_post_shortcode');
 /**
  * Đăng ký khu vực Widget riêng cho Archive (11) theo chuẩn bài giảng
  */
-function register_archive_sidebar_11() {
-    register_sidebar( array(
-        'name'          => 'Archive Sidebar #11',
-        'id'            => 'sidebar-archive-11',
-        'description'   => 'Khu vực Widget hiển thị danh sách Lưu trữ cho phần Archive (11)',
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ) );
+function register_archive_sidebar_11()
+{
+	register_sidebar(array(
+		'name' => 'Archive Sidebar #11',
+		'id' => 'sidebar-archive-11',
+		'description' => 'Khu vực Widget hiển thị danh sách Lưu trữ cho phần Archive (11)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
 }
-add_action( 'widgets_init', 'register_archive_sidebar_11' );
+add_action('widgets_init', 'register_archive_sidebar_11');
 
 /**
  * Shortcode [tdc_archive] cho phần (11) Archive
  */
-function tdc_archive_shortcode($atts) {
-    $atts = shortcode_atts(array(
-        'title' => 'Archive'
-    ), $atts, 'tdc_archive');
+function tdc_archive_shortcode($atts)
+{
+	$atts = shortcode_atts(array(
+		'title' => 'Archive'
+	), $atts, 'tdc_archive');
 
-    $output = '<style>
+	$output = '<style>
         .tdc-archive-widget-11 {
             font-family: Arial, sans-serif;
             margin-bottom: 25px;
@@ -1152,54 +1160,56 @@ function tdc_archive_shortcode($atts) {
         }
     </style>';
 
-    $output .= '<div class="tdc-archive-widget-11">';
-    if (!empty($atts['title'])) {
-        $output .= '<h3 class="tdc-archive-title-11">' . esc_html($atts['title']) . '</h3>';
-        $output .= '<div class="tdc-archive-line-11"></div>';
-    }
-    $output .= '<ul class="tdc-archive-list-11">';
+	$output .= '<div class="tdc-archive-widget-11">';
+	if (!empty($atts['title'])) {
+		$output .= '<h3 class="tdc-archive-title-11">' . esc_html($atts['title']) . '</h3>';
+		$output .= '<div class="tdc-archive-line-11"></div>';
+	}
+	$output .= '<ul class="tdc-archive-list-11">';
 
-    $categories = get_categories(array('number' => 5, 'orderby' => 'count', 'order' => 'DESC'));
-    if (!empty($categories)) {
-        foreach ($categories as $cat) {
-            $output .= '<li><a href="' . esc_url(get_category_link($cat->term_id)) . '">' . esc_html($cat->name) . '</a></li>';
-        }
-    } else {
-        $output .= '<li><a href="#">Tháng 09 năm 2026</a></li>';
-    }
+	$categories = get_categories(array('number' => 5, 'orderby' => 'count', 'order' => 'DESC'));
+	if (!empty($categories)) {
+		foreach ($categories as $cat) {
+			$output .= '<li><a href="' . esc_url(get_category_link($cat->term_id)) . '">' . esc_html($cat->name) . '</a></li>';
+		}
+	} else {
+		$output .= '<li><a href="#">Tháng 09 năm 2026</a></li>';
+	}
 
-    $output .= '</ul></div>';
-    return $output;
+	$output .= '</ul></div>';
+	return $output;
 }
 add_shortcode('tdc_archive', 'tdc_archive_shortcode');
 
 /**
  * Đăng ký khu vực Widget riêng cho Comments (12) theo đúng chuẩn bài giảng
  */
-function register_comments_sidebar_12() {
-    register_sidebar( array(
-        'name'          => 'Comments Sidebar #12',
-        'id'            => 'sidebar-comments-12',
-        'description'   => 'Khu vực Widget hiển thị danh sách bình luận cho phần Comments (12)',
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ) );
+function register_comments_sidebar_12()
+{
+	register_sidebar(array(
+		'name' => 'Comments Sidebar #12',
+		'id' => 'sidebar-comments-12',
+		'description' => 'Khu vực Widget hiển thị danh sách bình luận cho phần Comments (12)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
 }
-add_action( 'widgets_init', 'register_comments_sidebar_12' );
+add_action('widgets_init', 'register_comments_sidebar_12');
 
 /**
  * Shortcode [tdc_recent_comments] cho phần (12) Comments
  * Khung hiển thị khớp 100% hình ảnh slide bài giảng (media_1790126661322.png)
  */
-function tdc_recent_comments_shortcode($atts) {
-    $atts = shortcode_atts(array(
-        'count' => 5,
-        'title' => 'Comments'
-    ), $atts, 'tdc_recent_comments');
+function tdc_recent_comments_shortcode($atts)
+{
+	$atts = shortcode_atts(array(
+		'count' => 5,
+		'title' => 'Comments'
+	), $atts, 'tdc_recent_comments');
 
-    $output = '<style>
+	$output = '<style>
         .tdc-comments-widget-12 {
             font-family: Arial, sans-serif;
             margin-bottom: 25px;
@@ -1240,90 +1250,100 @@ function tdc_recent_comments_shortcode($atts) {
         }
     </style>';
 
-    $output .= '<div class="tdc-comments-widget-12">';
-    if (!empty($atts['title'])) {
-        $output .= '<h3 class="tdc-comments-title-12">' . esc_html($atts['title']) . '</h3>';
-        $output .= '<div class="tdc-comments-line-12"></div>';
-    }
-    $output .= '<ul class="tdc-comments-list-12">';
+	$output .= '<div class="tdc-comments-widget-12">';
+	if (!empty($atts['title'])) {
+		$output .= '<h3 class="tdc-comments-title-12">' . esc_html($atts['title']) . '</h3>';
+		$output .= '<div class="tdc-comments-line-12"></div>';
+	}
+	$output .= '<ul class="tdc-comments-list-12">';
 
-    $comments = get_comments(array(
-        'number' => $atts['count'],
-        'status' => 'approve'
-    ));
+	$comments = get_comments(array(
+		'number' => $atts['count'],
+		'status' => 'approve'
+	));
 
-    if (!empty($comments)) {
-        foreach ($comments as $comment) {
-            $text = wp_strip_all_tags($comment->comment_content);
-            $link = get_comment_link($comment);
-            $output .= '<li class="tdc-comments-item-12">';
-            $output .= '  <a href="' . esc_url($link) . '">' . esc_html($text) . '</a>';
-            $output .= '</li>';
-        }
-    } else {
-        // Mẫu bình luận chính xác theo hình ảnh slide (media_1790126661322.png)
-        $sample_comments = array(
-            'Bài viết hay quá',
-            'Cảm ơn tác giả',
-            'Bài viết thật hữu ích'
-        );
+	if (!empty($comments)) {
+		foreach ($comments as $comment) {
+			$text = wp_strip_all_tags($comment->comment_content);
+			$link = get_comment_link($comment);
+			$output .= '<li class="tdc-comments-item-12">';
+			$output .= '  <a href="' . esc_url($link) . '">' . esc_html($text) . '</a>';
+			$output .= '</li>';
+		}
+	} else {
+		// Mẫu bình luận chính xác theo hình ảnh slide (media_1790126661322.png)
+		$sample_comments = array(
+			'Bài viết hay quá',
+			'Cảm ơn tác giả',
+			'Bài viết thật hữu ích'
+		);
 
-        foreach ($sample_comments as $text) {
-            $output .= '<li class="tdc-comments-item-12">';
-            $output .= '  <a href="#">' . esc_html($text) . '</a>';
-            $output .= '</li>';
-        }
-    }
+		foreach ($sample_comments as $text) {
+			$output .= '<li class="tdc-comments-item-12">';
+			$output .= '  <a href="#">' . esc_html($text) . '</a>';
+			$output .= '</li>';
+		}
+	}
 
-    $output .= '</ul></div>';
-    return $output;
+	$output .= '</ul></div>';
+	return $output;
 }
 add_shortcode('tdc_recent_comments', 'tdc_recent_comments_shortcode');
 
 /**
  * Tạo Widget TDC Comments cho Quản trị viên
  */
-class TDC_Comments_Widget extends WP_Widget {
-    public function __construct() {
-        parent::__construct(
-            'tdc_comments_widget',
-            'Bình luận mới nhất (TDC #12)',
-            array('description' => 'Kéo thả để hiển thị danh sách bình luận mới nhất ở Sidebar #12.')
-        );
-    }
+class TDC_Comments_Widget extends WP_Widget
+{
+	public function __construct()
+	{
+		parent::__construct(
+			'tdc_comments_widget',
+			'Bình luận mới nhất (TDC #12)',
+			array('description' => 'Kéo thả để hiển thị danh sách bình luận mới nhất ở Sidebar #12.')
+		);
+	}
 
-    public function widget($args, $instance) {
-        echo $args['before_widget'];
-        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
-        $count = !empty($instance['count']) ? $instance['count'] : 5;
-        echo do_shortcode('[tdc_recent_comments count="' . esc_attr($count) . '" title="' . esc_attr($title) . '"]');
-        echo $args['after_widget'];
-    }
+	public function widget($args, $instance)
+	{
+		echo $args['before_widget'];
+		$title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+		$count = !empty($instance['count']) ? $instance['count'] : 5;
+		echo do_shortcode('[tdc_recent_comments count="' . esc_attr($count) . '" title="' . esc_attr($title) . '"]');
+		echo $args['after_widget'];
+	}
 
-    public function form($instance) {
-        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
-        $count = !empty($instance['count']) ? $instance['count'] : 5;
-        ?>
-        <p>
-            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
-            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
-        </p>
-        <p>
-            <label for="<?php echo esc_attr($this->get_field_id('count')); ?>">Số lượng bình luận:</label>
-            <input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('count')); ?>" name="<?php echo esc_attr($this->get_field_name('count')); ?>" type="number" value="<?php echo esc_attr($count); ?>" min="1" max="10">
-        </p>
-        <?php
-    }
+	public function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+		$count = !empty($instance['count']) ? $instance['count'] : 5;
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('count')); ?>">Số lượng bình luận:</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('count')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('count')); ?>" type="number"
+				value="<?php echo esc_attr($count); ?>" min="1" max="10">
+		</p>
+		<?php
+	}
 
-    public function update($new_instance, $old_instance) {
-        $instance = array();
-        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
-        $instance['count'] = (!empty($new_instance['count'])) ? absint($new_instance['count']) : 5;
-        return $instance;
-    }
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+		$instance['count'] = (!empty($new_instance['count'])) ? absint($new_instance['count']) : 5;
+		return $instance;
+	}
 }
-function register_tdc_comments_widget() {
-    register_widget('TDC_Comments_Widget');
+function register_tdc_comments_widget()
+{
+	register_widget('TDC_Comments_Widget');
 }
 add_action('widgets_init', 'register_tdc_comments_widget');
 
@@ -1338,238 +1358,258 @@ add_action('widgets_init', 'register_tdc_comments_widget');
  * 1. Xử lý gửi bình luận nhanh từ form Module 14
  */
 add_action('init', 'tdc_handle_module_14_comment_submit');
-function tdc_handle_module_14_comment_submit() {
-    if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tdc_action']) && $_POST['tdc_action'] === 'submit_module_14_comment') {
-        if (!isset($_POST['tdc_comment_nonce']) || !wp_verify_nonce($_POST['tdc_comment_nonce'], 'tdc_comment_action')) {
-            return;
-        }
+function tdc_handle_module_14_comment_submit()
+{
+	if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tdc_action']) && $_POST['tdc_action'] === 'submit_module_14_comment') {
+		if (!isset($_POST['tdc_comment_nonce']) || !wp_verify_nonce($_POST['tdc_comment_nonce'], 'tdc_comment_action')) {
+			return;
+		}
 
-        $author = sanitize_text_field($_POST['author_name']);
-        $content = sanitize_textarea_field($_POST['comment_content']);
+		$author = sanitize_text_field($_POST['author_name']);
+		$content = sanitize_textarea_field($_POST['comment_content']);
 
-        if (!empty($author) && !empty($content)) {
-            $latest_posts = get_posts(array('numberposts' => 1, 'post_status' => 'publish'));
-            $post_id = !empty($latest_posts) ? $latest_posts[0]->ID : 1;
+		if (!empty($author) && !empty($content)) {
+			$latest_posts = get_posts(array('numberposts' => 1, 'post_status' => 'publish'));
+			$post_id = !empty($latest_posts) ? $latest_posts[0]->ID : 1;
 
-            wp_insert_comment(array(
-                'comment_post_ID'      => $post_id,
-                'comment_author'       => $author,
-                'comment_author_email' => sanitize_email(sanitize_title($author) . '@example.com'),
-                'comment_content'      => $content,
-                'comment_type'         => 'comment',
-                'comment_approved'     => 1,
-                'comment_date'         => current_time('mysql'),
-            ));
+			wp_insert_comment(array(
+				'comment_post_ID' => $post_id,
+				'comment_author' => $author,
+				'comment_author_email' => sanitize_email(sanitize_title($author) . '@example.com'),
+				'comment_content' => $content,
+				'comment_type' => 'comment',
+				'comment_approved' => 1,
+				'comment_date' => current_time('mysql'),
+			));
 
-            $redirect = wp_get_referer() ? wp_get_referer() : $_SERVER['REQUEST_URI'];
-            $redirect = add_query_arg('comment_submitted', '1', remove_query_arg('comment_submitted', $redirect));
-            wp_safe_redirect($redirect);
-            exit;
-        }
-    }
+			$redirect = wp_get_referer() ? wp_get_referer() : $_SERVER['REQUEST_URI'];
+			$redirect = add_query_arg('comment_submitted', '1', remove_query_arg('comment_submitted', $redirect));
+			wp_safe_redirect($redirect);
+			exit;
+		}
+	}
 }
 
 /**
  * 2. Hàm dựng giao diện bình luận dạng bong bóng chat (Speech Bubble) chuẩn Image 1
  */
-function tdc_module_14_comments_render($args = array()) {
-    $title = !empty($args['title']) ? $args['title'] : 'Comments';
-    $count = !empty($args['count']) ? absint($args['count']) : 3;
+function tdc_module_14_comments_render($args = array())
+{
+	$title = !empty($args['title']) ? $args['title'] : 'Comments';
+	$count = !empty($args['count']) ? absint($args['count']) : 3;
 
-    $comments = get_comments(array(
-        'number' => $count,
-        'status' => 'approve',
-        'order'  => 'DESC',
-    ));
+	$comments = get_comments(array(
+		'number' => $count,
+		'status' => 'approve',
+		'order' => 'DESC',
+	));
 
-    $display_list = array();
-    if (!empty($comments)) {
-        foreach ($comments as $comm) {
-            $display_list[] = array(
-                'author'  => $comm->comment_author ? $comm->comment_author : 'Anonymous',
-                'content' => wp_strip_all_tags($comm->comment_content),
-                'avatar'  => get_avatar_url($comm, array('size' => 96)),
-            );
-        }
-    }
+	$display_list = array();
+	if (!empty($comments)) {
+		foreach ($comments as $comm) {
+			$display_list[] = array(
+				'author' => $comm->comment_author ? $comm->comment_author : 'Anonymous',
+				'content' => wp_strip_all_tags($comm->comment_content),
+				'avatar' => get_avatar_url($comm, array('size' => 96)),
+			);
+		}
+	}
 
-    // Nếu chưa có hoặc ít hơn 3 bình luận, bổ sung mẫu chuẩn theo Image 1
-    if (count($display_list) < 3) {
-        $default_samples = array(
-            array(
-                'author'  => 'John Doe',
-                'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                'avatar'  => '',
-            ),
-            array(
-                'author'  => 'Jane Doe',
-                'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                'avatar'  => '',
-            ),
-            array(
-                'author'  => 'John Doe',
-                'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                'avatar'  => '',
-            ),
-        );
+	// Nếu chưa có hoặc ít hơn 3 bình luận, bổ sung mẫu chuẩn theo Image 1
+	if (count($display_list) < 3) {
+		$default_samples = array(
+			array(
+				'author' => 'John Doe',
+				'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+				'avatar' => '',
+			),
+			array(
+				'author' => 'Jane Doe',
+				'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+				'avatar' => '',
+			),
+			array(
+				'author' => 'John Doe',
+				'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+				'avatar' => '',
+			),
+		);
 
-        while (count($display_list) < 3) {
-            $display_list[] = $default_samples[count($display_list)];
-        }
-    }
+		while (count($display_list) < 3) {
+			$display_list[] = $default_samples[count($display_list)];
+		}
+	}
 
-    ob_start();
-    ?>
-    <div class="tdc-module-14-comments">
-        <h3 class="tdc-module-14-title"><?php echo esc_html($title); ?></h3>
-        <div class="tdc-module-14-divider"></div>
+	ob_start();
+	?>
+	<div class="tdc-module-14-comments">
+		<h3 class="tdc-module-14-title"><?php echo esc_html($title); ?></h3>
+		<div class="tdc-module-14-divider"></div>
 
-        <?php if (!empty($_GET['comment_submitted'])): ?>
-            <div class="tdc-alert-success" style="background:#e6f4ea; color:#137333; padding:10px 14px; border-radius:4px; margin-bottom:15px; font-size:13.5px; border:1px solid #ceead6;">
-                ✓ Bình luận của bạn đã được đăng thành công!
-            </div>
-        <?php endif; ?>
+		<?php if (!empty($_GET['comment_submitted'])): ?>
+			<div class="tdc-alert-success"
+				style="background:#e6f4ea; color:#137333; padding:10px 14px; border-radius:4px; margin-bottom:15px; font-size:13.5px; border:1px solid #ceead6;">
+				✓ Bình luận của bạn đã được đăng thành công!
+			</div>
+		<?php endif; ?>
 
-        <div class="tdc-comments-bubble-list">
-            <?php foreach ($display_list as $item): ?>
-                <div class="tdc-comment-bubble-item">
-                    <div class="tdc-comment-avatar">
-                        <?php if (!empty($item['avatar'])): ?>
-                            <img src="<?php echo esc_url($item['avatar']); ?>" alt="<?php echo esc_attr($item['author']); ?>" />
-                        <?php else: ?>
-                            <svg viewBox="0 0 24 24" width="28" height="28" fill="#9ca3af"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                        <?php endif; ?>
-                    </div>
-                    <div class="tdc-comment-bubble-card">
-                        <div class="tdc-comment-bubble-header">
-                            <span class="tdc-comment-author-name"><?php echo esc_html($item['author']); ?></span>
-                        </div>
-                        <div class="tdc-comment-bubble-body">
-                            <p class="tdc-comment-text"><?php echo esc_html($item['content']); ?></p>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
+		<div class="tdc-comments-bubble-list">
+			<?php foreach ($display_list as $item): ?>
+				<div class="tdc-comment-bubble-item">
+					<div class="tdc-comment-avatar">
+						<?php if (!empty($item['avatar'])): ?>
+							<img src="<?php echo esc_url($item['avatar']); ?>" alt="<?php echo esc_attr($item['author']); ?>" />
+						<?php else: ?>
+							<svg viewBox="0 0 24 24" width="28" height="28" fill="#9ca3af">
+								<path
+									d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+							</svg>
+						<?php endif; ?>
+					</div>
+					<div class="tdc-comment-bubble-card">
+						<div class="tdc-comment-bubble-header">
+							<span class="tdc-comment-author-name"><?php echo esc_html($item['author']); ?></span>
+						</div>
+						<div class="tdc-comment-bubble-body">
+							<p class="tdc-comment-text"><?php echo esc_html($item['content']); ?></p>
+						</div>
+					</div>
+				</div>
+			<?php endforeach; ?>
+		</div>
 
-        <div class="tdc-comment-input-box">
-            <h4 class="tdc-input-box-title">Thêm bình luận mới</h4>
-            <form method="post" action="" class="tdc-comment-form">
-                <?php wp_nonce_field('tdc_comment_action', 'tdc_comment_nonce'); ?>
-                <input type="hidden" name="tdc_action" value="submit_module_14_comment" />
-                <div class="tdc-form-group">
-                    <input type="text" name="author_name" placeholder="Họ và tên của bạn..." required class="tdc-form-control" />
-                </div>
-                <div class="tdc-form-group">
-                    <textarea name="comment_content" placeholder="Nhập nội dung bình luận..." rows="3" required class="tdc-form-control"></textarea>
-                </div>
-                <div class="tdc-form-group" style="text-align: right; margin-bottom: 0;">
-                    <button type="submit" class="tdc-btn-comment-submit">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <?php
-    return ob_get_clean();
+		<div class="tdc-comment-input-box">
+			<h4 class="tdc-input-box-title">Thêm bình luận mới</h4>
+			<form method="post" action="" class="tdc-comment-form">
+				<?php wp_nonce_field('tdc_comment_action', 'tdc_comment_nonce'); ?>
+				<input type="hidden" name="tdc_action" value="submit_module_14_comment" />
+				<div class="tdc-form-group">
+					<input type="text" name="author_name" placeholder="Họ và tên của bạn..." required
+						class="tdc-form-control" />
+				</div>
+				<div class="tdc-form-group">
+					<textarea name="comment_content" placeholder="Nhập nội dung bình luận..." rows="3" required
+						class="tdc-form-control"></textarea>
+				</div>
+				<div class="tdc-form-group" style="text-align: right; margin-bottom: 0;">
+					<button type="submit" class="tdc-btn-comment-submit">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<?php
+	return ob_get_clean();
 }
 
 /**
  * 3. Shortcode [tdc_module_14_comments]
  */
-function tdc_module_14_comments_shortcode($atts) {
-    $atts = shortcode_atts(array(
-        'title' => 'Comments',
-        'count' => 3,
-    ), $atts, 'tdc_module_14_comments');
+function tdc_module_14_comments_shortcode($atts)
+{
+	$atts = shortcode_atts(array(
+		'title' => 'Comments',
+		'count' => 3,
+	), $atts, 'tdc_module_14_comments');
 
-    return tdc_module_14_comments_render($atts);
+	return tdc_module_14_comments_render($atts);
 }
 add_shortcode('tdc_module_14_comments', 'tdc_module_14_comments_shortcode');
 
 /**
  * 4. Widget Module #14 Comments cho Admin
  */
-class TDC_Comments_Module_14_Widget extends WP_Widget {
-    public function __construct() {
-        parent::__construct(
-            'tdc_comments_module_14_widget',
-            'Bình luận (TDC #14)',
-            array('description' => 'Hiển thị danh sách bình luận dạng bong bóng hội thoại và form nhập thông tin (Module #14).')
-        );
-    }
+class TDC_Comments_Module_14_Widget extends WP_Widget
+{
+	public function __construct()
+	{
+		parent::__construct(
+			'tdc_comments_module_14_widget',
+			'Bình luận (TDC #14)',
+			array('description' => 'Hiển thị danh sách bình luận dạng bong bóng hội thoại và form nhập thông tin (Module #14).')
+		);
+	}
 
-    public function widget($args, $instance) {
-        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
-        $count = !empty($instance['count']) ? absint($instance['count']) : 3;
+	public function widget($args, $instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+		$count = !empty($instance['count']) ? absint($instance['count']) : 3;
 
-        echo $args['before_widget'];
-        echo tdc_module_14_comments_render(array(
-            'title' => $title,
-            'count' => $count
-        ));
-        echo $args['after_widget'];
-    }
+		echo $args['before_widget'];
+		echo tdc_module_14_comments_render(array(
+			'title' => $title,
+			'count' => $count
+		));
+		echo $args['after_widget'];
+	}
 
-    public function form($instance) {
-        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
-        $count = !empty($instance['count']) ? absint($instance['count']) : 3;
-        ?>
-        <p>
-            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
-            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
-        </p>
-        <p>
-            <label for="<?php echo esc_attr($this->get_field_id('count')); ?>">Số lượng bình luận:</label>
-            <input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('count')); ?>" name="<?php echo esc_attr($this->get_field_name('count')); ?>" type="number" value="<?php echo esc_attr($count); ?>" min="1" max="10">
-        </p>
-        <?php
-    }
+	public function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+		$count = !empty($instance['count']) ? absint($instance['count']) : 3;
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('count')); ?>">Số lượng bình luận:</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('count')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('count')); ?>" type="number"
+				value="<?php echo esc_attr($count); ?>" min="1" max="10">
+		</p>
+		<?php
+	}
 
-    public function update($new_instance, $old_instance) {
-        $instance = array();
-        $instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : 'Comments';
-        $instance['count'] = (!empty($new_instance['count'])) ? absint($new_instance['count']) : 3;
-        return $instance;
-    }
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : 'Comments';
+		$instance['count'] = (!empty($new_instance['count'])) ? absint($new_instance['count']) : 3;
+		return $instance;
+	}
 }
-function register_tdc_comments_module_14_widget() {
-    register_widget('TDC_Comments_Module_14_Widget');
+function register_tdc_comments_module_14_widget()
+{
+	register_widget('TDC_Comments_Module_14_Widget');
 }
 add_action('widgets_init', 'register_tdc_comments_module_14_widget');
 
 /**
  * 5. Đăng ký các khu vực Widget Sidebar cho Trang Danh Sách / Tìm Kiếm (Search Page)
  */
-function register_search_sidebars() {
-    register_sidebar( array(
-        'name'          => 'Search Sidebar - Trái (#13)',
-        'id'            => 'sidebar-search-left-13',
-        'description'   => 'Khu vực Widget cột trái (Module #13) cho trang danh sách / tìm kiếm.',
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ) );
+function register_search_sidebars()
+{
+	register_sidebar(array(
+		'name' => 'Search Sidebar - Trái (#13)',
+		'id' => 'sidebar-search-left-13',
+		'description' => 'Khu vực Widget cột trái (Module #13) cho trang danh sách / tìm kiếm.',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
 
-    register_sidebar( array(
-        'name'          => 'Search Sidebar - Phải / Comments (#14)',
-        'id'            => 'sidebar-comments-14',
-        'description'   => 'Khu vực Widget cột phải hiển thị bình luận (Module #14) cho trang danh sách / tìm kiếm.',
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ) );
+	register_sidebar(array(
+		'name' => 'Search Sidebar - Phải / Comments (#14)',
+		'id' => 'sidebar-comments-14',
+		'description' => 'Khu vực Widget cột phải hiển thị bình luận (Module #14) cho trang danh sách / tìm kiếm.',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
 
-    register_sidebar( array(
-        'name'          => 'Search Bottom - Dưới (#15)',
-        'id'            => 'sidebar-search-bottom-15',
-        'description'   => 'Khu vực Widget phía dưới (Module #15) cho trang danh sách / tìm kiếm.',
-        'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ) );
+	register_sidebar(array(
+		'name' => 'Search Bottom - Dưới (#15)',
+		'id' => 'sidebar-search-bottom-15',
+		'description' => 'Khu vực Widget phía dưới (Module #15) cho trang danh sách / tìm kiếm.',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	));
 }
 add_action('widgets_init', 'register_search_sidebars');
 
@@ -1577,51 +1617,55 @@ add_action('widgets_init', 'register_search_sidebars');
  * 6. Tự động tương thích: nếu người dùng thêm block Bình luận (core/comments) vào widget hoặc trang tìm kiếm,
  * tự động hiển thị giao diện Module 14 chuẩn bong bóng hội thoại (Speech Bubble).
  */
-add_filter('render_block', function($block_content, $block) {
-    if (!empty($block['blockName']) && $block['blockName'] === 'core/comments') {
-        if (is_search() || empty(trim(strip_tags($block_content)))) {
-            return tdc_module_14_comments_render();
-        }
-    }
-    return $block_content;
+add_filter('render_block', function ($block_content, $block) {
+	if (!empty($block['blockName']) && $block['blockName'] === 'core/comments') {
+		if (is_search() || empty(trim(strip_tags($block_content)))) {
+			return tdc_module_14_comments_render();
+		}
+	}
+	return $block_content;
 }, 10, 2);
 
 /**
  * 7. Shortcodes cho layout Trang tìm kiếm / danh sách (Image 2)
  */
-function tdc_sidebar_search_left_shortcode() {
-    ob_start();
-    if (is_active_sidebar('sidebar-search-left-13')) {
-        dynamic_sidebar('sidebar-search-left-13');
-    }
-    return ob_get_clean();
+function tdc_sidebar_search_left_shortcode()
+{
+	ob_start();
+	if (is_active_sidebar('sidebar-search-left-13')) {
+		dynamic_sidebar('sidebar-search-left-13');
+	}
+	return ob_get_clean();
 }
 add_shortcode('tdc_sidebar_search_left', 'tdc_sidebar_search_left_shortcode');
 
-function tdc_sidebar_search_right_shortcode() {
-    ob_start();
-    if (is_active_sidebar('sidebar-comments-14')) {
-        dynamic_sidebar('sidebar-comments-14');
-    }
-    $sidebar_output = ob_get_clean();
+function tdc_sidebar_search_right_shortcode()
+{
+	ob_start();
+	if (is_active_sidebar('sidebar-comments-14')) {
+		dynamic_sidebar('sidebar-comments-14');
+	}
+	$sidebar_output = ob_get_clean();
 
-    // Nếu sidebar không có widget hoặc widget sinh ra rỗng (chẳng hạn block comments mặc định của WP bị rỗng trên trang search)
-    if (empty(trim(strip_tags($sidebar_output)))) {
-        return tdc_module_14_comments_render();
-    }
-    return $sidebar_output;
+	// Nếu sidebar không có widget hoặc widget sinh ra rỗng (chẳng hạn block comments mặc định của WP bị rỗng trên trang search)
+	if (empty(trim(strip_tags($sidebar_output)))) {
+		return tdc_module_14_comments_render();
+	}
+	return $sidebar_output;
 }
 add_shortcode('tdc_sidebar_search_right', 'tdc_sidebar_search_right_shortcode');
 
-function tdc_sidebar_search_bottom_shortcode() {
-    ob_start();
-    if (is_active_sidebar('sidebar-search-bottom-15')) {
-        dynamic_sidebar('sidebar-search-bottom-15');
-    }
-    return ob_get_clean();
+function tdc_sidebar_search_bottom_shortcode()
+{
+	ob_start();
+	if (is_active_sidebar('sidebar-search-bottom-15')) {
+		dynamic_sidebar('sidebar-search-bottom-15');
+	}
+	return ob_get_clean();
 }
 add_shortcode('tdc_sidebar_search_bottom', 'tdc_sidebar_search_bottom_shortcode');
 
 require_once get_template_directory() . '/widget-recent-posts.php';
 require_once get_template_directory() . '/widget-numbered-posts.php';
 require_once get_template_directory() . '/widget-test-4.php';
+require_once get_template_directory() . '/widget-module-13.php';
