@@ -33,6 +33,19 @@ $footer_posts = wp_get_recent_posts(array(
 ));
 ?>
 
+<!-- Khu vực hiển thị: phía trên Footer (widget_test_4) -->
+<?php if ( is_front_page() || is_home() || is_archive() || is_category() || is_tag() || is_tax() || is_search() || is_single() ): ?>
+	<div id="widget_test_4_area" class="widget-test-4-area" style="width: 96%; max-width: 1400px; margin: 30px auto; padding: 15px 10px;">
+		<?php 
+		if ( is_active_sidebar( 'widget_test_4' ) ) {
+			dynamic_sidebar( 'widget_test_4' );
+		} else {
+			the_widget( 'Widget_Test_4' );
+		}
+		?>
+	</div>
+<?php endif; ?>
+
 <section id="footer">
 	<div class="container">
 		<div class="row">
