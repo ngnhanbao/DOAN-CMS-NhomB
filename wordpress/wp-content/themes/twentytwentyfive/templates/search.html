@@ -1,20 +1,58 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","className":"group-c-search-page","layout":{"type":"constrained"}} -->
-<main class="wp-block-group group-c-search-page">
+<!-- wp:group {"tagName":"main","className":"group-c-search-page","style":{"spacing":{"margin":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|60"}}},"layout":{"type":"wide"}} -->
+<main class="wp-block-group alignwide group-c-search-page" style="margin-top:var(--wp--preset--spacing--40);margin-bottom:var(--wp--preset--spacing--60);width:96%;max-width:1400px;margin-left:auto;margin-right:auto;padding-left:10px;padding-right:10px;">
 
-	<!-- Tiêu đề: Search: "messi" -->
+	<!-- Tiêu đề: Search: "từ khóa" -->
 	<!-- wp:query-title {"type":"search","className":"group-c-search-title"} /-->
 
 	<!-- Khung ô tìm kiếm màu kem luôn hiển thị ở vị trí Search (4) -->
 	<!-- wp:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
 
-	<!-- Danh sách bài viết tìm thấy (Search result (5)) -->
-	<!-- wp:shortcode -->
-	[tdc_search_results]
-	<!-- /wp:shortcode -->
+	<!-- Khung 3 cột theo đúng wireframe: Cột 13 (25%) | Cột giữa (50%) | Cột 14 Comments (25%) -->
+	<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"25px"}}},"className":"group-c-search-3-columns"} -->
+	<div class="wp-block-columns group-c-search-3-columns" style="margin-top:30px;">
+
+		<!-- Cột 1 (Trái): Module #13 (25%) - Cột trái chưa cần code (để trống chờ thành viên khác) -->
+		<!-- wp:column {"width":"25%","className":"group-c-search-col-left"} -->
+		<div class="wp-block-column group-c-search-col-left" style="flex-basis:25%">
+			<!-- wp:shortcode -->
+			[tdc_sidebar_search_left]
+			<!-- /wp:shortcode -->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- Cột 2 (Giữa): Search Result (Module #5) (50%) -->
+		<!-- wp:column {"width":"50%","className":"group-c-search-col-center"} -->
+		<div class="wp-block-column group-c-search-col-center" style="flex-basis:50%">
+			<!-- wp:shortcode -->
+			[tdc_search_results]
+			<!-- /wp:shortcode -->
+		</div>
+		<!-- /wp:column -->
+
+		<!-- Cột 3 (Phải): Comments (Module #14) (25%) -->
+		<!-- wp:column {"width":"25%","className":"group-c-search-col-right"} -->
+		<div class="wp-block-column group-c-search-col-right" style="flex-basis:25%">
+			<!-- wp:shortcode -->
+			[tdc_sidebar_search_right]
+			<!-- /wp:shortcode -->
+		</div>
+		<!-- /wp:column -->
+
+	</div>
+	<!-- /wp:columns -->
+
+	<!-- Vị trí phía dưới (Module #15) -->
+	<!-- wp:group {"className":"group-c-search-bottom-15","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group group-c-search-bottom-15" style="margin-top:40px;">
+		<!-- wp:shortcode -->
+		[tdc_sidebar_search_bottom]
+		<!-- /wp:shortcode -->
+	</div>
+	<!-- /wp:group -->
 
 </main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer"} /-->
+<!-- wp:template-part {"slug":"footer"} /-->
