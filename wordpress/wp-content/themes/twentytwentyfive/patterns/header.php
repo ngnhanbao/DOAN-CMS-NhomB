@@ -194,7 +194,7 @@
 </header>
 <script>
 	function validationGroupRearch(form) {
-		const input = form.querySelector('input[name="s"]'); 
+		const input = form.querySelector('input[name="s"]');
 		if (!input || input.value.trim() === '') {
 			alert('Vui lòng nhập từ khóa tìm kiếm!');
 			input.focus();

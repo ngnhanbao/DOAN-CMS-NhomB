@@ -26,37 +26,46 @@ Tags: one-column, custom-colors, custom-menu, custom-logo, editor-style, feature
  * https://github.com/WordPress/gutenberg/issues/42319
  */
 a {
-	text-decoration-thickness: 1px !important;
-	text-underline-offset: .1em;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: .1em;
 }
 
 /* Focus styles */
 :where(.wp-site-blocks *:focus) {
-	outline-width: 2px;
-	outline-style: solid;
+    outline-width: 2px;
+    outline-style: solid;
 }
 
 /* Increase the bottom margin on submenus, so that the outline is visible. */
 .wp-block-navigation .wp-block-navigation-submenu .wp-block-navigation-item:not(:last-child) {
-	margin-bottom: 3px;
+    margin-bottom: 3px;
 }
 
 /* Increase the outline offset on the parent menu items, so that the outline does not touch the text. */
 .wp-block-navigation .wp-block-navigation-item .wp-block-navigation-item__content {
-	outline-offset: 4px;
+    outline-offset: 4px;
 }
 
 /* Remove outline offset from the submenus, otherwise the outline is visible outside the submenu container. */
 .wp-block-navigation .wp-block-navigation-item ul.wp-block-navigation__submenu-container .wp-block-navigation-item__content {
-	outline-offset: 0;
+    outline-offset: 0;
 }
 
 /*
  * Progressive enhancement to reduce widows and orphans
  * https://github.com/WordPress/gutenberg/issues/55190
  */
-h1, h2, h3, h4, h5, h6, blockquote, caption, figcaption, p {
-	text-wrap: pretty;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote,
+caption,
+figcaption,
+p {
+    text-wrap: pretty;
 }
 
 /*
@@ -64,7 +73,7 @@ h1, h2, h3, h4, h5, h6, blockquote, caption, figcaption, p {
  * https://github.com/WordPress/gutenberg/issues/65934
 */
 .more-link {
-	display: block;
+    display: block;
 }
 
 /*
@@ -72,5 +81,128 @@ h1, h2, h3, h4, h5, h6, blockquote, caption, figcaption, p {
  * https://core.trac.wordpress.org/ticket/63875
  */
 :where(pre) {
-	overflow-x: auto;
+    overflow-x: auto;
+}
+
+/* ==========================================================================
+   Widget Test 4 Styles
+   ========================================================================== */
+.wt4-container {
+    width: 100%;
+    font-family: "Times New Roman", Times, Georgia, serif;
+    box-sizing: border-box;
+    background: #ffffff;
+    margin: 10px 0 20px 0;
+}
+
+.wt4-header {
+    margin: 0 0 25px 0;
+    padding: 0;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: "Times New Roman", Times, Georgia, serif;
+    color: #111111;
+}
+
+.wt4-header-text {
+    display: inline-block;
+    border-bottom: 3px solid #0077b6;
+    padding-bottom: 4px;
+    line-height: 1.2;
+}
+
+.wt4-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 40px;
+    row-gap: 20px;
+}
+
+.wt4-item {
+    display: flex;
+    align-items: flex-start;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e9ecef;
+    box-sizing: border-box;
+}
+
+/* Bỏ đường viền ở 3 bài cuối cùng để khớp hình mẫu */
+.wt4-item:nth-last-child(-n+3) {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.wt4-number {
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 0.9;
+    color: #222222;
+    font-family: "Times New Roman", Times, Georgia, serif;
+    margin-right: 18px;
+    flex-shrink: 0;
+    min-width: 32px;
+    text-align: left;
+    user-select: none;
+}
+
+.wt4-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.wt4-title {
+    margin: 0;
+    padding: 0;
+    font-size: 15.5px;
+    line-height: 1.45;
+    font-weight: 400;
+    font-family: "Times New Roman", Times, Georgia, serif;
+}
+
+.wt4-title a {
+    color: #222222;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.wt4-title a:hover {
+    color: #0077b6;
+    text-decoration: underline;
+}
+
+@media (max-width: 991px) {
+    .wt4-grid {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 25px;
+    }
+
+    .wt4-item:nth-last-child(-n+3) {
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 18px;
+    }
+
+    .wt4-item:nth-last-child(-n+2) {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .wt4-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wt4-item:nth-last-child(-n+2) {
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 18px;
+    }
+
+    .wt4-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
 }

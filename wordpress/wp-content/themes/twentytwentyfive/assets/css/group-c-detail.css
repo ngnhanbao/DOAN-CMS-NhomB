@@ -1,0 +1,377 @@
+/* Post Detail Styles for Group C / FIT TDC Design */
+
+body.single-post {
+    background-color: #ffffff !important;
+}
+
+.tdc-detail-article {
+    max-width: 900px;
+    margin: 40px auto 60px auto;
+    padding: 0 20px;
+    background: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Header with Title and Date Badge */
+.tdc-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 10px;
+}
+
+.tdc-detail-title {
+    flex: 1;
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #1a1a1a;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+/* Circular Yellow Date Badge */
+.tdc-date-badge {
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+    background: #f0be1a !important; /* Vàng nghệ đặc trưng của FIT TDC */
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #222222 !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15) !important;
+    user-select: none !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+.tdc-date-badge-inner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    color: #222222 !important;
+    white-space: nowrap !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.tdc-date-fraction {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.tdc-date-badge .tdc-badge-day,
+.tdc-date-badge .tdc-date-day {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    color: #222222 !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    text-align: center !important;
+    display: block !important;
+}
+
+.tdc-date-badge .tdc-badge-dash,
+.tdc-date-badge .tdc-date-dash {
+    display: block !important;
+    width: 17px !important;
+    height: 1px !important;
+    background-color: #222222 !important;
+    margin: 2px 0 !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.tdc-date-badge .tdc-badge-month,
+.tdc-date-badge .tdc-date-month {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    color: #222222 !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    text-align: center !important;
+    display: block !important;
+}
+
+.tdc-date-badge .tdc-badge-year,
+.tdc-date-badge .tdc-date-year {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    color: #222222 !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 0 0 3px !important;
+    align-self: center !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
+}
+
+/* Decorative Divider with Arrow Down */
+.tdc-detail-divider {
+    position: relative;
+    border-top: 1px solid #e0e0e0;
+    margin: 20px 0 35px 0;
+}
+
+.tdc-detail-divider .tdc-arrow-down {
+    position: absolute;
+    top: 0;
+    left: 60px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #999999;
+}
+
+/* Featured Image */
+.tdc-detail-featured-image {
+    margin-bottom: 30px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.tdc-detail-featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Article Content Typography */
+.tdc-detail-content {
+    font-size: 1.08rem;
+    line-height: 1.8;
+    color: #333333;
+}
+
+/* First paragraph (Sapo) */
+.tdc-detail-content > p:first-of-type {
+    font-style: italic;
+    color: #555555;
+    font-size: 1.12rem;
+    line-height: 1.75;
+    margin-bottom: 25px;
+}
+
+.tdc-detail-content p {
+    margin-bottom: 22px;
+    text-align: justify;
+}
+
+.tdc-detail-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 25px auto;
+    border-radius: 4px;
+}
+
+.tdc-detail-content h2,
+.tdc-detail-content h3,
+.tdc-detail-content h4 {
+    color: #1a1a1a;
+    font-weight: 700;
+    margin-top: 35px;
+    margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .tdc-detail-article {
+        margin: 20px auto 40px auto;
+        padding: 0 15px;
+    }
+
+    .tdc-detail-header {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .tdc-detail-title {
+        font-size: 1.5rem;
+    }
+
+    .tdc-date-badge {
+        width: 58px !important;
+        height: 58px !important;
+        min-width: 58px !important;
+        max-width: 58px !important;
+    }
+
+    .tdc-date-badge .tdc-badge-day,
+    .tdc-date-badge .tdc-date-day,
+    .tdc-date-badge .tdc-badge-month,
+    .tdc-date-badge .tdc-date-month {
+        font-size: 12px !important;
+    }
+
+    .tdc-date-badge .tdc-badge-dash,
+    .tdc-date-badge .tdc-date-dash {
+        width: 15px !important;
+    }
+
+    .tdc-date-badge .tdc-badge-year,
+    .tdc-date-badge .tdc-date-year {
+        font-size: 12px !important;
+    }
+
+    .tdc-detail-content p {
+        text-align: left;
+    }
+}
+
+/* =========================================================
+   (7) PREV - NEXT POST NAVIGATION STYLES
+   ========================================================= */
+.tdc-post-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 30px auto;
+    max-width: 900px;
+    padding: 0 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.tdc-post-nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.tdc-post-nav-date-box,
+.tdc-post-nav-date-box *,
+.tdc-post-nav-date-stack,
+.tdc-post-nav-month {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+/* Vòng tròn ngày tháng màu vàng nghệ đặc trưng FIT TDC */
+.tdc-post-nav-date-box {
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    background: #f0be1a !important; /* Vàng nghệ đặc trưng của FIT TDC */
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #222222 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+    margin-right: 18px !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    user-select: none !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    cursor: pointer;
+}
+
+.tdc-post-nav-item:hover .tdc-post-nav-date-box {
+    transform: scale(1.06) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18) !important;
+}
+
+.tdc-post-nav-date-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-right: 2px !important;
+    border-bottom: none !important;
+    line-height: 1 !important;
+    padding: 0 !important;
+}
+
+.tdc-post-nav-day {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    color: #222222 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    display: block !important;
+}
+
+.tdc-post-nav-line {
+    width: 14px !important;
+    height: 1px !important;
+    background-color: #222222 !important;
+    margin: 2px 0 !important;
+    border: none !important;
+    padding: 0 !important;
+    display: block !important;
+}
+
+.tdc-post-nav-month {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    color: #222222 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    display: block !important;
+}
+
+.tdc-post-nav-year {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    color: #222222 !important;
+    align-self: center !important;
+    margin: 0 0 0 3px !important;
+    padding: 0 !important;
+    border: none !important;
+    font-family: "Times New Roman", Times, Georgia, serif !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
+}
+
+.tdc-post-nav-title {
+    font-size: 16px;
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+.tdc-post-nav-title a {
+    color: #222222;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.tdc-post-nav-title a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+

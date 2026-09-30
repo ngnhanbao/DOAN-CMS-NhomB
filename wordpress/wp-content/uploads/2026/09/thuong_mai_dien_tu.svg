@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#431407"/>
+      <stop offset="100%" stop-color="#1c1917"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#fb923c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="800" y="200" width="280" height="260" rx="20" fill="#292524" stroke="#f97316" stroke-width="4"/>
+  <circle cx="870" cy="380" r="20" fill="#f97316"/>
+  <circle cx="1010" cy="380" r="20" fill="#f97316"/>
+  <path d="M830,260 L870,260 L900,340 L1030,340 L1060,280 L880,280" fill="none" stroke="#fdba74" stroke-width="6"/>
+  <rect x="100" y="120" width="220" height="40" rx="8" fill="url(#accent)"/>
+  <text x="210" y="145" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">THƯƠNG MẠI ĐIỆN TỬ</text>
+  <text x="100" y="240" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="#ffffff">Xu Hướng Thương Mại Điện Tử</text>
+  <text x="100" y="295" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="#f97316">&amp; Chuyển Đổi Số Doanh Nghiệp</text>
+  <text x="100" y="360" font-family="system-ui, sans-serif" font-size="20" fill="#fed7aa">Tích hợp AI, thanh toán số và tối ưu chuỗi cung ứng toàn cầu.</text>
+</svg>

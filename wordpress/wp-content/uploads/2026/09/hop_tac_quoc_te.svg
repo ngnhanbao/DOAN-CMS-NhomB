@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#fb7185"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="950" cy="315" r="220" fill="none" stroke="#f43f5e" stroke-width="3" opacity="0.3"/>
+  <ellipse cx="950" cy="315" rx="220" ry="90" fill="none" stroke="#f43f5e" stroke-width="2" opacity="0.3"/>
+  <line x1="950" y1="95" x2="950" y2="535" stroke="#f43f5e" stroke-width="2" opacity="0.3"/>
+  <rect x="100" y="120" width="220" height="40" rx="8" fill="url(#accent)"/>
+  <text x="210" y="145" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">HỢP TÁC QUỐC TẾ</text>
+  <text x="100" y="240" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="#ffffff">Tăng Cường Hợp Tác Quốc Tế</text>
+  <text x="100" y="295" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="#fb7185">&amp; Ngoại Giao Đa Phương Chủ Động</text>
+  <text x="100" y="360" font-family="system-ui, sans-serif" font-size="20" fill="#fecdd3">Khẳng định vị thế toàn cầu, mở rộng quan hệ đối tác chiến lược.</text>
+</svg>

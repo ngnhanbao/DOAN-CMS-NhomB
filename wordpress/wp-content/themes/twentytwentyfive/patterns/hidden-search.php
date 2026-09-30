@@ -11,4 +11,18 @@
 
 ?>
 
-<!-- wp:search {"label":"<?php echo esc_html_x( 'Search', 'Search form label.', 'twentytwentyfive' ); ?>","showLabel":false,"placeholder":"<?php echo esc_attr_x( 'Type here...', 'Search input field placeholder text.', 'twentytwentyfive' ); ?>","buttonText":"<?php echo esc_attr_x( 'Search', 'Button text. Verb.', 'twentytwentyfive' ); ?>"} /-->
+<div class="wp-block-group group-c-no-results">
+
+	<?php if ( is_search() && ! have_posts() ) : ?>
+		<!-- wp:paragraph {"className":"group-c-no-results-text"} -->
+		<p class="group-c-no-results-text">
+			We could not find any results for your search.
+			You can give it another try through the search form below.
+		</p>
+		<!-- /wp:paragraph -->
+	<?php endif; ?>
+
+	<!-- wp:search {"label":"Search","showLabel":false,"placeholder":"Search topics or keywords","buttonText":"Search","buttonPosition":"button-inside","className":"group-c-search-form"} /-->
+
+</div>
+<!-- /wp:group -->

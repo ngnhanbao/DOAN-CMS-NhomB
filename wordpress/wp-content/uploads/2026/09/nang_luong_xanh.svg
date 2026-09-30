@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14532d"/>
+      <stop offset="100%" stop-color="#062c19"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <polygon points="900,120 820,320 920,320 840,520 1020,280 920,280" fill="#4ade80" opacity="0.3"/>
+  <rect x="100" y="120" width="220" height="40" rx="8" fill="url(#accent)"/>
+  <text x="210" y="145" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#062c19" text-anchor="middle">NĂNG LƯỢNG XANH</text>
+  <text x="100" y="240" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="#ffffff">Ứng Dụng Năng Lượng Tái Tạo</text>
+  <text x="100" y="295" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="#4ade80">&amp; Công Nghệ Pin Lưu Trữ Mới</text>
+  <text x="100" y="360" font-family="system-ui, sans-serif" font-size="20" fill="#bbf7d0">Chuyển đổi năng lượng sạch, hướng tới mục tiêu phát thải ròng bằng 0.</text>
+</svg>
