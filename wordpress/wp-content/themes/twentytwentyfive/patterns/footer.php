@@ -19,7 +19,7 @@
         if (is_active_sidebar('above-footer')) {
             dynamic_sidebar('above-footer'); 
         } else {
-            the_widget('TDC_Widget_Test_4', array('title' => 'Widget Test 4', 'number' => 5));
+            the_widget('TDC_Widget_Last_Posts', array('title' => 'Latest News', 'number' => 3));
         }
         ?>
     </div>
