@@ -25,11 +25,11 @@ $year       = get_the_time('y');
 		<div class="tdc-date-badge" title="<?php echo esc_attr(get_the_date()); ?>">
 			<div class="tdc-date-badge-inner">
 				<div class="tdc-date-fraction">
-					<span class="tdc-date-day"><?php echo esc_html($day); ?></span>
-					<span class="tdc-date-dash"></span>
-					<span class="tdc-date-month"><?php echo esc_html($month); ?></span>
+					<span class="tdc-badge-day"><?php echo esc_html($day); ?></span>
+					<span class="tdc-badge-dash"></span>
+					<span class="tdc-badge-month"><?php echo esc_html($month); ?></span>
 				</div>
-				<span class="tdc-date-year">'<?php echo esc_html($year); ?></span>
+				<span class="tdc-badge-year">'<?php echo esc_html($year); ?></span>
 			</div>
 		</div>
 	</header>

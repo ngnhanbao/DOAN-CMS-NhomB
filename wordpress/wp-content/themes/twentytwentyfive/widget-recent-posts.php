@@ -58,26 +58,26 @@ class TDC_Custom_Recent_Posts_Widget extends WP_Widget
                 .tdc-recent-post-item:last-child {
                     margin-bottom: 0;
                 }
-                .tdc-recent-post-date {
+                .tdc-recent-posts-widget .tdc-recent-post-date {
                     display: flex;
                     align-items: center;
                     margin-right: 20px;
                     font-size: 15px;
                     line-height: 1.1;
                 }
-                .tdc-date-left {
+                .tdc-recent-posts-widget .tdc-date-left {
                     display: flex;
                     flex-direction: column;
                     text-align: center;
                 }
-                .tdc-date-day {
+                .tdc-recent-posts-widget .tdc-date-day {
                     font-size: 30px;
                     font-weight: 800;
                     font-family: serif;
                     color: #ffffff;
                     padding-bottom: 3px;
                 }
-                .tdc-date-month {
+                .tdc-recent-posts-widget .tdc-date-month {
                     font-size: 30px;
                     font-weight: 800;
                     font-family: serif;
@@ -85,7 +85,7 @@ class TDC_Custom_Recent_Posts_Widget extends WP_Widget
                     padding-top: 3px;
                     border-top: 1px solid #fff;
                 }
-                .tdc-date-year {
+                .tdc-recent-posts-widget .tdc-date-year {
                     font-size: 30px;
                     font-weight: 800;
                     font-family: serif;
