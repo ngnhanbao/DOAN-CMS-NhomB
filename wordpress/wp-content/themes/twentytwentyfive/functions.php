@@ -1669,3 +1669,4 @@ require_once get_template_directory() . '/widget-recent-posts.php';
 require_once get_template_directory() . '/widget-numbered-posts.php';
 require_once get_template_directory() . '/widget-test-4.php';
 require_once get_template_directory() . '/widget-module-13.php';
+require_once get_template_directory() . '/widget-last-posts.php';
