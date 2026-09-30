@@ -63,6 +63,14 @@ if (!function_exists('twentytwentyfive_enqueue_styles')):
 			'path',
 			get_parent_theme_file_path($src)
 		);
+
+		// Thêm CSS riêng cho phần Header Group C
+		wp_enqueue_style(
+			'group-c-header-style',
+			get_parent_theme_file_uri('assets/css/group-c-header.css'),
+			array(),
+			file_exists(get_parent_theme_file_path('assets/css/group-c-header.css')) ? filemtime(get_parent_theme_file_path('assets/css/group-c-header.css')) : '1.0'
+		);
 	}
 endif;
 add_action('wp_enqueue_scripts', 'twentytwentyfive_enqueue_styles');
