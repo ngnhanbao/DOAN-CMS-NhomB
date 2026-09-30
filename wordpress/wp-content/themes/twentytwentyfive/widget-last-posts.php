@@ -26,6 +26,11 @@ class TDC_Widget_Last_Posts extends WP_Widget
 
     public function widget($args, $instance)
     {
+        // Chỉ hiển thị widget này ở trang tìm kiếm
+        if (!is_search()) {
+            return;
+        }
+
         echo $args['before_widget'];
 
         $title = !empty($instance['title']) ? $instance['title'] : 'Latest News';
