@@ -837,18 +837,25 @@ add_filter('render_block', function ($block_content, $block) {
 // --- SHORTCODE HIỂN THỊ KẾT QUẢ TÌM KIẾM ---
 function tdc_search_results_shortcode()
 {
-	$search_query = get_search_query();
-
-	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-	$query_args = array(
-		'post_type' => 'post',
-		'posts_per_page' => 10,
-		'paged' => $paged
-	);
-	if (!empty($search_query)) {
-		$query_args['s'] = $search_query;
+	global $wp_query;
+	
+	if ( is_search() || is_archive() ) {
+		// Dùng chung query mặc định của WordPress (đã tự động bắt đúng chuyên mục, tìm kiếm...)
+		$query = $wp_query;
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+	} else {
+		$search_query = get_search_query();
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+		$query_args = array(
+			'post_type' => 'post',
+			'posts_per_page' => 10,
+			'paged' => $paged
+		);
+		if (!empty($search_query)) {
+			$query_args['s'] = $search_query;
+		}
+		$query = new WP_Query($query_args);
 	}
-	$query = new WP_Query($query_args);
 
 	if (!$query->have_posts()) {
 		return '<div class="tdc-no-search-results" style="padding:25px;text-align:center;color:#666;background:#fff;border:1px solid #eaeaea;">Không tìm thấy bài viết nào phù hợp.</div>';
@@ -876,9 +883,9 @@ function tdc_search_results_shortcode()
             .tdc-search-date { border-right: none; border-bottom: 1px solid #eaeaea; padding-right: 0; padding-bottom: 15px; margin-right: 0; margin-bottom: 15px; flex-direction: row; gap: 10px; align-items: baseline; }
         }
         
-        .tdc-pagination { display: flex; gap: 10px; margin-top: 30px; }
-        .tdc-pagination a, .tdc-pagination span { padding: 8px 12px; border: 1px solid #ddd; text-decoration: none; color: #333; }
-        .tdc-pagination span.current { background: #0056b3; color: white; border-color: #0056b3; }
+        .tdc-pagination { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 8px !important; margin-top: 30px !important; align-items: center !important; }
+        .tdc-pagination a, .tdc-pagination span { display: inline-flex !important; align-items: center !important; justify-content: center !important; padding: 6px 12px !important; border: 1px solid #ddd !important; text-decoration: none !important; color: #333 !important; min-width: 36px !important; height: 36px !important; box-sizing: border-box !important; margin: 0 !important; font-size: 15px !important; line-height: 1 !important; }
+        .tdc-pagination span.current { background: #0056b3 !important; color: white !important; border-color: #0056b3 !important; font-weight: bold !important; }
     </style>';
 
 	$output .= '<div class="tdc-search-list">';
@@ -1668,17 +1675,8 @@ add_shortcode('tdc_sidebar_search_left', 'tdc_sidebar_search_left_shortcode');
 
 function tdc_sidebar_search_right_shortcode()
 {
-	ob_start();
-	if (is_active_sidebar('sidebar-comments-14')) {
-		dynamic_sidebar('sidebar-comments-14');
-	}
-	$sidebar_output = ob_get_clean();
-
-	// Nếu sidebar không có widget hoặc widget sinh ra rỗng (chẳng hạn block comments mặc định của WP bị rỗng trên trang search)
-	if (empty(trim(strip_tags($sidebar_output)))) {
-		return tdc_module_14_comments_render();
-	}
-	return $sidebar_output;
+	// Bắt buộc hiển thị đúng thiết kế bong bóng Comments (Module 14)
+	return tdc_module_14_comments_render();
 }
 add_shortcode('tdc_sidebar_search_right', 'tdc_sidebar_search_right_shortcode');
 
