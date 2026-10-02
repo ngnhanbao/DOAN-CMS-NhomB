@@ -29,15 +29,11 @@ class TDC_Module_13_Widget extends WP_Widget
             echo '<style>
                 .tdc-module-13-list {
                     display: grid;
-                    grid-template-columns: repeat(3, 1fr);
+                    grid-template-columns: repeat(1fr);
                     gap: 30px;
                     font-family: Arial, sans-serif;
                 }
-                @media (max-width: 991px) {
-                    .tdc-module-13-list {
-                        grid-template-columns: 1fr;
-                    }
-                }
+                
                 .tdc-module-13-item {
                     display: flex;
                     flex-direction: column;

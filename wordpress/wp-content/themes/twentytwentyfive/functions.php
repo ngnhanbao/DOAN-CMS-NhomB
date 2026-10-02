@@ -1116,68 +1116,74 @@ add_action('widgets_init', 'register_archive_sidebar_11');
  */
 function tdc_archive_shortcode($atts)
 {
-	$atts = shortcode_atts(array(
-		'title' => 'Archive'
-	), $atts, 'tdc_archive');
-
-	$output = '<style>
-        .tdc-archive-widget-11 {
-            font-family: Arial, sans-serif;
-            margin-bottom: 25px;
-        }
-        .tdc-archive-title-11 {
-            font-size: 18px;
-            font-weight: 500;
-            color: #333333;
-            margin: 0 0 4px 0;
-        }
-        .tdc-archive-line-11 {
-            width: 45px;
-            height: 2px;
-            background-color: #777777;
-            margin-bottom: 12px;
-        }
-        .tdc-archive-list-11 {
-            list-style: none !important;
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-        .tdc-archive-list-11 li {
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .tdc-archive-list-11 li:last-child {
-            border-bottom: none;
-        }
-        .tdc-archive-list-11 li a {
-            color: #337ab7;
-            text-decoration: none;
-            font-size: 15px;
-        }
-        .tdc-archive-list-11 li a:hover {
-            color: #23527c;
-            text-decoration: underline;
-        }
-    </style>';
-
-	$output .= '<div class="tdc-archive-widget-11">';
-	if (!empty($atts['title'])) {
-		$output .= '<h3 class="tdc-archive-title-11">' . esc_html($atts['title']) . '</h3>';
-		$output .= '<div class="tdc-archive-line-11"></div>';
-	}
-	$output .= '<ul class="tdc-archive-list-11">';
-
-	$categories = get_categories(array('number' => 5, 'orderby' => 'count', 'order' => 'DESC'));
-	if (!empty($categories)) {
-		foreach ($categories as $cat) {
-			$output .= '<li><a href="' . esc_url(get_category_link($cat->term_id)) . '">' . esc_html($cat->name) . '</a></li>';
-		}
+	ob_start();
+	if (is_active_sidebar('sidebar-archive-11')) {
+		dynamic_sidebar('sidebar-archive-11');
 	} else {
-		$output .= '<li><a href="#">Tháng 09 năm 2026</a></li>';
-	}
+		$atts = shortcode_atts(array(
+			'title' => 'Archive'
+		), $atts, 'tdc_archive');
 
-	$output .= '</ul></div>';
-	return $output;
+		$output = '<style>
+			.tdc-archive-widget-11 {
+				font-family: Arial, sans-serif;
+				margin-bottom: 25px;
+			}
+			.tdc-archive-title-11 {
+				font-size: 18px;
+				font-weight: 500;
+				color: #333333;
+				margin: 0 0 4px 0;
+			}
+			.tdc-archive-line-11 {
+				width: 45px;
+				height: 2px;
+				background-color: #777777;
+				margin-bottom: 12px;
+			}
+			.tdc-archive-list-11 {
+				list-style: none !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+			.tdc-archive-list-11 li {
+				padding: 8px 0;
+				border-bottom: 1px solid #f0f0f0;
+			}
+			.tdc-archive-list-11 li:last-child {
+				border-bottom: none;
+			}
+			.tdc-archive-list-11 li a {
+				color: #337ab7;
+				text-decoration: none;
+				font-size: 15px;
+			}
+			.tdc-archive-list-11 li a:hover {
+				color: #23527c;
+				text-decoration: underline;
+			}
+		</style>';
+
+		$output .= '<div class="tdc-archive-widget-11">';
+		if (!empty($atts['title'])) {
+			$output .= '<h3 class="tdc-archive-title-11">' . esc_html($atts['title']) . '</h3>';
+			$output .= '<div class="tdc-archive-line-11"></div>';
+		}
+		$output .= '<ul class="tdc-archive-list-11">';
+
+		$categories = get_categories(array('number' => 5, 'orderby' => 'count', 'order' => 'DESC'));
+		if (!empty($categories)) {
+			foreach ($categories as $cat) {
+				$output .= '<li><a href="' . esc_url(get_category_link($cat->term_id)) . '">' . esc_html($cat->name) . '</a></li>';
+			}
+		} else {
+			$output .= '<li><a href="#">Tháng 09 năm 2026</a></li>';
+		}
+
+		$output .= '</ul></div>';
+		echo $output;
+	}
+	return ob_get_clean();
 }
 add_shortcode('tdc_archive', 'tdc_archive_shortcode');
 
