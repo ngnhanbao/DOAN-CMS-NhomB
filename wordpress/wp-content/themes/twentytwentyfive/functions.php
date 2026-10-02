@@ -337,13 +337,13 @@ function my_custom_widgets_init()
 
 	// Khu vực Widget Phía trên Footer (Above Footer - widget_test_4)
 	register_sidebar(array(
-		'name'          => 'Phía trên Footer (Above Footer)',
-		'id'            => 'sidebar-above-footer',
-		'description'   => 'Khu vực hiển thị widget phía trên Footer (Trang chủ, Trang danh sách, Trang chi tiết)',
+		'name' => 'Phía trên Footer (Above Footer)',
+		'id' => 'sidebar-above-footer',
+		'description' => 'Khu vực hiển thị widget phía trên Footer (Trang chủ, Trang danh sách, Trang chi tiết)',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h3 class="widget-title">',
-		'after_title'   => '</h3>',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
 	));
 }
 // Móc hàm my_custom_widgets_init vào hook widgets_init của WordPress
@@ -502,15 +502,15 @@ function tdc_custom_news_shortcode($atts)
 	// CSS được nhúng trực tiếp để đảm bảo hiển thị ngay lập tức
 	$output = '<style>
         .tdc-news-list { display: flex; flex-direction: column; gap: 15px; font-family: sans-serif; }
-        .tdc-news-item { display: flex; border: 1px solid #eaeaea; background: #fff; padding: 15px; align-items: stretch; }
-        .tdc-news-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #eaeaea; padding-right: 20px; margin-right: 20px; min-width: 75px; }
-        .tdc-day { font-size: 42px; font-weight: 700; font-family: "Times New Roman", Times, serif; line-height: 1; color: #333; }
+        .tdc-news-item { display: flex; border: 1px solid #b6b6b6ff; background: #fff; padding: 15px; align-items: stretch; }
+        .tdc-news-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #111111ff; padding-right: 20px; margin-right: 20px; min-width: 75px; }
+        .tdc-day { font-size: 42px; font-weight: 700; font-family: Georgia, "Times New Roman", serif;; line-height: 1; color: #333; }
         .tdc-month { font-size: 11px; text-transform: uppercase; color: #888; margin-top: 5px; letter-spacing: 0.5px; }
         .tdc-news-content { flex: 1; }
         .tdc-title { margin: 0 0 10px 0; font-size: 16px; line-height: 1.4; }
         .tdc-title a { color: #0056b3; text-decoration: none; text-transform: uppercase; font-weight: 700; }
         .tdc-title a:hover { color: #003d82; text-decoration: underline; }
-        .tdc-excerpt { font-size: 14px; color: #555; line-height: 1.5; margin: 0; }
+        .tdc-excerpt { font-size: 14px; color: #2c2c2cff; line-height: 1.5; margin: 0; }
     </style>';
 
 	$output .= '<div class="tdc-news-list">';
