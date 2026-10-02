@@ -1,142 +1,289 @@
+/* =========================================================
+   GROUP C - HEADER STYLES (Matching Sample Mockup)
+   ========================================================= */
+
+/* Main Header Bar */
 .group-c-header {
-    width: 100%;
-    background: #ffffff;
-    border-bottom: 1px solid #eeeeee;
+	background-color: #f8f9fa;
+	border-bottom: 1px solid #e5e7eb;
+	width: 100%;
+	position: relative;
+	z-index: 1000;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
-.group-c-header .container-fluid {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 0;
+.group-c-header .group-c-navbar {
+	padding: 0;
+	min-height: 52px;
+	width: 100%;
 }
 
-.group-c-logo {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    font-size: 24px;
-    color: #777 !important;
-    text-decoration: none;
+.group-c-header-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 0 20px;
+	box-sizing: border-box;
 }
 
-.group-c-home {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    background: #eeeeee;
-    color: #666 !important;
-    text-decoration: none;
+/* =========================================================
+   LEFT SECTION: Logo, Home Active Tab, Search Form
+   ========================================================= */
+.group-c-header .header-left {
+	display: flex;
+	align-items: center;
+	height: 52px;
 }
 
-.group-c-search {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-left: 15px;
-    margin-right: auto;
+/* Group C Brand / Logo */
+.group-c-header .group-c-logo {
+	color: #6c757d;
+	font-size: 15px;
+	font-weight: 500;
+	text-decoration: none;
+	padding: 0 18px 0 4px;
+	display: inline-flex;
+	align-items: center;
+	height: 100%;
+	transition: color 0.15s ease;
 }
 
-.group-c-search input {
-    width: 235px;
-    height: 38px;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+.group-c-header .group-c-logo:hover {
+	color: #212529;
 }
 
-.group-c-search button {
-    height: 38px;
-    padding: 0 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background: #fff;
-    color: #666;
+/* Home Tab (Active tab with darker gray background rectangle) */
+.group-c-header .group-c-home {
+	background-color: #e9ecef;
+	color: #212529;
+	font-size: 14px;
+	font-weight: 500;
+	text-decoration: none;
+	padding: 0 22px;
+	height: 52px;
+	display: inline-flex;
+	align-items: center;
+	margin-right: 18px;
+	transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.group-c-categories {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    margin-right: 20px;
+.group-c-header .group-c-home:hover {
+	background-color: #dee2e6;
+	color: #000000;
 }
 
-.group-c-categories a {
-    color: #777;
-    text-decoration: none;
+/* Search Form */
+.group-c-header .group-c-search {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
 }
 
-.group-c-icon-item button {
-    min-width: 65px;
-    height: 80px;
-    border: none;
-    background: transparent;
-    color: #777;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
+.group-c-header .group-c-search input[type="search"] {
+	height: 32px;
+	padding: 4px 10px;
+	font-size: 13px;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+	background-color: #ffffff;
+	color: #495057;
+	width: 175px;
+	box-sizing: border-box;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.group-c-icon-item i {
-    font-size: 22px;
+.group-c-header .group-c-search input[type="search"]:focus {
+	outline: none;
+	border-color: #86b7fe;
+	box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.15);
 }
 
-.group-c-icon-item span {
-    font-size: 11px;
+.group-c-header .group-c-search button[type="submit"] {
+	height: 32px;
+	padding: 4px 12px;
+	font-size: 13px;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+	background-color: #ffffff;
+	color: #495057;
+	cursor: pointer;
+	box-sizing: border-box;
+	transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
-.group-c-account {
-    position: relative;
+.group-c-header .group-c-search button[type="submit"]:hover {
+	background-color: #f1f3f5;
+	color: #212529;
+	border-color: #adb5bd;
 }
 
-.group-c-account-button {
-    min-width: 95px;
-    height: 80px;
-    border: none;
-    background: transparent;
-    color: #777;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
+/* =========================================================
+   RIGHT SECTION: Categories, Menu Icon, Search Icon, Account Dropdown
+   ========================================================= */
+.group-c-header .header-right {
+	display: flex;
+	align-items: center;
+	gap: 20px;
 }
 
-.group-c-account-button .fa-circle-user {
-    font-size: 28px;
+/* Category Navigation Menu */
+.group-c-header .group-c-categories .cms-menu-list {
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	align-items: center;
+	gap: 22px;
 }
 
-.group-c-account-dropdown {
-    display: none;
-
-    position: absolute;
-    top: 80px;
-    right: 0;
-
-    min-width: 160px;
-
-    background: white;
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 12px rgba(0,0,0,.15);
-
-    z-index: 9999;
+.group-c-header .cms-menu-list li {
+	display: inline-flex;
+	align-items: center;
+	margin: 0;
+	padding: 0;
 }
 
-.group-c-account:hover .group-c-account-dropdown {
-    display: block;
+.group-c-header .cms-menu-list li a {
+	text-decoration: none;
+	color: #555555;
+	font-size: 13.5px;
+	font-weight: 400;
+	transition: color 0.15s ease;
 }
 
-.group-c-account-dropdown a {
-    display: block;
-    padding: 10px 15px;
-    color: #555;
-    text-decoration: none;
+.group-c-header .cms-menu-list li a:hover {
+	color: #000000;
 }
 
-.group-c-account-dropdown a:hover {
-    background: #f5f5f5;
+/* Actions Group (Menu, Search, Account) */
+.group-c-header .group-c-actions {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	border-left: 1px solid #e0e0e0;
+	padding-left: 14px;
+}
+
+/* Action Buttons (Icon on top, text underneath) */
+.group-c-header .group-c-action-btn {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	border: none;
+	padding: 4px 6px;
+	cursor: pointer;
+	color: #6c757d;
+	text-decoration: none;
+	line-height: 1.1;
+	transition: color 0.15s ease;
+}
+
+.group-c-header .group-c-action-btn i.fa-ellipsis,
+.group-c-header .group-c-action-btn i.fa-magnifying-glass {
+	font-size: 15px;
+	margin-bottom: 3px;
+	color: #495057;
+	transition: color 0.15s ease;
+}
+
+.group-c-header .group-c-action-btn span {
+	font-size: 10px;
+	color: #6c757d;
+	font-weight: 400;
+	transition: color 0.15s ease;
+}
+
+.group-c-header .group-c-action-btn:hover,
+.group-c-header .group-c-action-btn:hover i,
+.group-c-header .group-c-action-btn:hover span {
+	color: #000000;
+}
+
+/* Account Dropdown */
+.group-c-header .group-c-account {
+	position: relative;
+}
+
+/* Hide default Bootstrap caret arrow pseudo-element */
+.group-c-header .group-c-account-button.dropdown-toggle::after {
+	display: none !important;
+}
+
+.group-c-header .account-avatar-icon {
+	font-size: 20px;
+	color: #6c757d;
+	margin-bottom: 2px;
+	transition: color 0.15s ease;
+}
+
+.group-c-header .account-label {
+	font-size: 10px;
+	color: #6c757d;
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.group-c-header .account-caret {
+	font-size: 8px;
+	margin-left: 1px;
+}
+
+.group-c-header .group-c-account:hover .account-avatar-icon,
+.group-c-header .group-c-account:hover .account-label {
+	color: #000000;
+}
+
+/* Dropdown Menu Popup */
+.group-c-header .group-c-account-dropdown {
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	border-radius: 6px;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+	padding: 6px 0;
+	min-width: 160px;
+	margin-top: 6px !important;
+}
+
+.group-c-header .group-c-account-dropdown .dropdown-item {
+	font-size: 13px;
+	padding: 7px 16px;
+	color: #333333;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.group-c-header .group-c-account-dropdown .dropdown-item:hover {
+	background-color: #f8f9fa;
+	color: #000000;
+}
+
+.group-c-header .group-c-account-dropdown .dropdown-divider {
+	margin: 4px 0;
+	border-color: #f1f3f5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+	.group-c-header-container {
+		flex-wrap: wrap;
+		gap: 10px;
+		padding: 8px 12px;
+	}
+
+	.group-c-header .header-left,
+	.group-c-header .header-right {
+		width: 100%;
+		justify-content: space-between;
+		height: auto;
+	}
+
+	.group-c-header .group-c-home {
+		height: 38px;
+	}
 }

@@ -200,8 +200,8 @@ function group_c_enqueue_assets()
 	wp_enqueue_style(
 		'group-c-header',
 		get_template_directory_uri() . '/assets/css/group-c-header.css',
-		array(),
-		'1.0.0'
+		array('group-c-bootstrap', 'group-c-font-awesome'),
+		file_exists(get_template_directory() . '/assets/css/group-c-header.css') ? filemtime(get_template_directory() . '/assets/css/group-c-header.css') : '1.0.0'
 	);
 
 
