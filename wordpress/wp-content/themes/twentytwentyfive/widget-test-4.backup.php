@@ -2,13 +2,13 @@
 /**
  * Custom Widget hiển thị danh sách bài viết theo thiết kế Widget Test 4
  */
-class TDC_Widget_Test_4 extends WP_Widget
+class TDC_Widget_Test_4_Backup extends WP_Widget
 {
     public function __construct()
     {
         parent::__construct(
-            'tdc_widget_test_4',
-            'Widget Test 4',
+            'tdc_widget_test_4_backup',
+            'Widget Test 4 (Backup)',
             array('description' => 'Hiển thị bài viết với thumbnail bên trái, tiêu đề bên phải.')
         );
     }
@@ -130,8 +130,8 @@ class TDC_Widget_Test_4 extends WP_Widget
     }
 }
 
-function register_tdc_widget_test_4()
+function register_tdc_widget_test_4_backup()
 {
-    register_widget('TDC_Widget_Test_4');
+    register_widget('TDC_Widget_Test_4_Backup');
 }
-add_action('widgets_init', 'register_tdc_widget_test_4');
+add_action('widgets_init', 'register_tdc_widget_test_4_backup');
