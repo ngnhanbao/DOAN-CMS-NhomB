@@ -8,12 +8,12 @@
    ========================================================= */
 
 .group-c-search-page {
-	width: 100%;
-	max-width: 1100px !important;
+	width: 96% !important;
+	max-width: 1400px !important;
 
 	margin: 0 auto !important;
 
-	padding: 45px 20px 70px;
+	padding: 30px 10px 70px !important;
 
 	box-sizing: border-box;
 }
@@ -510,3 +510,99 @@
 
 	margin: 0 auto !important;
 }
+
+/* =========================================================
+   3-COLUMN LAYOUT CHO TRANG TÌM KIẾM (KHỚP WIREFRAME IMAGE 2)
+   Cột 13 (25%) | Cột 5 Kết quả (50%) | Cột 14 Comments (25%)
+   ========================================================= */
+
+.group-c-search-3-columns {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: nowrap !important;
+	gap: 25px !important;
+	align-items: flex-start !important;
+	width: 100% !important;
+	margin-top: 35px !important;
+}
+
+.group-c-search-col-left {
+	flex: 0 0 25% !important;
+	width: 25% !important;
+	max-width: 25% !important;
+	min-width: 0 !important;
+	min-height: 1px !important;
+}
+
+.group-c-search-col-center {
+	flex: 0 0 50% !important;
+	width: 50% !important;
+	max-width: 50% !important;
+	min-width: 0 !important;
+}
+
+.group-c-search-col-right {
+	flex: 0 0 25% !important;
+	width: 25% !important;
+	max-width: 25% !important;
+	min-width: 0 !important;
+}
+
+.group-c-search-bottom-15 {
+	width: 100% !important;
+	margin-top: 40px !important;
+}
+
+@media (max-width: 992px) {
+	.group-c-search-3-columns {
+		flex-direction: column !important;
+		gap: 30px !important;
+	}
+	.group-c-search-col-left,
+	.group-c-search-col-center,
+	.group-c-search-col-right {
+		flex: 1 1 100% !important;
+		max-width: 100% !important;
+		width: 100% !important;
+	}
+}
+
+/* =========================================================
+   2-COLUMN LAYOUT CHO TRANG TÌM KIẾM
+   Cột Kết quả (70%) | Cột Comments (30%)
+   ========================================================= */
+
+.group-c-search-2-columns {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: nowrap !important;
+	gap: 30px !important;
+	align-items: flex-start !important;
+	width: 100% !important;
+	margin-top: 35px !important;
+}
+
+.group-c-search-col-main {
+	flex: 0 0 70% !important;
+	max-width: 70% !important;
+	min-width: 0 !important;
+}
+
+.group-c-search-2-columns .group-c-search-col-right {
+	flex: 0 0 30% !important;
+	max-width: 30% !important;
+	min-width: 0 !important;
+}
+
+@media (max-width: 992px) {
+	.group-c-search-2-columns {
+		flex-direction: column !important;
+		gap: 30px !important;
+	}
+	.group-c-search-col-main,
+	.group-c-search-2-columns .group-c-search-col-right {
+		flex: 1 1 100% !important;
+		max-width: 100% !important;
+		width: 100% !important;
+	}
+}

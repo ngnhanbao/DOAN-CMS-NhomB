@@ -66,6 +66,10 @@ define('DB_COLLATE', getenv_docker('WORDPRESS_DB_COLLATE', ''));
 define('WP_HOME', 'http://wordpress.local');
 define('WP_SITEURL', 'http://wordpress.local');
 
+// Tắt hoàn toàn tính năng tự động cập nhật để cố định phiên bản 7.1.1
+define('AUTOMATIC_UPDATER_DISABLED', true);
+define('WP_AUTO_UPDATE_CORE', false);
+
 
 /**#@+
  * Authentication unique keys and salts.
