@@ -40,7 +40,7 @@ class TDC_Numbered_Posts_Widget extends WP_Widget
                 }
                 .tdc-numbered-grid {
                     display: grid;
-                    grid-template-columns: 1fr 1fr;
+                    grid-template-columns: repeat(3, 1fr);
                     gap: 0 30px;
                 }
                 .tdc-numbered-item {
@@ -75,6 +75,11 @@ class TDC_Numbered_Posts_Widget extends WP_Widget
                 .tdc-numbered-content a:hover {
                     color: #0056b3;
                 }
+                @media (max-width: 992px) {
+                    .tdc-numbered-grid {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                }
                 @media (max-width: 768px) {
                     .tdc-numbered-grid {
                         grid-template-columns: 1fr;
@@ -89,8 +94,8 @@ class TDC_Numbered_Posts_Widget extends WP_Widget
             while ($recent_posts->have_posts()) {
                 $recent_posts->the_post();
                 
-                // Hide bottom border for the last row (if 2 cols, it's the last 2 items)
-                $no_border_class = ($count > $number - 2) ? ' no-border' : '';
+                // Hide bottom border for the last row (if 3 cols, it's the last 3 items)
+                $no_border_class = ($count > $number - 3) ? ' no-border' : '';
                 
                 echo '    <div class="tdc-numbered-item' . $no_border_class . '">';
                 echo '      <div class="tdc-numbered-rank">' . $count . '</div>';
