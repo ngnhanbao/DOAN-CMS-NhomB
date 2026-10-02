@@ -12,6 +12,13 @@
  */
 ?>
 
+<?php
+// Hiển thị widget_test_4 tại khu vực phía trên Footer (Trang chủ, Trang danh sách, Trang chi tiết)
+if (function_exists('tdc_render_above_footer_area')) {
+	tdc_render_above_footer_area();
+}
+?>
+
 <!-- Khu vực hiển thị: phía trên Footer (Widget_Test_4) -->
 <?php if ( is_front_page() || is_home() || is_archive() || is_category() || is_tag() || is_tax() || is_search() || is_single() ): ?>
 	<div id="widget_test_4_area" class="widget-test-4-area" style="width: 96%; max-width: 1400px; margin: 30px auto; padding: 15px 10px;">
