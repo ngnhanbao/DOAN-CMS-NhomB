@@ -1,57 +1,81 @@
 ul.tdc-timeline {
     list-style-type: none;
-    position: relative;
-}
-ul.tdc-timeline:before {
-    content: ' ';
-    background: #d4d9df;
-    display: inline-block;
-    position: absolute;
-    left: 29px;
-    width: 2px;
-    height: 100%;
-    z-index: 400;
-}
-ul.tdc-timeline > li {
-    margin: 20px 0;
-    padding-left: 20px;
-}
-ul.tdc-timeline > li:before {
-    content: ' ';
-    background: white;
-    display: inline-block;
-    position: absolute;
-    border-radius: 50%;
-    border: 3px solid #22c0e8;
-    left: 20px;
-    width: 20px;
-    height: 20px;
-    z-index: 400;
-}
-.tdc-timeline-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-}
-.tdc-timeline-header h5 {
     margin: 0;
-    font-size: 16px;
+    padding: 0;
 }
-.tdc-timeline-header h5 a {
-    color: #22c0e8;
+
+ul.tdc-timeline > .tdc-post-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.tdc-post-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    border-right: 1px solid #e0e0e0;
+    padding-right: 15px;
+    margin-right: 15px;
+}
+
+.tdc-date-day {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1;
+}
+
+.tdc-date-month {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #888;
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+}
+
+.tdc-post-content {
+    flex-grow: 1;
+}
+
+.tdc-post-title {
+    margin: 0 0 8px 0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.tdc-post-title a {
+    color: #0056b3;
     text-decoration: none;
+    transition: color 0.2s ease;
 }
-.tdc-timeline-header h5 a:hover {
+
+.tdc-post-title a:hover {
+    color: #003d82;
     text-decoration: underline;
 }
-.tdc-timeline-date {
-    color: #22c0e8;
-    font-size: 14px;
-}
-.tdc-timeline-excerpt {
-    color: #666;
-    font-size: 14px;
-    line-height: 1.5;
+
+.tdc-post-excerpt {
+    font-size: 13px;
+    color: #555;
     margin: 0;
+    line-height: 1.5;
+}
+
+/* Optional live indicator style */
+.tdc-post-excerpt::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #dc3545;
+    border-radius: 50%;
+    margin-right: 6px;
 }
