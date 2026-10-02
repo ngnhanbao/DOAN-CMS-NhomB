@@ -19,6 +19,47 @@ if (function_exists('tdc_render_above_footer_area')) {
 }
 ?>
 
+<!-- Khu vực hiển thị: phía trên Footer (Widget_Test_4) -->
+<?php if ( is_front_page() || is_home() || is_archive() || is_category() || is_tag() || is_tax() || is_search() || is_single() ): ?>
+	<div id="widget_test_4_area" class="widget-test-4-area" style="width: 96%; max-width: 1400px; margin: 30px auto; padding: 15px 10px;">
+		<?php 
+		if ( is_active_sidebar( 'widget_test_4' ) ) {
+			dynamic_sidebar( 'widget_test_4' );
+		} elseif ( is_active_sidebar( 'above-footer' ) ) {
+			dynamic_sidebar( 'above-footer' );
+		} else {
+			the_widget( 'Widget_Test_4' );
+		}
+		?>
+	</div>
+<?php endif; ?>
+
+<!-- Khu vực hiển thị: phía trên Footer (TDC_Widget_Test_4) -->
+<?php if (is_home() || is_front_page() || is_archive() || is_search() || is_single()): ?>
+<section class="tdc-above-footer-area" style="padding: 40px 0; background: #fff; border-top: 1px solid #eaeaea;">
+    <div class="container">
+        <?php 
+        if (is_active_sidebar('above-footer')) {
+            dynamic_sidebar('above-footer'); 
+        } else {
+            the_widget('TDC_Widget_Test_4', array('title' => 'Widget Test 4', 'number' => 5));
+        }
+        ?>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- Khu vực hiển thị: Widget Last Posts -->
+<?php if ( is_search() ): ?>
+<section class="tdc-above-footer-area" style="padding: 40px 0; background: #fff; border-top: 1px solid #eaeaea;">
+    <div class="container">
+        <?php 
+        the_widget('TDC_Widget_Last_Posts', array('title' => 'Latest News', 'number' => 3));
+        ?>
+    </div>
+</section>
+<?php endif; ?>
+
 <section id="footer">
 	<div class="container">
 		<div class="row">
