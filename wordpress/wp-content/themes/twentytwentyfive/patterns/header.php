@@ -73,10 +73,10 @@
 
 					<!-- SEARCH ICON -->
 					<div class="group-c-icon-item">
-						<button type="button" class="group-c-action-btn" aria-label="Search">
+						<a href="<?php echo esc_url(home_url('/?s=')); ?>" class="group-c-action-btn" aria-label="Search">
 							<i class="fa-solid fa-magnifying-glass"></i>
 							<span>Search</span>
-						</button>
+						</a>
 					</div>
 
 					<!-- ACCOUNT DROPDOWN -->
