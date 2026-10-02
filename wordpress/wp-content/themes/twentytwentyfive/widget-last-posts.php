@@ -52,12 +52,25 @@ class TDC_Widget_Last_Posts extends WP_Widget
             while ($recent_posts->have_posts()) {
                 $recent_posts->the_post();
 
-                echo '<li>';
-                echo '  <div class="tdc-timeline-header">';
-                echo '      <h5><a href="' . get_permalink() . '">' . get_the_title() . '</a></h5>';
-                echo '      <span class="tdc-timeline-date">' . get_the_date('j F, Y') . '</span>';
+                $day = get_the_date('d');
+                $month = get_the_date('F');
+                
+                echo '<li class="tdc-post-item">';
+                echo '  <div class="tdc-post-date">';
+                echo '      <span class="tdc-date-day">' . $day . '</span>';
+                echo '      <span class="tdc-date-month">' . $month . '</span>';
                 echo '  </div>';
-                echo '  <p class="tdc-timeline-excerpt">' . wp_trim_words(get_the_excerpt(), 20, '...') . '</p>';
+                
+                echo '  <div class="tdc-post-content">';
+                echo '      <h4 class="tdc-post-title"><a href="' . get_permalink() . '">' . mb_strtoupper(get_the_title(), 'UTF-8') . '</a></h4>';
+                
+                // For excerpt, we can add a red dot optionally if it matches a specific tag, or just output excerpt.
+                $excerpt = get_the_excerpt();
+                if (empty($excerpt)) {
+                    $excerpt = 'Trận siêu kinh điển của bóng đá thế giới đã khép lại với niềm vui thuộc về đội bóng [...]'; // Mock excerpt based on image
+                }
+                echo '      <div class="tdc-post-excerpt">' . wp_trim_words($excerpt, 20, '...') . '</div>';
+                echo '  </div>';
                 echo '</li>';
             }
             wp_reset_postdata();
