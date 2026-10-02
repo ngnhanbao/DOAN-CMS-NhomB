@@ -837,18 +837,25 @@ add_filter('render_block', function ($block_content, $block) {
 // --- SHORTCODE HIỂN THỊ KẾT QUẢ TÌM KIẾM ---
 function tdc_search_results_shortcode()
 {
-	$search_query = get_search_query();
-
-	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-	$query_args = array(
-		'post_type' => 'post',
-		'posts_per_page' => 10,
-		'paged' => $paged
-	);
-	if (!empty($search_query)) {
-		$query_args['s'] = $search_query;
+	global $wp_query;
+	
+	if ( is_search() || is_archive() ) {
+		// Dùng chung query mặc định của WordPress (đã tự động bắt đúng chuyên mục, tìm kiếm...)
+		$query = $wp_query;
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+	} else {
+		$search_query = get_search_query();
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+		$query_args = array(
+			'post_type' => 'post',
+			'posts_per_page' => 10,
+			'paged' => $paged
+		);
+		if (!empty($search_query)) {
+			$query_args['s'] = $search_query;
+		}
+		$query = new WP_Query($query_args);
 	}
-	$query = new WP_Query($query_args);
 
 	if (!$query->have_posts()) {
 		return '<div class="tdc-no-search-results" style="padding:25px;text-align:center;color:#666;background:#fff;border:1px solid #eaeaea;">Không tìm thấy bài viết nào phù hợp.</div>';
