@@ -17,6 +17,11 @@
 if (function_exists('tdc_render_above_footer_area')) {
 	tdc_render_above_footer_area();
 }
+
+// Hiển thị widget Đừng bỏ lỡ của bạn
+if (function_exists('tdc_render_above_footer_area_alt')) {
+	tdc_render_above_footer_area_alt();
+}
 ?>
 
 
