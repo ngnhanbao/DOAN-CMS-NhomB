@@ -40,7 +40,7 @@ class TDC_Numbered_Posts_Widget extends WP_Widget
                 }
                 .tdc-numbered-grid {
                     display: grid;
-                    grid-template-columns: 1fr 1fr;
+                    grid-template-columns: repeat(2, 1fr);
                     gap: 0 30px;
                 }
                 .tdc-numbered-item {
@@ -75,6 +75,11 @@ class TDC_Numbered_Posts_Widget extends WP_Widget
                 .tdc-numbered-content a:hover {
                     color: #0056b3;
                 }
+                @media (max-width: 992px) {
+                    .tdc-numbered-grid {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                }
                 @media (max-width: 768px) {
                     .tdc-numbered-grid {
                         grid-template-columns: 1fr;
@@ -84,21 +89,21 @@ class TDC_Numbered_Posts_Widget extends WP_Widget
 
             echo '<div class="tdc-numbered-widget">';
             echo '  <div class="tdc-numbered-grid">';
-            
+
             $count = 1;
             while ($recent_posts->have_posts()) {
                 $recent_posts->the_post();
-                
-                // Hide bottom border for the last row (if 2 cols, it's the last 2 items)
-                $no_border_class = ($count > $number - 2) ? ' no-border' : '';
-                
+
+                // Hide bottom border for the last row (if 3 cols, it's the last 3 items)
+                $no_border_class = ($count > $number - 3) ? ' no-border' : '';
+
                 echo '    <div class="tdc-numbered-item' . $no_border_class . '">';
                 echo '      <div class="tdc-numbered-rank">' . $count . '</div>';
                 echo '      <div class="tdc-numbered-content">';
                 echo '          <a href="' . get_permalink() . '">' . get_the_title() . '</a>';
                 echo '      </div>';
                 echo '    </div>';
-                
+
                 $count++;
             }
             wp_reset_postdata();
@@ -118,14 +123,14 @@ class TDC_Numbered_Posts_Widget extends WP_Widget
         <p>
             <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
             <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
-                   name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
-                   value="<?php echo esc_attr($title); ?>">
+                name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+                value="<?php echo esc_attr($title); ?>">
         </p>
         <p>
             <label for="<?php echo esc_attr($this->get_field_id('number')); ?>">Số lượng bài hiển thị:</label>
             <input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('number')); ?>"
-                   name="<?php echo esc_attr($this->get_field_name('number')); ?>" type="number" step="1" min="2"
-                   value="<?php echo esc_attr($number); ?>" size="3">
+                name="<?php echo esc_attr($this->get_field_name('number')); ?>" type="number" step="1" min="2"
+                value="<?php echo esc_attr($number); ?>" size="3">
         </p>
         <?php
     }

@@ -200,8 +200,8 @@ function group_c_enqueue_assets()
 	wp_enqueue_style(
 		'group-c-header',
 		get_template_directory_uri() . '/assets/css/group-c-header.css',
-		array(),
-		'1.0.0'
+		array('group-c-bootstrap', 'group-c-font-awesome'),
+		file_exists(get_template_directory() . '/assets/css/group-c-header.css') ? filemtime(get_template_directory() . '/assets/css/group-c-header.css') : '1.0.0'
 	);
 
 
@@ -243,6 +243,14 @@ function group_c_enqueue_assets()
 		get_template_directory_uri() . '/assets/css/group-c-categories.css',
 		array(),
 		file_exists(get_template_directory() . '/assets/css/group-c-categories.css') ? filemtime(get_template_directory() . '/assets/css/group-c-categories.css') : '1.0.0'
+	);
+
+	// Custom Widget Test 4 CSS (Above Footer)
+	wp_enqueue_style(
+		'group-c-widget-test-4',
+		get_template_directory_uri() . '/assets/css/group-c-widget-test-4.css',
+		array(),
+		file_exists(get_template_directory() . '/assets/css/group-c-widget-test-4.css') ? filemtime(get_template_directory() . '/assets/css/group-c-widget-test-4.css') : '1.0.0'
 	);
 }
 
@@ -325,6 +333,17 @@ function my_custom_widgets_init()
 		'after_widget' => '</div>',
 		'before_title' => '<h5 class="widget-title">',
 		'after_title' => '</h5>',
+	));
+
+	// Khu vực Widget Phía trên Footer (Above Footer - widget_test_4)
+	register_sidebar(array(
+		'name' => 'Phía trên Footer (Above Footer)',
+		'id' => 'sidebar-above-footer',
+		'description' => 'Khu vực hiển thị widget phía trên Footer (Trang chủ, Trang danh sách, Trang chi tiết)',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
 	));
 }
 // Móc hàm my_custom_widgets_init vào hook widgets_init của WordPress
@@ -483,15 +502,15 @@ function tdc_custom_news_shortcode($atts)
 	// CSS được nhúng trực tiếp để đảm bảo hiển thị ngay lập tức
 	$output = '<style>
         .tdc-news-list { display: flex; flex-direction: column; gap: 15px; font-family: sans-serif; }
-        .tdc-news-item { display: flex; border: 1px solid #eaeaea; background: #fff; padding: 15px; align-items: stretch; }
-        .tdc-news-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #eaeaea; padding-right: 20px; margin-right: 20px; min-width: 75px; }
-        .tdc-day { font-size: 42px; font-weight: 700; font-family: "Times New Roman", Times, serif; line-height: 1; color: #333; }
+        .tdc-news-item { display: flex; border: 1px solid #b6b6b6ff; background: #fff; padding: 15px; align-items: stretch; }
+        .tdc-news-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #111111ff; padding-right: 20px; margin-right: 20px; min-width: 75px; }
+        .tdc-day { font-size: 42px; font-weight: 700; font-family: Georgia, "Times New Roman", serif;; line-height: 1; color: #333; }
         .tdc-month { font-size: 11px; text-transform: uppercase; color: #888; margin-top: 5px; letter-spacing: 0.5px; }
         .tdc-news-content { flex: 1; }
         .tdc-title { margin: 0 0 10px 0; font-size: 16px; line-height: 1.4; }
         .tdc-title a { color: #0056b3; text-decoration: none; text-transform: uppercase; font-weight: 700; }
         .tdc-title a:hover { color: #003d82; text-decoration: underline; }
-        .tdc-excerpt { font-size: 14px; color: #555; line-height: 1.5; margin: 0; }
+        .tdc-excerpt { font-size: 14px; color: #2c2c2cff; line-height: 1.5; margin: 0; }
     </style>';
 
 	$output .= '<div class="tdc-news-list">';
@@ -818,18 +837,25 @@ add_filter('render_block', function ($block_content, $block) {
 // --- SHORTCODE HIỂN THỊ KẾT QUẢ TÌM KIẾM ---
 function tdc_search_results_shortcode()
 {
-	$search_query = get_search_query();
-
-	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-	$query_args = array(
-		'post_type' => 'post',
-		'posts_per_page' => 10,
-		'paged' => $paged
-	);
-	if (!empty($search_query)) {
-		$query_args['s'] = $search_query;
+	global $wp_query;
+	
+	if ( is_search() || is_archive() ) {
+		// Dùng chung query mặc định của WordPress (đã tự động bắt đúng chuyên mục, tìm kiếm...)
+		$query = $wp_query;
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+	} else {
+		$search_query = get_search_query();
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+		$query_args = array(
+			'post_type' => 'post',
+			'posts_per_page' => 10,
+			'paged' => $paged
+		);
+		if (!empty($search_query)) {
+			$query_args['s'] = $search_query;
+		}
+		$query = new WP_Query($query_args);
 	}
-	$query = new WP_Query($query_args);
 
 	if (!$query->have_posts()) {
 		return '<div class="tdc-no-search-results" style="padding:25px;text-align:center;color:#666;background:#fff;border:1px solid #eaeaea;">Không tìm thấy bài viết nào phù hợp.</div>';
@@ -857,9 +883,9 @@ function tdc_search_results_shortcode()
             .tdc-search-date { border-right: none; border-bottom: 1px solid #eaeaea; padding-right: 0; padding-bottom: 15px; margin-right: 0; margin-bottom: 15px; flex-direction: row; gap: 10px; align-items: baseline; }
         }
         
-        .tdc-pagination { display: flex; gap: 10px; margin-top: 30px; }
-        .tdc-pagination a, .tdc-pagination span { padding: 8px 12px; border: 1px solid #ddd; text-decoration: none; color: #333; }
-        .tdc-pagination span.current { background: #0056b3; color: white; border-color: #0056b3; }
+        .tdc-pagination { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 8px !important; margin-top: 30px !important; align-items: center !important; }
+        .tdc-pagination a, .tdc-pagination span { display: inline-flex !important; align-items: center !important; justify-content: center !important; padding: 6px 12px !important; border: 1px solid #ddd !important; text-decoration: none !important; color: #333 !important; min-width: 36px !important; height: 36px !important; box-sizing: border-box !important; margin: 0 !important; font-size: 15px !important; line-height: 1 !important; }
+        .tdc-pagination span.current { background: #0056b3 !important; color: white !important; border-color: #0056b3 !important; font-weight: bold !important; }
     </style>';
 
 	$output .= '<div class="tdc-search-list">';
@@ -1116,68 +1142,74 @@ add_action('widgets_init', 'register_archive_sidebar_11');
  */
 function tdc_archive_shortcode($atts)
 {
-	$atts = shortcode_atts(array(
-		'title' => 'Archive'
-	), $atts, 'tdc_archive');
-
-	$output = '<style>
-        .tdc-archive-widget-11 {
-            font-family: Arial, sans-serif;
-            margin-bottom: 25px;
-        }
-        .tdc-archive-title-11 {
-            font-size: 18px;
-            font-weight: 500;
-            color: #333333;
-            margin: 0 0 4px 0;
-        }
-        .tdc-archive-line-11 {
-            width: 45px;
-            height: 2px;
-            background-color: #777777;
-            margin-bottom: 12px;
-        }
-        .tdc-archive-list-11 {
-            list-style: none !important;
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-        .tdc-archive-list-11 li {
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .tdc-archive-list-11 li:last-child {
-            border-bottom: none;
-        }
-        .tdc-archive-list-11 li a {
-            color: #337ab7;
-            text-decoration: none;
-            font-size: 15px;
-        }
-        .tdc-archive-list-11 li a:hover {
-            color: #23527c;
-            text-decoration: underline;
-        }
-    </style>';
-
-	$output .= '<div class="tdc-archive-widget-11">';
-	if (!empty($atts['title'])) {
-		$output .= '<h3 class="tdc-archive-title-11">' . esc_html($atts['title']) . '</h3>';
-		$output .= '<div class="tdc-archive-line-11"></div>';
-	}
-	$output .= '<ul class="tdc-archive-list-11">';
-
-	$categories = get_categories(array('number' => 5, 'orderby' => 'count', 'order' => 'DESC'));
-	if (!empty($categories)) {
-		foreach ($categories as $cat) {
-			$output .= '<li><a href="' . esc_url(get_category_link($cat->term_id)) . '">' . esc_html($cat->name) . '</a></li>';
-		}
+	ob_start();
+	if (is_active_sidebar('sidebar-archive-11')) {
+		dynamic_sidebar('sidebar-archive-11');
 	} else {
-		$output .= '<li><a href="#">Tháng 09 năm 2026</a></li>';
-	}
+		$atts = shortcode_atts(array(
+			'title' => 'Archive'
+		), $atts, 'tdc_archive');
 
-	$output .= '</ul></div>';
-	return $output;
+		$output = '<style>
+			.tdc-archive-widget-11 {
+				font-family: Arial, sans-serif;
+				margin-bottom: 25px;
+			}
+			.tdc-archive-title-11 {
+				font-size: 18px;
+				font-weight: 500;
+				color: #333333;
+				margin: 0 0 4px 0;
+			}
+			.tdc-archive-line-11 {
+				width: 45px;
+				height: 2px;
+				background-color: #777777;
+				margin-bottom: 12px;
+			}
+			.tdc-archive-list-11 {
+				list-style: none !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+			.tdc-archive-list-11 li {
+				padding: 8px 0;
+				border-bottom: 1px solid #f0f0f0;
+			}
+			.tdc-archive-list-11 li:last-child {
+				border-bottom: none;
+			}
+			.tdc-archive-list-11 li a {
+				color: #337ab7;
+				text-decoration: none;
+				font-size: 15px;
+			}
+			.tdc-archive-list-11 li a:hover {
+				color: #23527c;
+				text-decoration: underline;
+			}
+		</style>';
+
+		$output .= '<div class="tdc-archive-widget-11">';
+		if (!empty($atts['title'])) {
+			$output .= '<h3 class="tdc-archive-title-11">' . esc_html($atts['title']) . '</h3>';
+			$output .= '<div class="tdc-archive-line-11"></div>';
+		}
+		$output .= '<ul class="tdc-archive-list-11">';
+
+		$categories = get_categories(array('number' => 5, 'orderby' => 'count', 'order' => 'DESC'));
+		if (!empty($categories)) {
+			foreach ($categories as $cat) {
+				$output .= '<li><a href="' . esc_url(get_category_link($cat->term_id)) . '">' . esc_html($cat->name) . '</a></li>';
+			}
+		} else {
+			$output .= '<li><a href="#">Tháng 09 năm 2026</a></li>';
+		}
+
+		$output .= '</ul></div>';
+		echo $output;
+	}
+	return ob_get_clean();
 }
 add_shortcode('tdc_archive', 'tdc_archive_shortcode');
 
@@ -1346,6 +1378,8 @@ function register_tdc_comments_widget()
 	register_widget('TDC_Comments_Widget');
 }
 add_action('widgets_init', 'register_tdc_comments_widget');
+
+
 
 /**
  * =========================================================
@@ -1641,17 +1675,8 @@ add_shortcode('tdc_sidebar_search_left', 'tdc_sidebar_search_left_shortcode');
 
 function tdc_sidebar_search_right_shortcode()
 {
-	ob_start();
-	if (is_active_sidebar('sidebar-comments-14')) {
-		dynamic_sidebar('sidebar-comments-14');
-	}
-	$sidebar_output = ob_get_clean();
-
-	// Nếu sidebar không có widget hoặc widget sinh ra rỗng (chẳng hạn block comments mặc định của WP bị rỗng trên trang search)
-	if (empty(trim(strip_tags($sidebar_output)))) {
-		return tdc_module_14_comments_render();
-	}
-	return $sidebar_output;
+	// Bắt buộc hiển thị đúng thiết kế bong bóng Comments (Module 14)
+	return tdc_module_14_comments_render();
 }
 add_shortcode('tdc_sidebar_search_right', 'tdc_sidebar_search_right_shortcode');
 
@@ -1667,5 +1692,8 @@ add_shortcode('tdc_sidebar_search_bottom', 'tdc_sidebar_search_bottom_shortcode'
 
 require_once get_template_directory() . '/widget-recent-posts.php';
 require_once get_template_directory() . '/widget-numbered-posts.php';
+require_once get_template_directory() . '/widget-test-4.php';
+require_once get_template_directory() . '/widget-test-4.backup.php';
+require_once get_template_directory() . '/widget-test-4-alt.php';
 require_once get_template_directory() . '/widget-module-13.php';
 require_once get_template_directory() . '/widget-last-posts.php';

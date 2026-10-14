@@ -12,19 +12,19 @@
  */
 ?>
 
-<?php if (is_home() || is_front_page() || is_archive() || is_search() || is_single()): ?>
-<section class="tdc-above-footer-area" style="padding: 40px 0; background: #fff; border-top: 1px solid #eaeaea;">
-    <div class="container">
-        <?php 
-        if (is_active_sidebar('above-footer')) {
-            dynamic_sidebar('above-footer'); 
-        } else {
-            the_widget('TDC_Widget_Last_Posts', array('title' => 'Latest News', 'number' => 3));
-        }
-        ?>
-    </div>
-</section>
-<?php endif; ?>
+<?php
+// Hiển thị widget_test_4 tại khu vực phía trên Footer (Trang chủ, Trang danh sách, Trang chi tiết)
+if (function_exists('tdc_render_above_footer_area')) {
+	tdc_render_above_footer_area();
+}
+
+// Hiển thị widget Đừng bỏ lỡ của bạn
+if (function_exists('tdc_render_above_footer_area_alt')) {
+	tdc_render_above_footer_area_alt();
+}
+?>
+
+
 
 <section id="footer">
 	<div class="container">
