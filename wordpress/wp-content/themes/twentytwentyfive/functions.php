@@ -759,15 +759,27 @@ function tdc_categories_render_html($args = array())
 
 	if (!empty($categories)) {
 		foreach ($categories as $cat) {
+			$latest = get_posts(array(
+				'category' => $cat->term_id,
+				'posts_per_page' => 1,
+				'post_status' => 'publish',
+				'orderby' => 'date',
+				'order' => 'DESC',
+			));
+			$cat_date = !empty($latest) ? get_the_date('d/m/Y', $latest[0]->ID) : current_time('d/m/Y');
+			if ($cat->name === 'Phim truyện' || $cat->slug === 'phim-truyen') { $cat_date = current_time('d/m/Y'); }
+
 			$html .= '<li>';
 			$html .= '  <span class="tdc-bullet"></span>';
 			$html .= '  <a href="' . esc_url(get_category_link($cat->term_id)) . '">' . esc_html($cat->name) . '</a>';
+			$html .= '  <span class="tdc-cat-date">[' . esc_html($cat_date) . ']</span>';
 			$html .= '</li>';
 		}
+
+
 	} else {
 		$html .= '<li><span class="tdc-bullet"></span><span>' . esc_html__('Chưa có chuyên mục', 'twentytwentyfive') . '</span></li>';
 	}
-
 	$html .= '  </ul>';
 	$html .= '</div>';
 
@@ -838,8 +850,8 @@ add_filter('render_block', function ($block_content, $block) {
 function tdc_search_results_shortcode()
 {
 	global $wp_query;
-	
-	if ( is_search() || is_archive() ) {
+
+	if (is_search() || is_archive()) {
 		// Dùng chung query mặc định của WordPress (đã tự động bắt đúng chuyên mục, tìm kiếm...)
 		$query = $wp_query;
 		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
